@@ -1,0 +1,2338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Day 1: OOP + SOLID / Build Your Technical Skills</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:wght@400;600&display=swap">
+
+<style>
+  :root{
+    --bg:#0e0e10; --bg-soft:#16161a; --line:#26262c; --text:#e8e8ea;
+    --muted:#8a8a93; --dim:#5a5a63; --accent:#d4ff3a; --accent-2:#6ea8ff;
+    --good:#7ddc9a; --bad:#ff7a7a; --warn:#f5b840;
+  }
+  html, body { background: var(--bg); }
+  .reveal-viewport { background: var(--bg) !important; }
+
+  .reveal { font-family:'Inter',system-ui,sans-serif; font-weight:400; color:var(--text);
+            font-size:22px; letter-spacing:-0.005em; }
+  .reveal .slides { text-align:left; }
+  .reveal .slides > section { padding:56px 80px; height:100%; box-sizing:border-box; }
+
+  /* per-pillar accent tint (part 1) */
+  .reveal section.enc  { --accent:#d4ff3a; }
+  .reveal section.abs  { --accent:#ff8a3d; }
+  .reveal section.inh  { --accent:#6ea8ff; }
+  .reveal section.poly { --accent:#c084fc; }
+  /* per-principle accent tint (part 2) */
+  .reveal section.srp { --accent:#ff5c8d; }
+  .reveal section.ocp { --accent:#14b8a6; }
+  .reveal section.lsp { --accent:#a78bfa; }
+  .reveal section.isp { --accent:#f59e0b; }
+  .reveal section.dip { --accent:#22d3ee; }
+  /* the JDK in the dock (part 2, after lunch) */
+  .reveal section.jdk { --accent:#f87171; }
+
+  .reveal h1,.reveal h2,.reveal h3,.reveal h4 { font-family:'Inter',sans-serif; font-weight:600;
+    color:var(--text); text-transform:none; letter-spacing:-0.02em; margin:0 0 0.4em 0; line-height:1.12; }
+  .reveal h1 { font-size:60px; font-weight:700; letter-spacing:-0.04em; }
+  .reveal h2 { font-size:38px; font-weight:600; }
+  .reveal h3 { font-size:22px; font-weight:600; }
+  .reveal p,.reveal li { font-size:21px; line-height:1.55; color:#d4d4d8; }
+  .reveal ul,.reveal ol { margin:0.4em 0 0 1.2em; }
+  .reveal li { margin:0.4em 0; }
+  .reveal strong { color:var(--text); font-weight:600; }
+  .reveal em { font-style:italic; color:var(--accent); }
+
+  .eyebrow { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:1.1em; display:block; }
+  .eyebrow .dot { display:inline-block; width:8px; height:8px; border-radius:50%;
+    background:var(--accent); vertical-align:middle; margin-right:6px; }
+
+  .title-wrap { display:flex; flex-direction:column; justify-content:center; height:100%; }
+  .display { font-family:'Fraunces',serif; font-weight:400; font-size:104px; line-height:0.96;
+    letter-spacing:-0.04em; margin:0; }
+  .display em { font-style:italic; color:var(--accent); }
+  .subtitle { font-size:23px; color:var(--muted); margin-top:1.2em; max-width:62ch; }
+
+  .lede { font-size:27px; line-height:1.4; color:#e8e8ea; max-width:66ch; font-weight:400; }
+  .quote { font-family:'Fraunces',serif; font-style:italic; font-size:30px; line-height:1.35;
+    color:#e0e0e4; border-left:2px solid var(--accent); padding-left:22px; max-width:64ch; }
+  .quote-attr { font-family:'Inter',sans-serif; font-style:normal; font-size:14px; color:var(--muted);
+    margin-top:0.6em; letter-spacing:0.1em; text-transform:uppercase; }
+
+  .grid { display:grid; gap:24px; margin-top:20px; }
+  .g2 { grid-template-columns:1fr 1fr; } .g3 { grid-template-columns:1fr 1fr 1fr; }
+  .card { background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:18px 20px; }
+  .card h3 { margin-bottom:8px; font-size:18px; color:var(--accent); }
+  .card p { font-size:16px; color:var(--muted); margin:0; line-height:1.5; }
+
+  .tag { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; padding:4px 10px; border-radius:4px; background:rgba(212,255,58,0.08);
+    color:var(--accent); border:1px solid rgba(212,255,58,0.2); margin-bottom:12px; }
+  .tag.bad { background:rgba(255,122,122,0.06); color:var(--bad); border-color:rgba(255,122,122,0.25); }
+  .tag.good { background:rgba(125,220,154,0.06); color:var(--good); border-color:rgba(125,220,154,0.25); }
+
+  .reveal pre { background:#0a0a0c; border:1px solid var(--line); border-radius:10px; box-shadow:none;
+    margin:12px 0; width:100%; }
+  .reveal pre code { font-family:'JetBrains Mono',monospace; font-size:15px; line-height:1.5;
+    padding:18px 20px; border-radius:10px; background:transparent; }
+  .reveal pre.sm code { font-size:13px; line-height:1.45; padding:14px 16px; }
+  .reveal code:not(pre code) { font-family:'JetBrains Mono',monospace; font-size:0.86em;
+    background:var(--bg-soft); border:1px solid var(--line); padding:1px 6px; border-radius:4px; color:var(--accent); }
+
+  table.tbl { width:100%; border-collapse:collapse; font-size:18px; margin-top:14px; }
+  table.tbl th, table.tbl td { padding:11px 14px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+  table.tbl th { color:var(--muted); font-weight:500; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; }
+  table.tbl tr:last-child td { border-bottom:none; }
+  table.tbl td code { font-size:14px; }
+
+  .codeflex { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+  .diagram { background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .dgrid { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; margin-top:8px; }
+  .reveal svg text { font-family:'Inter',sans-serif; }
+  .reveal svg .mono { font-family:'JetBrains Mono',monospace; }
+  .footer-line { position:absolute; bottom:26px; left:80px; right:80px; display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--dim); letter-spacing:0.1em; text-transform:uppercase; }
+
+  .reveal ul.clean { list-style:none; margin-left:0; }
+  .reveal ul.clean li { padding-left:22px; position:relative; }
+  .reveal ul.clean li::before { content:''; position:absolute; left:0; top:13px; width:9px; height:1px; background:var(--accent); }
+
+  .reveal .slide-number { background:transparent; color:var(--dim); font-family:'JetBrains Mono',monospace; font-size:12px; }
+  .reveal .progress { color:var(--accent); height:2px; }
+  .reveal .controls { color:var(--dim); }
+
+  .brand { position:fixed; top:20px; right:26px; z-index:40; display:flex; align-items:center; gap:8px; opacity:0.9; }
+  .brand img { height:26px; width:auto; display:block; }
+
+  /* part divider treatment */
+  .reveal section.part { background:
+      radial-gradient(1200px 520px at 12% -10%, rgba(110,168,255,0.07), transparent 60%); }
+  .part-tag { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--accent-2); }
+
+  /* hands-on / capstone treatment */
+  .reveal section.handson { background:
+      radial-gradient(1200px 500px at 90% -10%, rgba(212,255,58,0.06), transparent 60%); }
+  .handson-head { display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+  .handson-badge { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em;
+    text-transform:uppercase; color:#0a0a0c; background:var(--accent); padding:5px 12px; border-radius:5px; font-weight:600; }
+  .cmd { background:#0a0a0c; border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px;
+    font-family:'JetBrains Mono',monospace; font-size:16px; color:#e0e0e4; padding:14px 18px; margin:12px 0; line-height:1.7; }
+  .cmd .c { color:var(--dim); }
+  .cmd.lg { font-size:24px; padding:16px 20px; margin:6px 0; line-height:1.5; word-break:break-all; }
+  .oslabel { font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--accent); margin:8px 0 2px; display:block; }
+  .setup-steps { display:grid; grid-template-columns:1fr 1fr; gap:10px 28px; margin-top:10px; }
+  .setup-note { font-size:19px; color:var(--muted); margin-top:12px; max-width:70ch; }
+  .setup-link { font-family:'JetBrains Mono',monospace; font-size:22px; color:var(--accent-2); word-break:break-all; }
+
+  /* quiz + answer treatment */
+  .reveal section.quiz { --accent:#facc15; background:
+      radial-gradient(1200px 520px at 88% -10%, rgba(250,204,21,0.06), transparent 60%); }
+  .reveal section.answer { --accent:#7ddc9a; background:
+      radial-gradient(1200px 520px at 10% -10%, rgba(125,220,154,0.06), transparent 60%); }
+  .reveal ol.opts { list-style:none; margin:16px 0 0 0; display:grid;
+    grid-template-columns:1fr 1fr; gap:12px 24px; }
+  .reveal ol.opts.w1 { grid-template-columns:1fr; }
+  .reveal ol.opts li { background:var(--bg-soft); border:1px solid var(--line); border-radius:9px;
+    padding:12px 16px; margin:0; font-size:19px; line-height:1.4; }
+  .reveal ol.opts li b { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.12em;
+    color:var(--accent); font-weight:500; margin-right:12px; }
+  .reveal ol.opts li code { font-size:0.84em; }
+  .trap { border-left:2px solid var(--warn); padding-left:16px; margin-top:16px; max-width:88ch; }
+  .trap b { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--warn); font-weight:500; display:block; margin-bottom:3px; }
+</style>
+</head>
+<body>
+
+<div class="brand"><img src="https://byts.co.in/imgs/bytsLogo.png" alt="Byts" /></div>
+
+<div class="reveal"><div class="slides">
+
+  <!-- ============================================================= -->
+  <!-- 01 TITLE -->
+  <section class="title-wrap">
+    <span class="eyebrow"><span class="dot"></span> day 1 / two parts, a quiz spread through them, then you build</span>
+    <h1 class="display">Object design:<br/>the <em>pillars</em>,<br/>then <em>SOLID</em>.</h1>
+    <p class="subtitle">Part 1: the four pillars of OOP. Part 2: SOLID, then what the JDK itself gets wrong. Ten questions land as we go, each one right after the idea it tests. Then you build one thing that needs all of it, with tests as your spec. Day 1 of 4: objects today, Collections tomorrow, then JDBC, then Servlets, and Spring begins exactly where we stop.</p>
+    <div class="footer-line"><span>day 1</span><span>build your technical skills</span></div>
+  </section>
+
+  <!-- 02 HOW TODAY RUNS -->
+  <section>
+    <span class="eyebrow">how today runs</span>
+    <h2>Two halves, one idea, then the build.</h2>
+    <ul class="clean">
+      <li class="fragment"><b>Part 1:</b> the four pillars, with real code on every one.</li>
+      <li class="fragment"><b>Part 2:</b> SOLID, then seven things the JDK itself gets wrong.</li>
+      <li class="fragment">Every idea opens with a <em>question</em>, not a definition. Guess first.</li>
+      <li class="fragment">Ten quiz questions, not saved up in a block: each lands right after the idea it tests.</li>
+      <li class="fragment"><b>Then you build:</b> a bank, a report, a finale. The tests are the spec.</li>
+      <li class="fragment">The week: Collections tomorrow, then JDBC, then Servlets, and Spring starts where we stop.</li>
+    </ul>
+    <div class="footer-line"><span>day 1</span><span>overview</span></div>
+  </section>
+
+  <!-- 03 FRAMING -->
+  <section>
+    <span class="eyebrow">first, the point of all of it</span>
+    <h2>Two names for one goal.</h2>
+    <p class="lede fragment">OOP exists to <em>manage complexity</em>: cut a big program into objects with boundaries. SOLID exists to keep those boundaries sharp, so you can <em>change code without fear.</em></p>
+    <div class="diagram fragment" style="margin-top:16px;">
+      <svg viewBox="0 0 940 200" width="100%">
+        <defs><marker id="a03" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+        <rect x="20" y="20" width="285" height="150" rx="10" fill="#0a0a0c" stroke="var(--bad)" stroke-dasharray="4 4"/>
+        <path d="M55,58 C150,38 200,148 280,78 M55,138 C170,88 120,58 285,148 M40,102 C140,168 225,42 296,108 M70,48 C120,118 205,148 255,58" fill="none" stroke="var(--dim)" stroke-width="1.5"/>
+        <text x="162" y="192" text-anchor="middle" fill="var(--muted)" font-size="14">one big tangle</text>
+        <line x1="325" y1="95" x2="410" y2="95" stroke="var(--accent)" stroke-width="2" marker-end="url(#a03)"/>
+        <text x="367" y="83" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">split</text>
+        <rect x="445" y="20" width="205" height="64" rx="10" fill="#16161a" stroke="var(--accent)"/>
+        <rect x="461" y="34" width="56" height="34" rx="5" fill="#0a0a0c" stroke="var(--dim)"/>
+        <text x="489" y="55" text-anchor="middle" fill="var(--muted)" font-size="11">state</text>
+        <text x="634" y="55" text-anchor="end" fill="var(--text)" font-size="13">object</text>
+        <rect x="445" y="106" width="205" height="64" rx="10" fill="#16161a" stroke="var(--accent)"/>
+        <rect x="461" y="120" width="56" height="34" rx="5" fill="#0a0a0c" stroke="var(--dim)"/>
+        <text x="489" y="141" text-anchor="middle" fill="var(--muted)" font-size="11">state</text>
+        <text x="634" y="141" text-anchor="end" fill="var(--text)" font-size="13">object</text>
+        <rect x="680" y="20" width="240" height="150" rx="10" fill="none" stroke="var(--line)" stroke-dasharray="5 4"/>
+        <text x="800" y="88" text-anchor="middle" fill="var(--muted)" font-size="14">each hides its state and</text>
+        <text x="800" y="110" text-anchor="middle" fill="var(--muted)" font-size="14">shows a small surface</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>day 1</span><span>the point</span></div>
+  </section>
+
+  <!-- ================= PILLAR 1 · ENCAPSULATION ================= -->
+  <!-- 04 ENC Q -->
+  <section class="enc">
+    <span class="eyebrow"><span class="dot"></span> pillar 1 / encapsulation</span>
+    <h2>What does one <em>public</em> field cost you?</h2>
+    <p class="fragment lede" style="margin-top:18px;">It looks free. It is the most expensive line in the file.</p>
+    <div class="diagram" style="margin-top:22px;">
+      <svg viewBox="0 0 940 200" width="100%">
+        <line x1="20" y1="158" x2="920" y2="158" stroke="var(--line)" stroke-width="1.5"/>
+        <rect x="45" y="44" width="170" height="114" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="130" cy="32" r="5" fill="var(--accent)"/>
+        <text x="130" y="180" text-anchor="middle" fill="var(--text)" font-size="15">Encapsulation</text>
+        <text x="130" y="199" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">hide</text>
+        <rect x="270" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="355" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Abstraction</text>
+        <text x="355" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">simplify</text>
+        <rect x="495" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="580" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Inheritance</text>
+        <text x="580" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">structure</text>
+        <rect x="720" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="805" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Polymorphism</text>
+        <text x="805" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">vary</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>encapsulation</span><span>question</span></div>
+  </section>
+
+  <!-- 05 ENC why -->
+  <section class="enc">
+    <span class="eyebrow">the answer</span>
+    <h2>A public field is a promise you can never take back.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment">Anyone can read it and write it, from anywhere.</li>
+        <li class="fragment">So you can never add a rule later, like "a balance can't go negative", without breaking every caller that touched it.</li>
+        <li class="fragment">You use a microwave with a button. You do not open it and rewire the magnetron. That barrier is the feature.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 300" width="100%">
+          <defs>
+            <marker id="a05g" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--good)"/></marker>
+            <marker id="a05b" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--bad)"/></marker>
+          </defs>
+          <text x="270" y="30" text-anchor="middle" fill="var(--text)" font-size="15">Account</text>
+          <rect x="120" y="44" width="290" height="228" rx="16" fill="#16161a" stroke="var(--accent)" stroke-width="2"/>
+          <rect x="228" y="96" width="150" height="76" rx="8" fill="#0a0a0c" stroke="var(--dim)"/>
+          <text x="303" y="128" text-anchor="middle" fill="var(--muted)" font-size="13" class="mono">private</text>
+          <text x="303" y="150" text-anchor="middle" fill="var(--muted)" font-size="13" class="mono">balance</text>
+          <rect x="60" y="204" width="130" height="38" rx="6" fill="#000" stroke="var(--good)"/>
+          <text x="125" y="228" text-anchor="middle" fill="var(--good)" font-size="12" class="mono">withdraw()</text>
+          <line x1="16" y1="223" x2="56" y2="223" stroke="var(--good)" stroke-width="2.5" marker-end="url(#a05g)"/>
+          <text x="16" y="200" fill="var(--good)" font-size="11">through the door</text>
+          <line x1="192" y1="219" x2="270" y2="173" stroke="var(--good)" stroke-width="1.8" marker-end="url(#a05g)"/>
+          <line x1="16" y1="118" x2="110" y2="145" stroke="var(--bad)" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#a05b)"/>
+          <text x="16" y="106" fill="var(--bad)" font-size="11">reach in directly?</text>
+          <line x1="106" y1="133" x2="134" y2="163" stroke="var(--bad)" stroke-width="4"/>
+          <line x1="134" y1="133" x2="106" y2="163" stroke="var(--bad)" stroke-width="4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>encapsulation</span><span>why</span></div>
+  </section>
+
+  <!-- 06 ENC how (code) -->
+  <section class="enc">
+    <span class="eyebrow">the move, and the leak nobody counts</span>
+    <h2>Hide the state. Expose the behaviour.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">exposed</span>
+<pre><code class="language-java" data-trim>
+class Account {
+    public double balance;
+}
+// anyone: acc.balance = -999;
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">guarded</span>
+<pre><code class="language-java" data-trim>
+class Account {
+    private double balance;
+    void withdraw(double amt) {
+        if (amt &gt; balance) throw ...;
+        balance -= amt;
+    }
+}
+</code></pre>
+      </div>
+    </div>
+    <div class="codeflex" style="margin-top:4px;">
+      <div>
+        <span class="tag bad">three keywords that read like a lock</span>
+<pre class="sm"><code class="language-java" data-trim>
+public static final String[] SUITS = { "clubs", "hearts" };
+SUITS[0] = "oops";   // legal, and global
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">actually locked</span>
+<pre class="sm"><code class="language-java" data-trim>
+private static final String[] SUITS = { "clubs", "hearts" };
+public static final List&lt;String&gt; SUITS_VIEW = List.of(SUITS);
+</code></pre>
+      </div>
+    </div>
+    <p class="fragment" style="color:var(--muted); margin-top:6px;">A non-zero-length array is always mutable, whatever you write in front of it. The rule under both pairs: if a caller can reach your state without calling one of your methods, you have no invariant, only a hope.</p>
+    <span class="tag">Effective Java, Items 15 and 16</span>
+    <div class="footer-line"><span>encapsulation</span><span>how</span></div>
+  </section>
+
+  <!-- 07 ENC getters -->
+  <section class="enc">
+    <span class="eyebrow">the trap everyone falls into</span>
+    <h2>Getters and setters are not encapsulation.</h2>
+    <p class="fragment">A setter for every field is just a public field with three extra lines. Ask what the object can <em>do</em>, not what fields it has.</p>
+    <div class="diagram fragment" style="margin-top:12px;">
+      <svg viewBox="0 0 940 185" width="100%">
+        <defs>
+          <marker id="a07a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--bad)"/></marker>
+          <marker id="a07t" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--good)"/></marker>
+        </defs>
+        <text x="20" y="24" fill="var(--bad)" font-size="14" class="mono">ASK   logic leaks to the caller</text>
+        <rect x="20" y="40" width="120" height="58" rx="8" fill="#16161a" stroke="var(--dim)"/>
+        <text x="80" y="74" text-anchor="middle" fill="var(--text)" font-size="13">caller</text>
+        <rect x="300" y="40" width="120" height="58" rx="8" fill="#16161a" stroke="var(--dim)"/>
+        <text x="360" y="74" text-anchor="middle" fill="var(--text)" font-size="13">account</text>
+        <line x1="300" y1="60" x2="142" y2="60" stroke="var(--bad)" stroke-width="2" marker-end="url(#a07a)"/>
+        <text x="221" y="52" text-anchor="middle" fill="var(--muted)" font-size="11" class="mono">getBalance()</text>
+        <text x="80" y="128" text-anchor="middle" fill="var(--bad)" font-size="12">the caller then</text>
+        <text x="80" y="146" text-anchor="middle" fill="var(--bad)" font-size="12">decides the rule</text>
+        <text x="520" y="24" fill="var(--good)" font-size="14" class="mono">TELL   logic stays inside</text>
+        <rect x="520" y="40" width="120" height="58" rx="8" fill="#16161a" stroke="var(--dim)"/>
+        <text x="580" y="74" text-anchor="middle" fill="var(--text)" font-size="13">caller</text>
+        <rect x="800" y="40" width="120" height="58" rx="8" fill="#16161a" stroke="var(--good)"/>
+        <text x="860" y="74" text-anchor="middle" fill="var(--text)" font-size="13">account</text>
+        <line x1="642" y1="60" x2="798" y2="60" stroke="var(--good)" stroke-width="2" marker-end="url(#a07t)"/>
+        <text x="720" y="52" text-anchor="middle" fill="var(--muted)" font-size="11" class="mono">withdraw(amt)</text>
+        <text x="860" y="128" text-anchor="middle" fill="var(--good)" font-size="12">the account</text>
+        <text x="860" y="146" text-anchor="middle" fill="var(--good)" font-size="12">enforces the rule</text>
+      </svg>
+    </div>
+    <p class="fragment" style="color:var(--muted);">Do not pull an object's data out to act on it. Tell the object to act. Tell, don't ask.</p>
+    <div class="footer-line"><span>encapsulation</span><span>tell, don't ask</span></div>
+  </section>
+
+  <!-- 08 ENC immutability -->
+  <section class="enc">
+    <span class="eyebrow">the strongest version, and the rule</span>
+    <h2>State that cannot change cannot be corrupted.</h2>
+    <p class="fragment">If a value never changes after it is built, there is nothing to guard. Make fields <code>final</code>, offer no setters.</p>
+    <p class="fragment" style="margin-top:10px;">Java <em>records</em> give you an immutable value for free: fields, constructor, equals, all done.</p>
+<pre class="fragment"><code class="language-java" data-trim>
+record Money(long cents, String currency) { }
+</code></pre>
+    <ul class="clean" style="margin-top:6px;">
+      <li class="fragment">Private by default.</li>
+      <li class="fragment">Expose behaviour, not data.</li>
+      <li class="fragment">Copy or wrap anything you hand out, and that includes a <code>Map</code> you return. The capstone Ledger has a test for exactly that leak.</li>
+    </ul>
+    <p class="fragment" style="margin-top:10px; color:var(--muted);">The JDK's own <code>java.util.Date</code> is the cautionary tale here. We open it up in the hall of shame.</p>
+    <div class="footer-line"><span>encapsulation</span><span>immutability + rule</span></div>
+  </section>
+
+  <!-- 09 ENC records -->
+  <section class="enc">
+    <span class="eyebrow">the version of that rule everyone gets wrong</span>
+    <h2>A record is shallowly immutable. That is all.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">a hole with a final keyword on it</span>
+<pre class="sm"><code class="language-java" data-trim>
+record Team(String name, List&lt;String&gt; members) { }
+
+Team t = new Team("core", members);
+t.members().add("cy");
+// the caller just edited your record, and the
+// generated equals now changes over time
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">copied on the way in</span>
+<pre class="sm"><code class="language-java" data-trim>
+record Team(String name, List&lt;String&gt; members) {
+    Team {
+        members = List.copyOf(members);
+    }
+}
+// and the accessor hands back a list
+// nobody can write through
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean" style="margin-top:4px;">
+      <li class="fragment"><code>final</code> protects the reference, never the object it points at.</li>
+      <li class="fragment">Copy on the way in and on the way out. One alone is still a hole.</li>
+      <li class="fragment">When the parameter type can be subclassed, use a constructor or a static factory, never <code>clone()</code>: the caller's subclass decides what clone returns.</li>
+    </ul>
+    <span class="tag">Effective Java, Item 50</span>
+    <div class="footer-line"><span>encapsulation</span><span>records</span></div>
+  </section>
+
+  <!-- 10 QUIZ 1 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 1 of 10</span>
+    <h2>Records are immutable. What does this print?</h2>
+<pre><code class="language-java" data-trim>
+record Team(String name, List&lt;String&gt; members) { }
+
+List&lt;String&gt; m = new ArrayList&lt;&gt;(List.of("ana"));
+Team t = new Team("core", m);
+m.add("bo");
+t.members().add("cy");
+System.out.println(t.members().size() + " " + t.equals(new Team("core", m)));
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>1 false</code></li>
+      <li><b>B</b> <code>1 true</code></li>
+      <li><b>C</b> <code>3 true</code></li>
+      <li><b>D</b> compile error: a record component is final</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>1 of 10</span></div>
+  </section>
+
+
+  <!-- ================= PILLAR 2 · ABSTRACTION ================= -->
+  <!-- 12 ABS Q -->
+  <section class="abs">
+    <span class="eyebrow"><span class="dot"></span> pillar 2 / abstraction</span>
+    <h2>A map is not the territory. So what do you leave <em>off</em> the map?</h2>
+    <p class="fragment lede" style="margin-top:18px;">A map that shows every blade of grass is useless. Its value is what it leaves out.</p>
+    <div class="diagram" style="margin-top:22px;">
+      <svg viewBox="0 0 940 200" width="100%">
+        <line x1="20" y1="158" x2="920" y2="158" stroke="var(--line)" stroke-width="1.5"/>
+        <rect x="45" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="130" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Encapsulation</text>
+        <text x="130" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">hide</text>
+        <rect x="270" y="44" width="170" height="114" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="355" cy="32" r="5" fill="var(--accent)"/>
+        <text x="355" y="180" text-anchor="middle" fill="var(--text)" font-size="15">Abstraction</text>
+        <text x="355" y="199" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">simplify</text>
+        <rect x="495" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="580" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Inheritance</text>
+        <text x="580" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">structure</text>
+        <rect x="720" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="805" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Polymorphism</text>
+        <text x="805" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">vary</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>abstraction</span><span>question</span></div>
+  </section>
+
+  <!-- 13 ABS why -->
+  <section class="abs">
+    <span class="eyebrow">the answer</span>
+    <h2>Abstraction is deciding what to ignore.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment">A good abstraction shows the essentials and hides the mechanism.</li>
+        <li class="fragment">You drive with a wheel and a pedal. You are not thinking about combustion.</li>
+        <li class="fragment">The wheel is the abstraction: the simple idea you touch, standing in for the complicated thing underneath.</li>
+        <li class="fragment">People mix this up with encapsulation. Encapsulation hides <em>data</em>: who may touch this state? Abstraction hides <em>mechanism</em>: what is the simplest idea I can hand the caller? You ask both, constantly.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 420 250" width="100%">
+          <rect x="60" y="18" width="300" height="46" rx="8" fill="rgba(255,138,61,0.14)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="210" y="46" text-anchor="middle" fill="var(--text)" font-size="15">wheel + pedal</text>
+          <text x="210" y="80" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">the abstraction you use</text>
+          <line x1="210" y1="86" x2="210" y2="104" stroke="var(--dim)" stroke-width="1.5"/>
+          <rect x="60" y="106" width="300" height="34" rx="7" fill="#16161a" stroke="var(--line)"/>
+          <text x="210" y="128" text-anchor="middle" fill="var(--muted)" font-size="13">engine</text>
+          <rect x="60" y="148" width="300" height="34" rx="7" fill="#16161a" stroke="var(--line)"/>
+          <text x="210" y="170" text-anchor="middle" fill="var(--muted)" font-size="13">pistons, timing</text>
+          <rect x="60" y="190" width="300" height="34" rx="7" fill="#0a0a0c" stroke="var(--line)"/>
+          <text x="210" y="212" text-anchor="middle" fill="var(--dim)" font-size="13">combustion</text>
+          <text x="210" y="242" text-anchor="middle" fill="var(--dim)" font-size="12">hidden: you never touch these</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>abstraction</span><span>why</span></div>
+  </section>
+
+  <!-- 14 ABS interfaces -->
+  <section class="abs">
+    <span class="eyebrow">the move, in Java</span>
+    <h2>Name what it can do. Say nothing about how.</h2>
+    <p class="fragment">An interface is a promise: these operations exist. It says nothing about the implementation.</p>
+    <div class="dgrid">
+      <div>
+<pre class="fragment"><code class="language-java" data-trim>
+interface PaymentGateway {
+    Receipt charge(Money m);
+}
+
+// depend on the promise:
+PaymentGateway gw =
+    new StripeGateway();
+</code></pre>
+        <p class="fragment" style="color:var(--muted); font-size:18px;">Program to the interface. Swap the implementation, and the caller never notices.</p>
+      </div>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 420 268" width="100%">
+          <defs><marker id="a13" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker></defs>
+          <rect x="140" y="14" width="140" height="44" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="210" y="41" text-anchor="middle" fill="var(--text)" font-size="14">caller</text>
+          <line x1="210" y1="58" x2="210" y2="84" stroke="var(--dim)" stroke-width="2" marker-end="url(#a13)"/>
+          <rect x="108" y="86" width="204" height="50" rx="8" fill="rgba(255,138,61,0.14)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="210" y="110" text-anchor="middle" fill="var(--accent)" font-size="14" class="mono">PaymentGateway</text>
+          <text x="210" y="128" text-anchor="middle" fill="var(--muted)" font-size="11">interface</text>
+          <line x1="150" y1="158" x2="85" y2="194" stroke="var(--dim)" stroke-width="1.5"/>
+          <line x1="210" y1="160" x2="210" y2="194" stroke="var(--dim)" stroke-width="1.5"/>
+          <line x1="270" y1="158" x2="335" y2="194" stroke="var(--dim)" stroke-width="1.5"/>
+          <rect x="22" y="196" width="118" height="42" rx="8" fill="#0a0a0c" stroke="var(--line)"/>
+          <text x="81" y="222" text-anchor="middle" fill="var(--muted)" font-size="13">Stripe</text>
+          <rect x="151" y="196" width="118" height="42" rx="8" fill="#0a0a0c" stroke="var(--line)"/>
+          <text x="210" y="222" text-anchor="middle" fill="var(--muted)" font-size="13">PayPal</text>
+          <rect x="280" y="196" width="118" height="42" rx="8" fill="#0a0a0c" stroke="var(--line)"/>
+          <text x="339" y="222" text-anchor="middle" fill="var(--muted)" font-size="13">Mock</text>
+          <text x="210" y="260" text-anchor="middle" fill="var(--dim)" font-size="11">caller depends on the box above, not these</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>abstraction</span><span>interfaces</span></div>
+  </section>
+
+  <!-- 15 ABS interface vs abstract -->
+  <section class="abs">
+    <span class="eyebrow">which tool, when</span>
+    <h2>Interface or abstract class?</h2>
+    <table class="tbl">
+      <tr><th></th><th>Interface</th><th>Abstract class</th></tr>
+      <tr><td>Is</td><td>a capability</td><td>a partial family member</td></tr>
+      <tr><td>State</td><td>none</td><td>shared fields are fine</td></tr>
+      <tr><td>How many</td><td>implement several</td><td>extend exactly one</td></tr>
+      <tr><td>Behaviour</td><td>default methods since Java 8, but they are a compatibility tool, not a place to put logic</td><td>real implementation, and that is the point of it</td></tr>
+    </table>
+    <p class="fragment" style="margin-top:14px; color:var(--muted);">Default to interfaces. Reach for an abstract class only when several types share real implementation, not just a shape.</p>
+    <div class="footer-line"><span>abstraction</span><span>interface vs abstract</span></div>
+  </section>
+
+  <!-- 16 ABS rule -->
+  <section class="abs">
+    <span class="eyebrow">the rule</span>
+    <h2>Abstract carefully, and late.</h2>
+    <p class="quote fragment" style="margin-top:6px;">Duplication is far cheaper than the wrong abstraction.</p>
+    <p class="quote-attr fragment">Sandi Metz</p>
+    <ul class="clean" style="margin-top:22px;">
+      <li class="fragment">Name the capability, not the class. <code>PaymentGateway</code>, not <code>StripeHelper</code>.</li>
+      <li class="fragment">Return the interface, not the concrete type.</li>
+      <li class="fragment">Do not abstract until you have seen the duplication at least twice. Guessing wrong is expensive.</li>
+    </ul>
+    <div class="footer-line"><span>abstraction</span><span>checklist</span></div>
+  </section>
+
+  <!-- 17 ABS default methods -->
+  <section class="abs">
+    <span class="eyebrow">the promise you make for code you have never seen</span>
+    <h2>A default method lands in every implementer, uninvited.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">count=6 data=3</span>
+<pre class="sm"><code class="language-java" data-trim>
+interface Sink {
+    void add(String s);
+    default void addAll(Collection&lt;String&gt; c) {
+        for (String s : c) add(s);        // self-use
+    }
+}
+class Counting implements Sink {
+    public void addAll(Collection&lt;String&gt; c) {
+        count += c.size();
+        Sink.super.addAll(c);             // and add() counts again
+    }
+}
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">add nothing, publish a new type</span>
+<pre class="sm"><code class="language-java" data-trim>
+// you cannot fix Sink without breaking
+// Counting, and Counting is not yours
+
+interface BulkSink extends Sink {
+    @Override void addAll(Collection&lt;String&gt; c);
+}
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean" style="margin-top:4px;">
+      <li class="fragment">A default method is a promise you make on behalf of code you have never seen.</li>
+      <li class="fragment">You cannot test it against implementations that do not exist yet, so document the self-use or add nothing.</li>
+      <li class="fragment">The real casualty was <code>Collection.removeIf</code>, which broke Apache Commons <code>SynchronizedCollection</code>.</li>
+    </ul>
+    <span class="tag">Effective Java, Item 21</span>
+    <div class="footer-line"><span>abstraction</span><span>default methods</span></div>
+  </section>
+
+  <!-- 18 QUIZ 2 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 2 of 10</span>
+    <h2>A copy without Cloneable. What happens?</h2>
+<pre><code class="language-java" data-trim>
+class Point {
+    int x = 1;
+    Point copy() throws CloneNotSupportedException {
+        return (Point) super.clone();
+    }
+    public static void main(String[] a) throws Exception {
+        System.out.println(new Point().copy().x);
+    }
+}
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> throws <code>CloneNotSupportedException</code> at run time</li>
+      <li><b>B</b> compile error: <code>clone()</code> has protected access in Object</li>
+      <li><b>C</b> prints <code>1</code></li>
+      <li><b>D</b> prints <code>0</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>2 of 10</span></div>
+  </section>
+
+
+  <!-- ================= PILLAR 3 · INHERITANCE ================= -->
+  <!-- 20 INH Q -->
+  <section class="inh">
+    <span class="eyebrow"><span class="dot"></span> pillar 3 / inheritance</span>
+    <h2>The most dangerous tool in OOP. When is <code>extends</code> actually right?</h2>
+    <p class="fragment lede" style="margin-top:18px;">It looks like free reuse. That is exactly why it bites.</p>
+    <div class="diagram" style="margin-top:22px;">
+      <svg viewBox="0 0 940 200" width="100%">
+        <line x1="20" y1="158" x2="920" y2="158" stroke="var(--line)" stroke-width="1.5"/>
+        <rect x="45" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="130" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Encapsulation</text>
+        <text x="130" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">hide</text>
+        <rect x="270" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="355" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Abstraction</text>
+        <text x="355" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">simplify</text>
+        <rect x="495" y="44" width="170" height="114" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="580" cy="32" r="5" fill="var(--accent)"/>
+        <text x="580" y="180" text-anchor="middle" fill="var(--text)" font-size="15">Inheritance</text>
+        <text x="580" y="199" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">structure</text>
+        <rect x="720" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="805" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Polymorphism</text>
+        <text x="805" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">vary</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>inheritance</span><span>question</span></div>
+  </section>
+
+  <!-- 21 INH fragile base -->
+  <section class="inh">
+    <span class="eyebrow">why it bites</span>
+    <h2>Inheritance welds a child to a parent's insides, forever.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment">A subclass depends not just on what the parent does, but on <em>how</em>.</li>
+        <li class="fragment">Change the parent, and you can silently break every child. The fragile base class problem.</li>
+        <li class="fragment">In 1996 the JDK 1.0 shipped <code>java.util.Stack extends Vector</code>, so every Stack has <code>add(int, e)</code>, <code>get(i)</code>, <code>remove(i)</code> and Vector's synchronisation.</li>
+        <li class="fragment">Thirty years on, its own Javadoc tells you to use the <code>Deque</code> interface instead. It cannot be fixed: a public superclass is forever.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 420 240" width="100%">
+          <rect x="130" y="18" width="160" height="48" rx="8" fill="#16161a" stroke="var(--accent)" stroke-width="2"/>
+          <text x="210" y="40" text-anchor="middle" fill="var(--text)" font-size="14">Vector</text>
+          <text x="210" y="57" text-anchor="middle" fill="var(--muted)" font-size="11">parent (not yours)</text>
+          <text x="342" y="34" fill="var(--bad)" font-size="12">edit</text>
+          <path d="M296,46 l18,-7 l-7,11 l15,-2 l-13,11" fill="none" stroke="var(--bad)" stroke-width="2"/>
+          <path d="M172,66 L100,146" stroke="var(--bad)" stroke-width="2" stroke-dasharray="3 3"/>
+          <path d="M210,66 L210,146" stroke="var(--bad)" stroke-width="2" stroke-dasharray="3 3"/>
+          <path d="M248,66 L320,146" stroke="var(--bad)" stroke-width="2" stroke-dasharray="3 3"/>
+          <rect x="50" y="148" width="100" height="42" rx="8" fill="#0a0a0c" stroke="var(--bad)"/>
+          <text x="100" y="174" text-anchor="middle" fill="var(--muted)" font-size="13">Stack</text>
+          <rect x="160" y="148" width="100" height="42" rx="8" fill="#0a0a0c" stroke="var(--bad)"/>
+          <text x="210" y="174" text-anchor="middle" fill="var(--muted)" font-size="13">History</text>
+          <rect x="270" y="148" width="100" height="42" rx="8" fill="#0a0a0c" stroke="var(--bad)"/>
+          <text x="320" y="174" text-anchor="middle" fill="var(--muted)" font-size="13">Queue</text>
+          <text x="210" y="222" text-anchor="middle" fill="var(--bad)" font-size="13">every child can break, silently</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>inheritance</span><span>fragile base class</span></div>
+  </section>
+
+  <!-- 22 INH self-use -->
+  <section class="inh">
+    <span class="eyebrow">the mechanism, not the symptom</span>
+    <h2>The parent runs first. Your fields do not exist yet.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+class Base {
+    Base() { init(); }                 // calls an overridable method
+    void init() { }
+}
+class Sub extends Base {
+    private String s = "ready";
+    @Override void init() { System.out.println(s); }
+}
+
+new Sub();
+</code></pre>
+    <ul class="clean" style="margin-top:6px;">
+      <li class="fragment">The superclass constructor runs before any <code>Sub</code> field initialiser, so the override sees a field that has not been assigned yet.</li>
+      <li class="fragment">The JDK does this to itself: <code>Throwable()</code> calls the public overridable <code>fillInStackTrace()</code>, which is why the cheap-exception trick works and why it is a documented hazard.</li>
+      <li class="fragment"><code>javac -Xlint:this-escape</code>, JDK 21 and later, warns on exactly this shape: possible this escape before subclass is fully initialized.</li>
+    </ul>
+    <p class="fragment" style="margin-top:8px; color:var(--muted);">The rule: if a class is not designed and documented for inheritance, make it <code>final</code>, or give it only private constructors and a static factory.</p>
+    <span class="tag">Effective Java, Item 19</span>
+    <div class="footer-line"><span>inheritance</span><span>self-use</span></div>
+  </section>
+
+  <!-- 23 INH is-a vs has-a -->
+  <section class="inh">
+    <span class="eyebrow">the test to apply</span>
+    <h2>is-a, or has-a?</h2>
+    <div class="dgrid">
+      <div>
+        <p class="fragment">Use inheritance only for a true <em>is-a</em> that will never change: a <code>Circle</code> is a <code>Shape</code>.</p>
+        <p class="fragment" style="margin-top:14px;">Extending a class just to borrow its code is really a <em>has-a</em>. A <code>Car</code> is not an <code>Engine</code>; it <em>has</em> one.</p>
+      </div>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 420 244" width="100%">
+          <defs>
+            <marker id="a19i" markerWidth="18" markerHeight="14" refX="14" refY="6" orient="auto"><path d="M1,1 L14,6 L1,11 z" fill="#0e0e10" stroke="var(--accent)" stroke-width="1.5"/></marker>
+            <marker id="a19h" markerWidth="18" markerHeight="14" refX="14" refY="6" orient="auto"><path d="M1,6 L7,2 L14,6 L7,10 z" fill="var(--accent)"/></marker>
+          </defs>
+          <text x="105" y="24" text-anchor="middle" fill="var(--good)" font-size="14" class="mono">is-a: inherit</text>
+          <rect x="55" y="40" width="100" height="42" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="105" y="66" text-anchor="middle" fill="var(--text)" font-size="13">Circle</text>
+          <line x1="105" y1="82" x2="105" y2="162" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#a19i)"/>
+          <rect x="55" y="166" width="100" height="42" rx="8" fill="#16161a" stroke="var(--accent)"/>
+          <text x="105" y="192" text-anchor="middle" fill="var(--text)" font-size="13">Shape</text>
+          <text x="315" y="24" text-anchor="middle" fill="var(--warn)" font-size="14" class="mono">has-a: hold</text>
+          <rect x="265" y="40" width="100" height="42" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="315" y="66" text-anchor="middle" fill="var(--text)" font-size="13">Car</text>
+          <line x1="315" y1="82" x2="315" y2="162" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#a19h)"/>
+          <rect x="265" y="166" width="100" height="42" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="315" y="192" text-anchor="middle" fill="var(--text)" font-size="13">Engine</text>
+          <text x="105" y="232" text-anchor="middle" fill="var(--muted)" font-size="11">hollow arrow</text>
+          <text x="315" y="232" text-anchor="middle" fill="var(--muted)" font-size="11">diamond</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>inheritance</span><span>is-a vs has-a</span></div>
+  </section>
+
+  <!-- 24 INH composition -->
+  <section class="inh">
+    <span class="eyebrow">the default you should reach for</span>
+    <h2>Composition over inheritance.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">the real JDK, inheriting the guts</span>
+<pre class="sm"><code class="language-java" data-trim>
+public class Stack&lt;E&gt; extends Vector&lt;E&gt; {
+    E push(E e) { ... }
+    E pop()     { ... }
+}
+
+Stack&lt;String&gt; s = new Stack&lt;&gt;();
+s.add(0, x);   // legal
+s.get(1);      // legal, and now it is not a stack
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">holds what it needs</span>
+<pre class="sm"><code class="language-java" data-trim>
+class Stack&lt;E&gt; {
+    private final ArrayDeque&lt;E&gt; items
+        = new ArrayDeque&lt;&gt;();
+    void push(E e) { items.push(e); }
+    E pop()        { return items.pop(); }
+}
+</code></pre>
+      </div>
+    </div>
+    <p class="fragment" style="color:var(--muted); margin-top:6px;">Compose by default, inherit on purpose, seal the family, and never inherit just to reuse code. A <code>protected</code> member is a promise to every subclass, so either document exactly when the parent calls it (read the implementation requirements notes on <code>AbstractList</code>) or make the class <code>final</code>.</p>
+    <p class="fragment" style="color:var(--muted); margin-top:8px;">The good side has a name: a forwarding class. You write one properly tomorrow, to fix a counting bug this exact shape causes.</p>
+    <span class="tag">Effective Java, Item 18</span>
+    <div class="footer-line"><span>inheritance</span><span>composition</span></div>
+  </section>
+
+  <!-- 25 INH sealed -->
+  <section class="inh">
+    <span class="eyebrow">when inheritance IS the right tool</span>
+    <h2>A closed, known set of variants.</h2>
+    <div class="dgrid">
+      <div>
+        <p class="fragment">When a concept has a fixed family of shapes, inheritance is exactly right. Java's <em>sealed</em> types let you say so, and the compiler enforces it.</p>
+<pre class="fragment"><code class="language-java" data-trim>
+sealed interface Shape
+    permits Circle, Square, Triangle { }
+</code></pre>
+        <p class="fragment" style="color:var(--muted); font-size:18px;">No rogue subclass can appear; a <code>switch</code> is checked for completeness.</p>
+      </div>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 420 246" width="100%">
+          <rect x="135" y="14" width="150" height="44" rx="8" fill="rgba(110,168,255,0.14)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="210" y="41" text-anchor="middle" fill="var(--accent)" font-size="14" class="mono">Shape</text>
+          <rect x="28" y="86" width="156" height="150" rx="12" fill="none" stroke="var(--accent)" stroke-dasharray="6 4"/>
+          <text x="106" y="106" text-anchor="middle" fill="var(--muted)" font-size="11">sealed: only these</text>
+          <rect x="48" y="118" width="116" height="32" rx="6" fill="#16161a" stroke="var(--line)"/><text x="106" y="139" text-anchor="middle" fill="var(--text)" font-size="12">Circle</text>
+          <rect x="48" y="156" width="116" height="32" rx="6" fill="#16161a" stroke="var(--line)"/><text x="106" y="177" text-anchor="middle" fill="var(--text)" font-size="12">Square</text>
+          <rect x="48" y="194" width="116" height="32" rx="6" fill="#16161a" stroke="var(--line)"/><text x="106" y="215" text-anchor="middle" fill="var(--text)" font-size="12">Triangle</text>
+          <line x1="180" y1="58" x2="120" y2="114" stroke="var(--dim)" stroke-width="1.5"/>
+          <rect x="270" y="150" width="126" height="40" rx="6" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="4 3"/>
+          <text x="333" y="174" text-anchor="middle" fill="var(--dim)" font-size="12">Hexagon?</text>
+          <line x1="284" y1="156" x2="382" y2="184" stroke="var(--bad)" stroke-width="2.5"/>
+          <line x1="382" y1="156" x2="284" y2="184" stroke="var(--bad)" stroke-width="2.5"/>
+          <text x="333" y="210" text-anchor="middle" fill="var(--bad)" font-size="11">compiler rejects it</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>inheritance</span><span>sealed types</span></div>
+  </section>
+
+  <!-- 26 QUIZ 3 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 3 of 10</span>
+    <h2>A constructor calls an overridable method. What prints?</h2>
+<pre><code class="language-java" data-trim>
+class Base {
+    Base() { init(); }
+    void init() { }
+}
+class Sub extends Base {
+    private String s = "ready";
+    @Override void init() { System.out.println(s); }
+}
+
+new Sub();
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>ready</code></li>
+      <li><b>B</b> <code>null</code></li>
+      <li><b>C</b> compile error: <code>init()</code> called before Sub exists</li>
+      <li><b>D</b> compile error: <code>s</code> is used before it is initialised</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>3 of 10</span></div>
+  </section>
+
+
+  <!-- ================= PILLAR 4 · POLYMORPHISM ================= -->
+  <!-- 28 POLY Q -->
+  <section class="poly">
+    <span class="eyebrow"><span class="dot"></span> pillar 4 / polymorphism</span>
+    <h2>Different objects, same call. Why is that the whole point?</h2>
+    <p class="fragment lede" style="margin-top:18px;">It is what lets you add new behaviour without editing old code.</p>
+    <div class="diagram" style="margin-top:22px;">
+      <svg viewBox="0 0 940 200" width="100%">
+        <line x1="20" y1="158" x2="920" y2="158" stroke="var(--line)" stroke-width="1.5"/>
+        <rect x="45" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="130" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Encapsulation</text>
+        <text x="130" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">hide</text>
+        <rect x="270" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="355" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Abstraction</text>
+        <text x="355" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">simplify</text>
+        <rect x="495" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <text x="580" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Inheritance</text>
+        <text x="580" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">structure</text>
+        <rect x="720" y="44" width="170" height="114" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="805" cy="32" r="5" fill="var(--accent)"/>
+        <text x="805" y="180" text-anchor="middle" fill="var(--text)" font-size="15">Polymorphism</text>
+        <text x="805" y="199" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">vary</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>polymorphism</span><span>question</span></div>
+  </section>
+
+  <!-- 29 POLY dispatch -->
+  <section class="poly">
+    <span class="eyebrow">the answer</span>
+    <h2>One call. Many behaviours. Chosen at runtime.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment">You call <code>shape.area()</code>. The right code runs based on what the object actually is.</li>
+        <li class="fragment">The caller does not switch on type. The object already knows what to do.</li>
+        <li class="fragment">That is dynamic dispatch, the engine under most OOP design.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 420 246" width="100%">
+          <defs><marker id="a24" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+          <rect x="120" y="14" width="180" height="44" rx="8" fill="rgba(192,132,252,0.14)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="210" y="41" text-anchor="middle" fill="var(--accent)" font-size="14" class="mono">s.area()</text>
+          <line x1="150" y1="58" x2="82" y2="146" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#a24)"/>
+          <line x1="210" y1="60" x2="210" y2="146" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#a24)"/>
+          <line x1="270" y1="58" x2="338" y2="146" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#a24)"/>
+          <rect x="22" y="148" width="118" height="60" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="81" y="172" text-anchor="middle" fill="var(--text)" font-size="13">Circle</text>
+          <text x="81" y="193" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">pi r r</text>
+          <rect x="151" y="148" width="118" height="60" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="210" y="172" text-anchor="middle" fill="var(--text)" font-size="13">Square</text>
+          <text x="210" y="193" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">s * s</text>
+          <rect x="280" y="148" width="118" height="60" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="339" y="172" text-anchor="middle" fill="var(--text)" font-size="13">Triangle</text>
+          <text x="339" y="193" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">b * h / 2</text>
+          <text x="210" y="234" text-anchor="middle" fill="var(--muted)" font-size="12">same call; the object picks the behaviour</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>polymorphism</span><span>dynamic dispatch</span></div>
+  </section>
+
+  <!-- 30 POLY java -->
+  <section class="poly">
+    <span class="eyebrow">the move, in Java</span>
+    <h2>An interface, several implementations, one call.</h2>
+<pre class="fragment"><code class="language-java" data-trim>
+interface Shape { double area(); }
+
+record Circle(double r) implements Shape {
+    public double area() { return Math.PI * r * r; }
+}
+record Square(double s) implements Shape {
+    public double area() { return s * s; }
+}
+
+for (Shape s : shapes) total += s.area();   // no if, no switch
+</code></pre>
+    <p class="fragment" style="color:var(--muted);"><code>@Override</code> is a contract you ask the compiler to check, not decoration. The next slide shows what it catches.</p>
+    <div class="footer-line"><span>polymorphism</span><span>in java</span></div>
+  </section>
+
+  <!-- 31 POLY what does not dispatch -->
+  <section class="poly">
+    <span class="eyebrow">and what is not</span>
+    <h2>Only instance methods are polymorphic.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+class Base {
+    static String kind() { return "base"; }
+    String name()        { return "B"; }
+    String tag = "b";
+}
+class Sub extends Base {
+    static String kind() { return "sub"; }
+    String name()        { return "S"; }
+    String tag = "s";
+}
+
+Base x = new Sub();
+System.out.println(x.kind() + " " + x.name() + " " + x.tag);
+</code></pre>
+    <ul class="clean" style="margin-top:4px;">
+      <li class="fragment">The method is chosen by the object. The field and the static are chosen by the declared type.</li>
+      <li class="fragment">A same-named field hides, it does not override, and both fields exist in the object at once.</li>
+      <li class="fragment">A private method is not a member of the subclass, so a same-signature method there is a new method, not an override (JLS 8.4.8).</li>
+      <li class="fragment">Which overload runs is decided by the compiler from the static types of the arguments. Only the receiver is polymorphic.</li>
+    </ul>
+    <p class="fragment" style="margin-top:6px; color:var(--muted);">Write <code>@Override</code> on every override and let the compiler tell you when you only thought you had one.</p>
+    <div class="footer-line"><span>polymorphism</span><span>what does not dispatch</span></div>
+  </section>
+
+  <!-- 32 POLY payoff -->
+  <section class="poly">
+    <span class="eyebrow">why it matters</span>
+    <h2>Open for extension. Closed for modification.</h2>
+    <div class="diagram fragment" style="margin-top:12px;">
+      <svg viewBox="0 0 940 278" width="100%">
+        <defs><marker id="a26b" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--bad)"/></marker></defs>
+        <text x="30" y="28" fill="var(--bad)" font-size="15" class="mono">switch on type</text>
+        <rect x="70" y="66" width="220" height="86" rx="10" fill="#0a0a0c" stroke="var(--bad)" stroke-width="2"/>
+        <text x="180" y="104" text-anchor="middle" fill="var(--muted)" font-size="14" class="mono">switch (type) {</text>
+        <text x="180" y="128" text-anchor="middle" fill="var(--muted)" font-size="14" class="mono">CIRCLE, SQUARE }</text>
+        <rect x="95" y="196" width="170" height="40" rx="8" fill="rgba(255,122,122,0.1)" stroke="var(--bad)"/>
+        <text x="180" y="221" text-anchor="middle" fill="var(--bad)" font-size="13">add TRIANGLE</text>
+        <line x1="180" y1="196" x2="180" y2="154" stroke="var(--bad)" stroke-width="2" marker-end="url(#a26b)"/>
+        <text x="180" y="260" text-anchor="middle" fill="var(--bad)" font-size="12">edit this, and every other switch</text>
+        <line x1="470" y1="22" x2="470" y2="256" stroke="var(--line)"/>
+        <text x="520" y="28" fill="var(--good)" font-size="15" class="mono">polymorphism</text>
+        <rect x="640" y="58" width="160" height="42" rx="8" fill="rgba(192,132,252,0.14)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="720" y="84" text-anchor="middle" fill="var(--accent)" font-size="14" class="mono">Shape</text>
+        <rect x="530" y="158" width="110" height="38" rx="7" fill="#16161a" stroke="var(--line)"/><text x="585" y="182" text-anchor="middle" fill="var(--text)" font-size="12">Circle</text>
+        <rect x="650" y="158" width="110" height="38" rx="7" fill="#16161a" stroke="var(--line)"/><text x="705" y="182" text-anchor="middle" fill="var(--text)" font-size="12">Square</text>
+        <rect x="770" y="158" width="146" height="38" rx="7" fill="rgba(125,220,154,0.1)" stroke="var(--good)"/><text x="843" y="182" text-anchor="middle" fill="var(--good)" font-size="12">Triangle (new)</text>
+        <line x1="585" y1="158" x2="705" y2="100" stroke="var(--dim)" stroke-width="1.4"/>
+        <line x1="705" y1="158" x2="718" y2="100" stroke="var(--dim)" stroke-width="1.4"/>
+        <line x1="843" y1="158" x2="735" y2="100" stroke="var(--good)" stroke-width="1.6" stroke-dasharray="4 3"/>
+        <text x="720" y="238" text-anchor="middle" fill="var(--good)" font-size="12">add one class; the caller never changes</text>
+      </svg>
+    </div>
+    <p class="fragment" style="color:var(--muted); margin-top:6px;">If you are switching on a type, stop. New behaviour is a new class, not a new branch in old code. Hold on to this slide: after the break it becomes the <em>O</em> in SOLID.</p>
+    <div class="footer-line"><span>polymorphism</span><span>open/closed</span></div>
+  </section>
+
+  <!-- 33 POLY swap the object -->
+  <section class="poly">
+    <span class="eyebrow">a taste of tomorrow</span>
+    <h2>Swap behaviour by swapping the object.</h2>
+    <p class="fragment">Hold an interface as a field, or take one as a parameter, and the class changes what it does with no edit anywhere.</p>
+<pre class="fragment"><code class="language-java" data-trim>
+names.sort(Comparator.comparing(String::length));
+names.sort(Comparator.reverseOrder());
+// same sort, different object handed in
+</code></pre>
+    <p class="fragment" style="margin-top:14px; color:var(--muted);">That is the JDK's own example, and you meet <code>Comparable</code> and <code>Comparator</code> properly on Collections day, including why a comparator that disagrees with <code>equals</code> wrecks a <code>TreeSet</code>. People call this shape Strategy. The machinery is just polymorphism.</p>
+    <div class="footer-line"><span>polymorphism</span><span>swap the object</span></div>
+  </section>
+
+  <!-- 34 QUIZ 4 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 4 of 10</span>
+    <h2>Which show() runs, and what does it print?</h2>
+<pre><code class="language-java" data-trim>
+class Animal { String name() { return "animal"; } }
+class Dog extends Animal { String name() { return "dog"; } }
+class Printer {
+    static String show(Animal a) { return "A:" + a.name(); }
+    static String show(Dog d)    { return "D:" + d.name(); }
+}
+Animal a = new Dog();
+System.out.println(Printer.show(a));
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>A:animal</code></li>
+      <li><b>B</b> <code>D:dog</code></li>
+      <li><b>C</b> <code>A:dog</code></li>
+      <li><b>D</b> <code>D:animal</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>4 of 10</span></div>
+  </section>
+
+
+  <!-- ================= PART 2 · SOLID ================= -->
+  <!-- 36 PART DIVIDER -->
+  <section class="part">
+    <span class="eyebrow part-tag">part 2 / from pillars to principles</span>
+    <h2 style="margin-top:14px;">You have the tools. Now, five habits to keep them sharp.</h2>
+    <p class="lede fragment" style="margin-top:16px;">SOLID is five specific, checkable rules in service of one goal: <em>code you can change without fear.</em></p>
+    <p class="fragment" style="margin-top:14px; color:var(--muted);">None of them are new. Two of them are literally the pillars you just met, polymorphism and abstraction, stated as design rules. SOLID is OOP done on purpose.</p>
+    <div class="footer-line"><span>solid</span><span>the point</span></div>
+  </section>
+
+  <!-- 37 THE MAP -->
+  <section>
+    <span class="eyebrow">the five, at a glance</span>
+    <h2>S O L I D.</h2>
+    <div class="diagram fragment" style="margin-top:14px;">
+      <svg viewBox="0 0 940 210" width="100%">
+        <line x1="15" y1="150" x2="925" y2="150" stroke="var(--line)" stroke-width="1.5"/>
+        <g>
+          <rect x="20" y="56" width="150" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="95" y="112" text-anchor="middle" fill="var(--text)" font-size="36" class="mono">S</text>
+          <text x="95" y="172" text-anchor="middle" fill="var(--muted)" font-size="13">one actor, one reason</text>
+        </g>
+        <g>
+          <rect x="207" y="56" width="150" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="282" y="112" text-anchor="middle" fill="var(--text)" font-size="36" class="mono">O</text>
+          <text x="282" y="172" text-anchor="middle" fill="var(--muted)" font-size="13">extend, don't modify</text>
+        </g>
+        <g>
+          <rect x="395" y="56" width="150" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="470" y="112" text-anchor="middle" fill="var(--text)" font-size="36" class="mono">L</text>
+          <text x="470" y="172" text-anchor="middle" fill="var(--muted)" font-size="13">keep the contract</text>
+        </g>
+        <g>
+          <rect x="582" y="56" width="150" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="657" y="112" text-anchor="middle" fill="var(--text)" font-size="36" class="mono">I</text>
+          <text x="657" y="172" text-anchor="middle" fill="var(--muted)" font-size="13">small interfaces</text>
+        </g>
+        <g>
+          <rect x="770" y="56" width="150" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <text x="845" y="112" text-anchor="middle" fill="var(--text)" font-size="36" class="mono">D</text>
+          <text x="845" y="172" text-anchor="middle" fill="var(--muted)" font-size="13">depend on abstractions</text>
+        </g>
+      </svg>
+    </div>
+    <p class="fragment" style="margin-top:8px; color:var(--muted);">Awful names. By the end, each is one plain sentence plus one smell you can spot on sight.</p>
+    <div class="footer-line"><span>solid</span><span>the map</span></div>
+  </section>
+
+  <!-- ================= S · SINGLE RESPONSIBILITY ================= -->
+  <!-- 38 SRP Q -->
+  <section class="srp">
+    <span class="eyebrow"><span class="dot"></span> S / single responsibility</span>
+    <h2>What makes a class need to change?</h2>
+    <p class="fragment lede" style="margin-top:16px;">Not the number of methods it has. The number of people who can walk up and ask for one.</p>
+    <div class="diagram" style="margin-top:20px;">
+      <svg viewBox="0 0 940 150" width="100%">
+        <line x1="15" y1="120" x2="925" y2="120" stroke="var(--line)" stroke-width="1.5"/>
+        <rect x="20" y="34" width="150" height="86" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="95" cy="24" r="5" fill="var(--accent)"/>
+        <text x="95" y="88" text-anchor="middle" fill="var(--accent)" font-size="32" class="mono">S</text>
+        <rect x="207" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
+        <rect x="395" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
+        <rect x="582" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
+        <rect x="770" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>single responsibility</span><span>question</span></div>
+  </section>
+
+  <!-- 39 SRP myth -->
+  <section class="srp">
+    <span class="eyebrow">the outdated definition</span>
+    <h2>"A class should do one thing" is wrong.</h2>
+    <div class="dgrid">
+      <div>
+        <p class="fragment">Run the test. Open <code>ArrayList</code> in the JDK: about sixty methods, add, remove, get, set, sort.</p>
+        <p class="fragment" style="margin-top:12px;">If the rule were "do one thing," <code>ArrayList</code> would be a disaster. Nobody splits <code>ArrayList</code>.</p>
+        <p class="fragment" style="margin-top:12px; color:var(--muted);">So "do one thing" cannot be the rule. A count of methods tells you nothing.</p>
+      </div>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 420 250" width="100%">
+          <rect x="60" y="24" width="300" height="202" rx="12" fill="#16161a" stroke="var(--good)" stroke-width="2"/>
+          <text x="210" y="52" text-anchor="middle" fill="var(--good)" font-size="15" class="mono">ArrayList</text>
+          <text x="210" y="80" text-anchor="middle" fill="var(--muted)" font-size="13">~60 methods</text>
+          <text x="210" y="104" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">add · remove · get · set</text>
+          <text x="210" y="124" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">sort · indexOf · clear ...</text>
+          <line x1="90" y1="146" x2="330" y2="146" stroke="var(--line)"/>
+          <text x="210" y="178" text-anchor="middle" fill="var(--text)" font-size="14">one owner:</text>
+          <text x="210" y="200" text-anchor="middle" fill="var(--accent)" font-size="14">the JDK collections team</text>
+          <text x="210" y="220" text-anchor="middle" fill="var(--good)" font-size="12">many methods, one actor, and that is fine</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>single responsibility</span><span>the myth</span></div>
+  </section>
+
+  <!-- 40 SRP actual rule -->
+  <section class="srp">
+    <span class="eyebrow">the actual rule</span>
+    <h2>Answer to one <em>actor</em>.</h2>
+    <p class="fragment quote" style="margin-top:8px; font-size:26px;">"A module should be responsible to one, and only one, actor."</p>
+    <p class="quote-attr fragment">Robert C. Martin, correcting fifteen years of misquotes</p>
+    <ul class="clean" style="margin-top:20px;">
+      <li class="fragment">A "reason to change" is not a feature. It is a <em>person</em>, a role, a stakeholder whose request triggers the change.</li>
+      <li class="fragment">CFO, HR, DBA: those are reasons. Bad classes are not bad for having many methods; they are bad when their methods answer to different people who never talk.</li>
+    </ul>
+    <p class="fragment" style="margin-top:16px; color:var(--muted);">Hold that thought over the break. After it, we watch one class serve three masters and blow up.</p>
+    <div class="footer-line"><span>single responsibility</span><span>one actor</span></div>
+  </section>
+
+  <!-- 41 SRP actor lens -->
+  <section class="srp">
+    <span class="eyebrow">the actor lens</span>
+    <h2>Find the people. Then find their code.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment">One <code>Employee</code> class, three methods, three departments.</li>
+        <li class="fragment"><code>calculatePay()</code> answers to the CFO. <code>reportHours()</code> answers to HR. <code>save()</code> answers to the DBA.</li>
+        <li class="fragment">Accounting tweaks the pay math, reuses a shared helper, and HR's report quietly breaks. Nobody warned HR.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 260" width="100%">
+          <defs><marker id="s41asrp" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker></defs>
+          <rect x="258" y="102" width="160" height="56" rx="9" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2"/>
+          <text x="338" y="126" text-anchor="middle" fill="var(--accent)" font-size="15">Employee</text>
+          <text x="338" y="145" text-anchor="middle" fill="var(--bad)" font-size="11">three masters, one class</text>
+          <rect x="20" y="14" width="180" height="56" rx="8" fill="#16161a" stroke="#6ea8ff"/>
+          <text x="110" y="37" text-anchor="middle" fill="var(--text)" font-size="13">CFO / Accounting</text>
+          <text x="110" y="56" text-anchor="middle" fill="var(--muted)" font-size="11" class="mono">calculatePay()</text>
+          <line x1="200" y1="42" x2="256" y2="114" stroke="var(--dim)" stroke-width="1.4" marker-end="url(#s41asrp)"/>
+          <rect x="20" y="102" width="180" height="56" rx="8" fill="#16161a" stroke="#7ddc9a"/>
+          <text x="110" y="125" text-anchor="middle" fill="var(--text)" font-size="13">COO / HR</text>
+          <text x="110" y="144" text-anchor="middle" fill="var(--muted)" font-size="11" class="mono">reportHours()</text>
+          <line x1="200" y1="130" x2="256" y2="130" stroke="var(--dim)" stroke-width="1.4" marker-end="url(#s41asrp)"/>
+          <rect x="20" y="190" width="180" height="56" rx="8" fill="#16161a" stroke="#f5b840"/>
+          <text x="110" y="213" text-anchor="middle" fill="var(--text)" font-size="13">CTO / DBA</text>
+          <text x="110" y="232" text-anchor="middle" fill="var(--muted)" font-size="11" class="mono">save()</text>
+          <line x1="200" y1="218" x2="256" y2="146" stroke="var(--dim)" stroke-width="1.4" marker-end="url(#s41asrp)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>single responsibility</span><span>the actor lens</span></div>
+  </section>
+
+  <!-- 42 SRP code (before/after) -->
+  <section class="srp">
+    <span class="eyebrow">before / after</span>
+    <h2>Split the class along the actors.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">three actors, one class</span>
+<pre class="sm"><code class="language-java" data-trim>
+class Employee {
+  // CFO's rules
+  Money calculatePay() { ... regularHours() ... }
+  // HR's report
+  String reportHours() { ... regularHours() ... }
+  // DBA's schema
+  void save() { ... }
+  // shared helper = the hidden landmine
+  int regularHours() { ... }
+}
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">one actor each</span>
+<pre class="sm"><code class="language-java" data-trim>
+record Employee(String id, int worked) { }
+
+class PayCalculator {        // CFO
+  Money pay(Employee e) { ... }
+}
+class HourReporter {         // HR
+  String report(Employee e) { ... }
+}
+class EmployeeRepo {         // DBA
+  void save(Employee e) { ... }
+}
+</code></pre>
+      </div>
+    </div>
+    <p class="fragment" style="color:var(--muted); margin-top:8px;">Now the CFO's change touches only <code>PayCalculator</code>. HR's report cannot break from a payroll edit, because the shared helper is gone.</p>
+    <div class="footer-line"><span>single responsibility</span><span>before / after</span></div>
+  </section>
+
+  <!-- 43 SRP smell -->
+  <section class="srp">
+    <span class="eyebrow">smell, and rule</span>
+    <h2>Two teams in one file.</h2>
+    <div class="grid g2">
+      <div class="card fragment"><h3>Smells</h3><p>A class named Manager, Util, or Helper. A constructor with many collaborators. Imports from several unrelated namespaces. Two unrelated tickets touching it in one sprint.</p></div>
+      <div class="card fragment"><h3>Rule</h3><p>One actor, one module. If two departments would edit this file for different reasons, it is two files in a trench coat.</p></div>
+    </div>
+    <p class="fragment" style="margin-top:18px; color:var(--muted);">Quick 30-second check: say what the class does in one sentence. If you need "and" (or a vague verb like "manages"), look again.</p>
+    <div class="footer-line"><span>single responsibility</span><span>checklist</span></div>
+  </section>
+
+  <!-- 44 QUIZ 5 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 5 of 10</span>
+    <h2>The CFO moves overtime from 40 hours to 35, so one line changes. What do the two methods print for a 38-hour week?</h2>
+<pre><code class="language-java" data-trim>
+class Employee {
+    private final int worked;
+    Employee(int worked) { this.worked = worked; }
+    private int regularHours() { return Math.min(worked, 35); }   // the CFO asked for this, was 40
+    int pay()       { return regularHours() * 20 + (worked - regularHours()) * 30; }
+    String report() { return "regular=" + regularHours(); }
+}
+Employee e = new Employee(38);
+System.out.println(e.pay() + " " + e.report());
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>760 regular=38</code> (unchanged, <code>regularHours</code> is private)</li>
+      <li><b>B</b> <code>790 regular=38</code></li>
+      <li><b>C</b> <code>790 regular=35</code></li>
+      <li><b>D</b> compile error: <code>pay()</code> calls a private method twice</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>5 of 10</span></div>
+  </section>
+
+
+  <!-- ================= O · OPEN-CLOSED ================= -->
+  <!-- 46 OCP Q -->
+  <section class="ocp">
+    <span class="eyebrow"><span class="dot"></span> O / open-closed</span>
+    <h2>A new feature arrives. Do you edit old code, or add new?</h2>
+    <p class="fragment lede" style="margin-top:16px;">Editing working code is how you break things that used to work.</p>
+    <div class="diagram" style="margin-top:20px;">
+      <svg viewBox="0 0 940 150" width="100%">
+        <line x1="15" y1="120" x2="925" y2="120" stroke="var(--line)" stroke-width="1.5"/>
+        <rect x="20" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
+        <rect x="207" y="34" width="150" height="86" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="282" cy="24" r="5" fill="var(--accent)"/><text x="282" y="88" text-anchor="middle" fill="var(--accent)" font-size="32" class="mono">O</text>
+        <rect x="395" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
+        <rect x="582" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
+        <rect x="770" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>open-closed</span><span>question</span></div>
+  </section>
+
+  <!-- 47 OCP code (before/after) -->
+  <section class="ocp">
+    <span class="eyebrow">the answer, in code</span>
+    <h2>From a switch to an interface.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">closed to nothing</span>
+<pre class="sm"><code class="language-java" data-trim>
+String export(Report r, String type) {
+  switch (type) {
+    case "csv":  return toCsv(r);
+    case "json": return toJson(r);
+    // add "xml"? reopen this method,
+    // and every other switch like it
+  }
+  throw new IllegalArgumentException(type);
+}
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">closed for modification</span>
+<pre class="sm"><code class="language-java" data-trim>
+interface ReportFormat {
+  String format(Report r);
+}
+class CsvFormat  implements ReportFormat { ... }
+class JsonFormat implements ReportFormat { ... }
+
+// a new format is a NEW class;
+// export() is never reopened
+String export(Report r, ReportFormat f) {
+  return f.format(r);
+}
+</code></pre>
+      </div>
+    </div>
+    <p class="fragment" style="color:var(--muted); margin-top:8px;">This is exactly the capstone you build this afternoon, and it is this morning's polymorphism slide stated as a rule.</p>
+    <div class="footer-line"><span>open-closed</span><span>before / after</span></div>
+  </section>
+
+  <!-- 48 OCP socket + smell -->
+  <section class="ocp">
+    <span class="eyebrow">the picture, and the rule</span>
+    <h2>A wall socket: fixed shape, endless appliances.</h2>
+    <p class="fragment lede">The socket is standard and closed. Any appliance whose plug fits just works, and you can invent new appliances forever. In code, the socket is an interface.</p>
+    <div class="grid g2" style="margin-top:18px;">
+      <div class="card fragment"><h3>Smell</h3><p>A switch or if-else on a type that grows a branch every time a variant is added. You keep reopening the same file.</p></div>
+      <div class="card fragment"><h3>Rule</h3><p>Put the varying part behind an interface. A new case is a new class, not an edit to the old one.</p></div>
+    </div>
+    <div class="footer-line"><span>open-closed</span><span>the socket</span></div>
+  </section>
+
+  <!-- 49 QUIZ 6 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 6 of 10</span>
+    <h2>A sealed family grows. What happens to this switch?</h2>
+<pre><code class="language-java" data-trim>
+class Shapes {
+    sealed interface Shape permits Circle, Square, Tri { }
+    record Circle(double r) implements Shape { }
+    record Square(double s) implements Shape { }
+    record Tri(double b, double h) implements Shape { }   // joined the family this morning
+
+    static double area(Shape s) {
+        return switch (s) {
+            case Circle c -&gt; Math.PI * c.r() * c.r();
+            case Square q -&gt; q.s() * q.s();
+        };
+    }
+}
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> compiles; <code>area(new Tri(1, 1))</code> throws <code>MatchException</code></li>
+      <li><b>B</b> compile error: the switch does not cover all possible input values</li>
+      <li><b>C</b> compiles; <code>area</code> returns <code>0.0</code> for a <code>Tri</code></li>
+      <li><b>D</b> compile error: a record cannot implement a sealed interface</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>6 of 10</span></div>
+  </section>
+
+
+  <!-- ================= L · LISKOV SUBSTITUTION ================= -->
+  <!-- 51 LSP Q -->
+  <section class="lsp">
+    <span class="eyebrow"><span class="dot"></span> L / liskov substitution</span>
+    <h2>A subtype should work anywhere its parent does. When does that break?</h2>
+    <p class="fragment lede" style="margin-top:16px;">When the child looks like the parent, but does not behave like it.</p>
+    <div class="diagram" style="margin-top:20px;">
+      <svg viewBox="0 0 940 150" width="100%">
+        <line x1="15" y1="120" x2="925" y2="120" stroke="var(--line)" stroke-width="1.5"/>
+        <rect x="20" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
+        <rect x="207" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
+        <rect x="395" y="34" width="150" height="86" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="470" cy="24" r="5" fill="var(--accent)"/><text x="470" y="88" text-anchor="middle" fill="var(--accent)" font-size="32" class="mono">L</text>
+        <rect x="582" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
+        <rect x="770" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>liskov substitution</span><span>question</span></div>
+  </section>
+
+  <!-- 52 LSP the story -->
+  <section class="lsp">
+    <span class="eyebrow">the answer, before the code</span>
+    <h2>In maths a Square is a Rectangle. In code it is a liability.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment">Rectangle's code makes a promise: set the width, and the height is left alone.</li>
+        <li class="fragment">A Square cannot keep that promise and stay square. So it breaks the parent's <em>contract</em>, not the parent's syntax.</li>
+        <li class="fragment">The compiler is perfectly happy. That is the whole point of this principle: it is the one you cannot delegate to javac.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 420 250" width="100%">
+          <rect x="20" y="20" width="380" height="100" rx="10" fill="#16161a" stroke="var(--good)"/>
+          <text x="36" y="46" fill="var(--good)" font-size="13" class="mono">Rectangle</text>
+          <text x="36" y="72" fill="var(--muted)" font-size="13" class="mono">setWidth(5); setHeight(4);</text>
+          <text x="36" y="98" fill="var(--text)" font-size="13" class="mono">area == 20   (as promised)</text>
+          <rect x="20" y="134" width="380" height="100" rx="10" fill="#0a0a0c" stroke="var(--bad)"/>
+          <text x="36" y="160" fill="var(--bad)" font-size="13" class="mono">Square extends Rectangle</text>
+          <text x="36" y="186" fill="var(--muted)" font-size="13" class="mono">setWidth(5)  also sets height 5</text>
+          <text x="36" y="212" fill="var(--bad)" font-size="13" class="mono">area == 25   promise broken</text>
+        </svg>
+      </div>
+    </div>
+    <p class="fragment" style="margin-top:10px; color:var(--muted);">The fix is not a cleverer Square. It is two types that do not inherit from each other.</p>
+    <div class="footer-line"><span>liskov substitution</span><span>the story</span></div>
+  </section>
+
+  <!-- 53 LSP code (before/after) -->
+  <section class="lsp">
+    <span class="eyebrow">the classic trap, in code</span>
+    <h2>The subtype that fails the parent's test.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">looks right, lies</span>
+<pre class="sm"><code class="language-java" data-trim>
+class Rectangle {
+  int w, h;
+  void setW(int w){ this.w = w; }
+  void setH(int h){ this.h = h; }
+  int area(){ return w * h; }
+}
+class Square extends Rectangle {
+  void setW(int w){ this.w = this.h = w; } // !
+  void setH(int h){ this.w = this.h = h; } // !
+}
+void check(Rectangle r){
+  r.setW(5); r.setH(4);
+  assert r.area() == 20;  // FAILS for Square
+}
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">don't force the is-a</span>
+<pre class="sm"><code class="language-java" data-trim>
+sealed interface Shape
+    permits Rectangle, Square {
+  int area();
+}
+record Rectangle(int w, int h) implements Shape {
+  public int area(){ return w * h; }
+}
+record Square(int side) implements Shape {
+  public int area(){ return side * side; }
+}
+// no inheritance to abuse; each keeps
+// its own honest promise
+</code></pre>
+      </div>
+    </div>
+    <p class="fragment" style="color:var(--muted); margin-top:6px;">The platform has its own version, two lines long: <code>Object[] a = new String[1];</code> then <code>a[0] = 42;</code> compiles, and throws <code>ArrayStoreException: java.lang.Integer</code> at run time. Arrays are covariant and generics are not. Java had no generics until 2004 and <code>Arrays.sort(Object[])</code> had to work, so the type system was told a lie in 1996 and we still live with it. Collections day owns the full treatment, Item 28, prefer lists to arrays.</p>
+    <div class="footer-line"><span>liskov substitution</span><span>before / after</span></div>
+  </section>
+
+  <!-- 54 LSP contract + smell -->
+  <section class="lsp">
+    <span class="eyebrow">half of this is a compile error, half is not</span>
+    <h2>Inherit the type, inherit the promises.</h2>
+    <div class="grid g3">
+      <div class="card fragment"><h3>What the compiler already checks</h3><p>An override cannot reduce visibility. It cannot add checked exceptions the parent did not declare. A return type may only narrow, never widen.</p></div>
+      <div class="card fragment"><h3>Smells</h3><p>An override that throws <code>UnsupportedOperationException</code>. Callers checking <code>instanceof</code> to special-case a subtype. A subclass that quietly does nothing.</p></div>
+      <div class="card fragment"><h3>Rule</h3><p>Usable through the parent's type with no surprises. If it cannot be, do not subclass. Compose instead.</p></div>
+    </div>
+    <p class="fragment" style="margin-top:16px;">Every check in the first card is Liskov, enforced. What no compiler can check is <em>behaviour</em>, which is why Square and Rectangle compiles perfectly and still fails the parent's test, and why an override that throws "not supported" is legal Java and a broken subtype.</p>
+    <p class="fragment" style="margin-top:8px; color:var(--muted);"><code>@Override</code> is the same idea in miniature: it asks the compiler to confirm you are keeping a promise rather than making a new one.</p>
+    <div class="footer-line"><span>liskov substitution</span><span>the contract</span></div>
+  </section>
+
+  <!-- 55 QUIZ 7 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 7 of 10</span>
+    <h2>What does this print?</h2>
+<pre><code class="language-java" data-trim>
+import java.util.Date;
+import java.sql.Timestamp;
+
+Date d = new Date(0);
+Timestamp t = new Timestamp(0);
+System.out.println(d.equals(t) + " " + t.equals(d));
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>true true</code></li>
+      <li><b>B</b> <code>true false</code></li>
+      <li><b>C</b> <code>false true</code></li>
+      <li><b>D</b> <code>false false</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>7 of 10</span></div>
+  </section>
+
+
+  <!-- ================= I · INTERFACE SEGREGATION ================= -->
+  <!-- 57 ISP Q -->
+  <section class="isp">
+    <span class="eyebrow"><span class="dot"></span> I / interface segregation</span>
+    <h2>One big interface, or many small ones?</h2>
+    <p class="fragment lede" style="margin-top:16px;">A big interface forces classes to depend on methods they never use.</p>
+    <div class="diagram" style="margin-top:20px;">
+      <svg viewBox="0 0 940 150" width="100%">
+        <line x1="15" y1="120" x2="925" y2="120" stroke="var(--line)" stroke-width="1.5"/>
+        <rect x="20" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
+        <rect x="207" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
+        <rect x="395" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
+        <rect x="582" y="34" width="150" height="86" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="657" cy="24" r="5" fill="var(--accent)"/><text x="657" y="88" text-anchor="middle" fill="var(--accent)" font-size="32" class="mono">I</text>
+        <rect x="770" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>interface segregation</span><span>question</span></div>
+  </section>
+
+  <!-- 58 ISP code (before/after) -->
+  <section class="isp">
+    <span class="eyebrow">the answer, in code</span>
+    <h2>Stop faking methods you don't have.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">forced to lie</span>
+<pre class="sm"><code class="language-java" data-trim>
+interface Machine {
+  void print(Doc d);
+  void scan(Doc d);
+  void fax(Doc d);
+}
+class SimplePrinter implements Machine {
+  public void print(Doc d){ ... }
+  public void scan(Doc d){
+    throw new UnsupportedOperationException();
+  }
+  public void fax(Doc d){
+    throw new UnsupportedOperationException();
+  }
+}
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">role-shaped</span>
+<pre class="sm"><code class="language-java" data-trim>
+interface Printer { void print(Doc d); }
+interface Scanner { void scan(Doc d); }
+interface Fax     { void fax(Doc d); }
+
+class SimplePrinter implements Printer {
+  public void print(Doc d){ ... }
+}
+class OfficeMachine
+    implements Printer, Scanner, Fax {
+  ...   // implement several when you are several
+}
+</code></pre>
+      </div>
+    </div>
+    <p class="fragment" style="color:var(--muted); margin-top:6px;">Split by role, and a class implements only what it is. Clients then depend on the slice they use, nothing more: the dead lying methods vanish, and a change to <code>Fax</code> can no longer force <code>SimplePrinter</code> to recompile.</p>
+    <div class="footer-line"><span>interface segregation</span><span>before / after</span></div>
+  </section>
+
+  <!-- 59 ISP smell + Object -->
+  <section class="isp">
+    <span class="eyebrow">smell, rule, and the worst offender in the language</span>
+    <h2>Methods you have to fake.</h2>
+    <div class="grid g3">
+      <div class="card fragment"><h3>Smell</h3><p>Implementers that throw or no-op half an interface. A client dragged into recompiling because a method it never calls changed.</p></div>
+      <div class="card fragment"><h3>Rule</h3><p>Interfaces belong to their clients. Keep them small and role-shaped. A class can implement several.</p></div>
+      <div class="card fragment"><h3>The fattest interface in Java</h3>
+<pre class="sm"><code class="language-java" data-trim>
+public final native Class&lt;?&gt; getClass();
+public native int hashCode();
+public boolean equals(Object);
+public String toString();
+protected native Object clone();
+protected void finalize();
+</code></pre>
+        <p><code>javap java.lang.Object</code>, and five more about thread coordination: <code>wait</code>, <code>wait</code>, <code>wait</code>, <code>notify</code>, <code>notifyAll</code>. Eleven methods on every object you will ever create.</p>
+      </div>
+    </div>
+    <ul class="clean" style="margin-top:10px;">
+      <li class="fragment">Every class you write inherits a monitor and a wait/notify protocol it almost never uses, and you cannot opt out. That is what it costs when a type is defined once, at the top, for everyone.</li>
+      <li class="fragment">The fewer clients an interface has, the smaller it should be. The root type has every client there is.</li>
+    </ul>
+    <div class="footer-line"><span>interface segregation</span><span>checklist</span></div>
+  </section>
+
+  <!-- 60 QUIZ 8 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 8 of 10</span>
+    <h2>Which line throws first?</h2>
+<pre><code class="language-java" data-trim>
+List&lt;String&gt; a = Arrays.asList("x", "y");
+a.set(0, "z");      // 1
+a.add("w");         // 2
+List&lt;String&gt; b = List.of("x", "y");
+b.set(0, "z");      // 3
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> line 1</li>
+      <li><b>B</b> line 2</li>
+      <li><b>C</b> line 3</li>
+      <li><b>D</b> none of them, all three run</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>8 of 10</span></div>
+  </section>
+
+
+  <!-- ================= D · DEPENDENCY INVERSION ================= -->
+  <!-- 62 DIP Q -->
+  <section class="dip">
+    <span class="eyebrow"><span class="dot"></span> D / dependency inversion</span>
+    <h2>Should your business logic depend on the database?</h2>
+    <p class="fragment lede" style="margin-top:16px;">If it does, you cannot change the database, or test the logic, without pain.</p>
+    <div class="diagram" style="margin-top:20px;">
+      <svg viewBox="0 0 940 150" width="100%">
+        <line x1="15" y1="120" x2="925" y2="120" stroke="var(--line)" stroke-width="1.5"/>
+        <rect x="20" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
+        <rect x="207" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
+        <rect x="395" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
+        <rect x="582" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
+        <rect x="770" y="34" width="150" height="86" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="845" cy="24" r="5" fill="var(--accent)"/><text x="845" y="88" text-anchor="middle" fill="var(--accent)" font-size="32" class="mono">D</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>dependency inversion</span><span>question</span></div>
+  </section>
+
+  <!-- 63 DIP answer -->
+  <section class="dip">
+    <span class="eyebrow">the answer</span>
+    <h2>Both sides depend on an abstraction.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment">High-level policy should not reach down to low-level detail.</li>
+        <li class="fragment">Instead, the policy defines an interface it needs; the detail implements it.</li>
+        <li class="fragment">Now the arrow from the detail points <em>up</em> at the abstraction. That is the inversion.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 420 250" width="100%">
+          <defs>
+            <marker id="s63adip" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker>
+            <marker id="s63adipi" markerWidth="18" markerHeight="14" refX="14" refY="6" orient="auto"><path d="M1,1 L14,6 L1,11 z" fill="#0e0e10" stroke="var(--accent)" stroke-width="1.5"/></marker>
+          </defs>
+          <rect x="120" y="16" width="180" height="46" rx="8" fill="#16161a" stroke="var(--line)"/><text x="210" y="38" text-anchor="middle" fill="var(--text)" font-size="13">OrderService</text><text x="210" y="54" text-anchor="middle" fill="var(--muted)" font-size="10">policy</text>
+          <rect x="120" y="102" width="180" height="46" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2"/><text x="210" y="124" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">PaymentGateway</text><text x="210" y="140" text-anchor="middle" fill="var(--muted)" font-size="10">interface</text>
+          <rect x="120" y="192" width="180" height="46" rx="8" fill="#16161a" stroke="var(--line)"/><text x="210" y="214" text-anchor="middle" fill="var(--text)" font-size="13">StripeGateway</text><text x="210" y="230" text-anchor="middle" fill="var(--muted)" font-size="10">detail</text>
+          <line x1="210" y1="62" x2="210" y2="100" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#s63adip)"/><text x="300" y="86" fill="var(--muted)" font-size="10">uses</text>
+          <line x1="210" y1="192" x2="210" y2="150" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#s63adipi)"/><text x="300" y="176" fill="var(--muted)" font-size="10">implements</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>dependency inversion</span><span>the answer</span></div>
+  </section>
+
+  <!-- 64 DIP code (before/after) -->
+  <section class="dip">
+    <span class="eyebrow">before / after</span>
+    <h2>Inject the dependency. Don't reach for it.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">welded to Stripe</span>
+<pre class="sm"><code class="language-java" data-trim>
+class OrderService {
+  // policy reaches down to a concrete detail
+  private final StripeGateway gw
+      = new StripeGateway();
+
+  void checkout(Order o){
+    gw.charge(o.total());
+  }
+}
+// can't swap Stripe; can't test without it
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">depends on a promise</span>
+<pre class="sm"><code class="language-java" data-trim>
+interface PaymentGateway { void charge(Money m); }
+
+class OrderService {
+  private final PaymentGateway gw;
+  OrderService(PaymentGateway gw){   // inject
+    this.gw = gw;
+  }
+  void checkout(Order o){ gw.charge(o.total()); }
+}
+class StripeGateway implements PaymentGateway { ... }
+// tests pass a fake; swap Stripe for PayPal freely
+</code></pre>
+      </div>
+    </div>
+    <p class="fragment" style="color:var(--muted); margin-top:6px;">The interface passed in from outside is the seam of this afternoon's capstone. It is also Day 4's composition root, one class that does all the new-ing, and it is the thing Spring's container automates for you.</p>
+    <div class="footer-line"><span>dependency inversion</span><span>before / after</span></div>
+  </section>
+
+  <!-- 65 DIP smell -->
+  <section class="dip">
+    <span class="eyebrow">smell, and rule</span>
+    <h2>When business logic imports a database driver.</h2>
+    <div class="grid g2">
+      <div class="card fragment"><h3>Smell</h3><p>A <code>new</code> of a concrete service inside business code. Core logic importing a specific database or HTTP library.</p></div>
+      <div class="card fragment"><h3>Rule</h3><p>Depend on an interface the policy owns. Pass the concrete thing in from the outside.</p></div>
+    </div>
+    <div class="footer-line"><span>dependency inversion</span><span>checklist</span></div>
+  </section>
+
+  <!-- 66 DIP hidden dependencies -->
+  <section class="dip">
+    <span class="eyebrow">the one that stops teams testing</span>
+    <h2>The dependency you cannot see.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">no seam at all</span>
+<pre class="sm"><code class="language-java" data-trim>
+class Invoice {
+  private final LocalDate due;
+
+  boolean overdue() {
+    return LocalDate.now().isAfter(due);
+  }
+}
+// to test the overdue branch you have to
+// change the system clock
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">time comes in through the door</span>
+<pre class="sm"><code class="language-java" data-trim>
+class Invoice {
+  private final Clock clock;
+  private final LocalDate due;
+
+  boolean overdue() {
+    return LocalDate.now(clock).isAfter(due);
+  }
+}
+// in the test, hand it a frozen clock:
+Clock.fixed(Instant.parse("2026-01-31T00:00:00Z"),
+            ZoneOffset.UTC)
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean" style="margin-top:4px;">
+      <li class="fragment">A static call is a hard-wired dependency with no seam. The compiler cannot help you and the test cannot replace it.</li>
+      <li class="fragment">Time, randomness, the current user and the logger are the four that catch everyone.</li>
+      <li class="fragment">If a class is hard to test, the design is telling you something before the test does.</li>
+    </ul>
+    <p class="fragment" style="margin-top:6px; color:var(--muted);">Day 4's composition root is where every one of these gets created, once, in one place.</p>
+    <div class="footer-line"><span>dependency inversion</span><span>hidden dependencies</span></div>
+  </section>
+
+  <!-- 67 QUIZ 9 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 9 of 10</span>
+    <h2>One singleton, one default. What does this print?</h2>
+<pre><code class="language-java" data-trim>
+class Registry {
+    static final Registry INSTANCE = new Registry();
+    static final String DEFAULT = System.getProperty("sink", "console");
+    private final String sink;
+    private Registry() { sink = DEFAULT; }
+    String sink() { return sink; }
+}
+System.out.println(Registry.INSTANCE.sink());
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>console</code></li>
+      <li><b>B</b> <code>null</code></li>
+      <li><b>C</b> <code>NullPointerException</code></li>
+      <li><b>D</b> compile error: illegal forward reference</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>9 of 10</span></div>
+  </section>
+
+
+  <!-- 69 SOLID SYNTHESIS -->
+  <section>
+    <span class="eyebrow">how the five work together</span>
+    <h2>One goal, five moves.</h2>
+    <div class="grid g2">
+      <div class="card fragment"><h3>SRP</h3><p>splits the system into small, single-purpose pieces</p></div>
+      <div class="card fragment"><h3>OCP + DIP</h3><p>put interfaces at the seams, so pieces plug in without edits</p></div>
+      <div class="card fragment"><h3>LSP</h3><p>keeps those plug-in pieces honest and substitutable</p></div>
+      <div class="card fragment"><h3>ISP</h3><p>keeps the seams small, so nothing depends on more than it needs</p></div>
+    </div>
+    <p class="fragment" style="margin-top:14px; color:var(--muted);">OCP and DIP are this morning's polymorphism and abstraction, applied with discipline. LSP is the inheritance contract. SOLID is OOP, done on purpose.</p>
+    <p class="fragment" style="margin-top:8px;">Lunch lands here. After it, we put the JDK itself through the review you have just learned.</p>
+    <div class="footer-line"><span>solid</span><span>synthesis</span></div>
+  </section>
+
+  <!-- ================= THE JDK IN THE DOCK ================= -->
+  <!-- 70 JDK Q -->
+  <section class="jdk">
+    <span class="eyebrow"><span class="dot"></span> after lunch / what the JDK itself gets wrong</span>
+    <h2>The JDK is thirty years old. Would it pass the review you just learned?</h2>
+    <p class="fragment lede" style="margin-top:14px;">No. And it cannot fix any of it, because a public superclass, a public field or a public interface is a promise you can never take back. That is slide 5, at platform scale.</p>
+    <div class="diagram fragment" style="margin-top:16px;">
+      <svg viewBox="0 0 940 212" width="100%">
+        <defs><marker id="s70axis" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker></defs>
+        <line x1="30" y1="170" x2="905" y2="170" stroke="var(--line)" stroke-width="1.5" marker-end="url(#s70axis)"/>
+        <rect x="45" y="20" width="176" height="134" rx="9" fill="#0a0a0c" stroke="var(--bad)" stroke-dasharray="5 4"/>
+        <text x="60" y="42" fill="var(--text)" font-size="12">Stack</text><text x="206" y="42" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">inherit</text>
+        <text x="60" y="68" fill="var(--text)" font-size="12">Properties</text><text x="206" y="68" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">inherit</text>
+        <text x="60" y="94" fill="var(--text)" font-size="12">Cloneable</text><text x="206" y="94" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">marker</text>
+        <text x="60" y="120" fill="var(--text)" font-size="12">Date</text><text x="206" y="120" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">mutable</text>
+        <text x="60" y="146" fill="var(--text)" font-size="12">Point</text><text x="206" y="146" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">public</text>
+        <line x1="133" y1="154" x2="133" y2="168" stroke="var(--dim)" stroke-width="1.4"/>
+        <circle cx="133" cy="170" r="4" fill="var(--bad)"/>
+        <text x="133" y="194" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">JDK 1.0 · 1996</text>
+        <rect x="258" y="94" width="176" height="60" rx="9" fill="#0a0a0c" stroke="var(--bad)" stroke-dasharray="5 4"/>
+        <text x="273" y="130" fill="var(--text)" font-size="12">Timestamp</text><text x="419" y="130" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">equals</text>
+        <line x1="346" y1="154" x2="346" y2="168" stroke="var(--dim)" stroke-width="1.4"/>
+        <circle cx="346" cy="170" r="4" fill="var(--bad)"/>
+        <text x="346" y="194" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">JDK 1.1 · 1997</text>
+        <rect x="471" y="94" width="176" height="60" rx="9" fill="#0a0a0c" stroke="var(--bad)" stroke-dasharray="5 4"/>
+        <text x="486" y="130" fill="var(--text)" font-size="12">SwingConstants</text><text x="632" y="130" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">constants</text>
+        <line x1="559" y1="154" x2="559" y2="168" stroke="var(--dim)" stroke-width="1.4"/>
+        <circle cx="559" cy="170" r="4" fill="var(--bad)"/>
+        <text x="559" y="194" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">JDK 1.2 · 1998</text>
+        <circle cx="720" cy="170" r="4" fill="var(--dim)"/>
+        <text x="720" y="194" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">JDK 8 · 2014</text>
+        <circle cx="860" cy="170" r="4" fill="var(--accent)"/>
+        <text x="860" y="194" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">JDK 25 · 2025</text>
+        <text x="790" y="130" text-anchor="middle" fill="var(--muted)" font-size="13">all of them still shipping</text>
+      </svg>
+    </div>
+    <p class="fragment" style="margin-top:4px; color:var(--muted);">Three releases in a row, so this was not one bad afternoon in 1995. Hands up: which of these have you used this month?</p>
+    <div class="footer-line"><span>the jdk</span><span>question</span></div>
+  </section>
+
+  <!-- 71 JDK exhibit 1 · Stack -->
+  <section class="jdk">
+    <span class="eyebrow">inheritance, and abstraction</span>
+    <h2>Exhibit 1: java.util.Stack extends Vector.</h2>
+<pre><code class="language-java" data-trim>
+public class Stack&lt;E&gt; extends Vector&lt;E&gt; { ... }   // the real declaration, since 1996
+
+Stack&lt;String&gt; s = new Stack&lt;&gt;();
+s.push("a"); s.push("b"); s.push("c");
+s.add(0, "z");
+System.out.println(s.search("z") + " " + s.get(0) + " " + s.pop());
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">A Stack is not a Vector. It <em>has</em> a growable array, and that is a field, not a parent.</li>
+      <li class="fragment">It inherits Vector's whole positional surface, <code>add(int, e)</code>, <code>get(i)</code>, <code>remove(i)</code>, plus every <code>synchronized</code> lock, so its one invariant, last in first out, is unenforceable.</li>
+      <li class="fragment">Its own Javadoc sends you elsewhere: a more complete and consistent set of LIFO operations is provided by the <code>Deque</code> interface.</li>
+    </ul>
+    <p class="fragment" style="margin-top:8px; color:var(--muted);">The line prints <code>4 z c</code>. <code>search</code> counts 1-based from the top; <code>get</code> and <code>add</code> count 0-based from the bottom. One class, two coordinate systems, and they disagree.</p>
+    <span class="tag">Effective Java, Item 18</span>
+    <div class="footer-line"><span>the jdk</span><span>exhibit 1 · Stack</span></div>
+  </section>
+
+  <!-- 72 JDK exhibit 2 · Properties -->
+  <section class="jdk">
+    <span class="eyebrow">inheritance, and encapsulation</span>
+    <h2>Exhibit 2: Properties extends Hashtable&lt;Object,Object&gt;.</h2>
+<pre><code class="language-java" data-trim>
+Properties p = new Properties();
+p.put("port", 8080);            // the parent's API: any Object, any Object
+p.setProperty("host", "db");    // the child's API: String, String
+
+p.getProperty("port");
+p.get("host");
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">Properties wants String keys and String values. Its parent accepts any Object, so the parent's API walks straight past the child's rule, and the rule has nowhere left to live.</li>
+      <li class="fragment"><code>getProperty("port")</code> returns <code>null</code> rather than complaining, because the value is an Integer and the method quietly declines to see it.</li>
+      <li class="fragment">The Javadoc's answer is prose: the use of <code>put</code> and <code>putAll</code> is strongly discouraged. That is a warning where a type should be.</li>
+    </ul>
+    <p class="fragment" style="margin-top:8px; color:var(--muted);">Bloch names this exact class under Item 18. Hold the two calls at the bottom; the last question of the day is built on them.</p>
+    <span class="tag">Effective Java, Item 18</span>
+    <div class="footer-line"><span>the jdk</span><span>exhibit 2 · Properties</span></div>
+  </section>
+
+  <!-- 73 JDK exhibit 3 · Timestamp -->
+  <section class="jdk">
+    <span class="eyebrow">Liskov, and the equals contract</span>
+    <h2>Exhibit 3: Timestamp is a Date that does not equal a Date.</h2>
+<pre><code class="language-java" data-trim>
+Date d = new Date(0);
+Timestamp t = new Timestamp(0);
+
+d.equals(t);
+t.equals(d);
+
+// Javadoc: "it is not recommended to view Timestamp values
+//           generically as an instance of java.util.Date"
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">Timestamp adds a <code>nanos</code> field, so it overrides <code>equals(Object)</code> to reject anything that is not a Timestamp.</li>
+      <li class="fragment"><code>equals</code> is now asymmetric, which <code>Object</code>'s own contract forbids. You called this one before lunch: <code>true false</code>.</li>
+      <li class="fragment">The class admits in its documentation that it is not substitutable for its parent. That is the textbook L violation, written down by the authors.</li>
+    </ul>
+    <p class="fragment" style="margin-top:8px; color:var(--muted);">Use instead: <code>java.time.Instant</code>, which carries nanoseconds and never pretends to be a Date.</p>
+    <span class="tag">Effective Java, Item 10</span>
+    <div class="footer-line"><span>the jdk</span><span>exhibit 3 · Timestamp</span></div>
+  </section>
+
+  <!-- 74 JDK the equals law -->
+  <section class="jdk">
+    <span class="eyebrow">the law behind exhibit 3</span>
+    <h2>You cannot add a value to an instantiable class and keep equals honest.</h2>
+    <ul class="clean">
+      <li class="fragment">Write <code>equals</code> with <code>instanceof</code> and you break symmetry. That is exactly what Timestamp did.</li>
+      <li class="fragment">Write it with <code>getClass()</code> and symmetry is safe, but a subclass instance can never equal a parent instance. That breaks Liskov and quietly breaks any collection holding the parent type.</li>
+      <li class="fragment">There is no third option. So hold the extra value instead of inheriting it: a <code>ColorPoint</code> with a <code>Point</code> field and an <code>asPoint()</code> view.</li>
+    </ul>
+<pre class="fragment sm"><code class="language-java" data-trim>
+Set&lt;Date&gt; s = new HashSet&lt;&gt;();
+s.add(d); s.add(t);     // size 2
+s.clear();
+s.add(t); s.add(d);     // size 1, same two objects
+</code></pre>
+    <p class="fragment" style="margin-top:4px; color:var(--muted);">Both objects have the same <code>hashCode</code>, because Timestamp never overrides it, so they land in one bucket and the outcome depends entirely on which one is the argument. A broken <code>equals</code> does not throw. It just loses your data.</p>
+    <span class="tag">Effective Java, Item 10</span>
+    <div class="footer-line"><span>the jdk</span><span>the equals law</span></div>
+  </section>
+
+  <!-- 75 JDK exhibit 4 · Cloneable -->
+  <section class="jdk">
+    <span class="eyebrow">abstraction</span>
+    <h2>Exhibit 4: Cloneable, an interface with nothing in it.</h2>
+<pre><code class="language-java" data-trim>
+public interface Cloneable { }      // zero methods. that is the entire file.
+
+class Point implements Cloneable {
+    int x = 1;
+    Point copy() throws CloneNotSupportedException {
+        return (Point) super.clone();
+    }
+}
+// now delete "implements Cloneable" and run it again
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">Implementing an empty interface flips the behaviour of <code>Object.clone()</code> from throwing <code>CloneNotSupportedException</code> to doing a field-by-field copy. Nothing else in Java works like that.</li>
+      <li class="fragment">The copy it produces skips every constructor, so none of your invariants ever run.</li>
+      <li class="fragment">A clone of a class with a mutable field is shallow, so the original and the copy share it, which is the record trap from this morning in a different costume.</li>
+    </ul>
+    <p class="fragment" style="margin-top:8px; color:var(--muted);">Use instead: a copy constructor, a static factory, or a record.</p>
+    <span class="tag">Effective Java, Item 13</span>
+    <div class="footer-line"><span>the jdk</span><span>exhibit 4 · Cloneable</span></div>
+  </section>
+
+  <!-- 76 JDK exhibit 5 · SwingConstants -->
+  <section class="jdk">
+    <span class="eyebrow">abstraction, and interface segregation</span>
+    <h2>Exhibit 5: SwingConstants, an interface used as a namespace.</h2>
+<pre><code class="language-java" data-trim>
+public interface SwingConstants {
+    int CENTER = 0;
+    int TOP    = 1;
+    int LEFT   = 2;
+    // ... and a dozen more
+}
+
+public class JLabel extends JComponent implements SwingConstants { ... }
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">Interface fields are implicitly <code>public static final</code> and they are inherited, so <code>JLabel.CENTER</code>, and the same constant on every subclass anyone ever writes, is public API forever.</li>
+      <li class="fragment">An interface should say what a type can <em>do</em>. This one says what some numbers are.</li>
+      <li class="fragment">A fat surface that no client asked for: that is I in miniature, and the constant-interface antipattern by name.</li>
+    </ul>
+    <p class="fragment" style="margin-top:8px; color:var(--muted);">Use instead: an enum, or a static import of a final class's constants.</p>
+    <span class="tag">Effective Java, Item 22</span>
+    <div class="footer-line"><span>the jdk</span><span>exhibit 5 · SwingConstants</span></div>
+  </section>
+
+  <!-- 77 JDK exhibit 6 · Date -->
+  <section class="jdk">
+    <span class="eyebrow">encapsulation</span>
+    <h2>Exhibit 6: a Date you can rewrite from the outside.</h2>
+<pre><code class="language-java" data-trim>
+final class Period {
+    private final Date start;
+    Period(Date start) { this.start = start; }
+    Date start() { return start; }
+}
+
+Period p = new Period(new Date());
+p.start().setTime(0);
+// so what is p's start now?
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">A <code>private final</code> field on a <code>final</code> class, and a caller just rewrote history through it. Nothing here is a bug in Period.</li>
+      <li class="fragment"><code>Date</code> has <code>setTime</code>, and a <code>setYear</code> deprecated since 1997. It is a value that is not a value.</li>
+      <li class="fragment"><code>final</code> protects the reference, never the object it points at. Same sentence as slide 9, different decade.</li>
+    </ul>
+    <p class="fragment" style="margin-top:8px; color:var(--muted);">Use instead: <code>java.time</code>, plus defensive copies whenever you must hand out something mutable.</p>
+    <span class="tag">Effective Java, Items 17 and 50</span>
+    <div class="footer-line"><span>the jdk</span><span>exhibit 6 · Date</span></div>
+  </section>
+
+  <!-- 78 JDK Date continued -->
+  <section class="jdk">
+    <span class="eyebrow">the same class, two more broken promises</span>
+    <h2>Date is also Comparable. And still mutable.</h2>
+    <ul class="clean">
+      <li class="fragment"><code>Date implements Comparable&lt;Date&gt;</code>, so a Date works as a <code>TreeMap</code> key. Then somebody calls <code>setTime</code> on it, and the entry is sitting in a position the tree no longer agrees with. You can neither find it nor remove it.</li>
+      <li class="fragment"><code>Date.toString</code> bakes in the default time zone, so one instant prints differently on two machines, and people compare the strings.</li>
+      <li class="fragment"><code>getYear()</code> returns the year minus 1900 and <code>getMonth()</code> counts from zero, which is why 2026 turns up as 126 in old log files.</li>
+    </ul>
+    <p class="fragment" style="margin-top:14px;">Carry this one line out of the whole run: <em>a mutable key is a bug you cannot see.</em> It is the same rule as the record with a mutable component on slide 9, and you will meet it a third time tomorrow when we do <code>equals</code> and <code>hashCode</code> properly.</p>
+    <div class="footer-line"><span>the jdk</span><span>Date, continued</span></div>
+  </section>
+
+  <!-- 79 JDK exhibit 7 · Point -->
+  <section class="jdk">
+    <span class="eyebrow">encapsulation</span>
+    <h2>Exhibit 7: java.awt.Point with public x and y.</h2>
+<pre><code class="language-java" data-trim>
+public class Point     { public int x, y; }               // java.awt
+public class Dimension { public int width, height; }      // java.awt
+
+Rectangle r = new Rectangle(10, 10);
+r.width = -5;        // compiles, ships, and no check exists anywhere
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">That is slide 4's public field, shipped in the platform. The non-negative check has nowhere to go, and never will.</li>
+      <li class="fragment">The honest cost of Dimension being mutable: <code>getSize()</code> has to allocate a fresh object on every call instead of handing back a shared one, because a shared one could be edited.</li>
+      <li class="fragment">If you want a real aliasing leak in the same package, <code>java.awt.Polygon</code> exposes its <code>int[] xpoints</code> directly.</li>
+    </ul>
+    <p class="fragment" style="margin-top:8px; color:var(--muted);">Use instead: accessors, or better, <code>record Point(int x, int y)</code>.</p>
+    <span class="tag">Effective Java, Item 16</span>
+    <div class="footer-line"><span>the jdk</span><span>exhibit 7 · Point</span></div>
+  </section>
+
+  <!-- 80 JDK exhibit 8 · optional operations -->
+  <section class="jdk">
+    <span class="eyebrow">Liskov, and interface segregation</span>
+    <h2>Exhibit 8: methods the interface promises and the object refuses.</h2>
+<pre><code class="language-java" data-trim>
+public interface List&lt;E&gt; extends Collection&lt;E&gt; {
+    boolean add(E e);        // Javadoc: "optional operation"
+    E set(int i, E e);       // Javadoc: "optional operation"
+    void clear();            // Javadoc: "optional operation"
+}
+
+Arrays.asList("x", "y")             // fixed size, writable in place
+List.of("x", "y")                   // no add, no set, nothing
+Collections.unmodifiableList(src)   // read-only view of a list that still moves
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">You answered the <code>Arrays.asList</code> version of this before lunch. Here is the cause: the contract itself says "maybe", so the implementer is invited to refuse at run time.</li>
+      <li class="fragment">Three lists, three different sets of legal operations, and one type. Nothing in the <code>List</code> reference you hold tells you which one you were handed.</li>
+      <li class="fragment">The fix the JDK could not make in 1998 is separate types: an immutable interface that simply has no <code>add</code> to refuse. Kotlin and Guava both did exactly that.</li>
+    </ul>
+    <p class="fragment" style="margin-top:8px; color:var(--muted);">This is the toy <code>Machine</code> interface from the ISP slide, shipped to nine million developers. A subtype that cannot honour the parent's contract, and an interface fat enough that its implementers must lie.</p>
+    <span class="tag">Effective Java, Items 10 and 20</span>
+    <div class="footer-line"><span>the jdk</span><span>exhibit 8 · optional operations</span></div>
+  </section>
+
+  <!-- 81 JDK the replacement -->
+  <section class="jdk">
+    <span class="eyebrow">what fixing it actually took</span>
+    <h2>java.time did not patch Date. It replaced it.</h2>
+    <ul class="clean">
+      <li class="fragment">Every type in <code>java.time</code> is immutable and <code>final</code>. So <code>Instant</code>, <code>LocalDate</code> and <code>Duration</code> cannot be rewritten by a caller, and cannot be subclassed into something that lies.</li>
+      <li class="fragment">There are no setters at all. Every <code>with</code> method returns a new object, which is why a <code>LocalDate</code> is safe as a map key forever, and a <code>Date</code> never was.</li>
+      <li class="fragment"><code>Clock</code> is a parameter, not a static call. That is the hidden dependency slide again, and it is the reason <code>java.time</code> is testable in a way <code>Date</code> could not be.</li>
+    </ul>
+    <p class="fragment" style="margin-top:14px; color:var(--muted);">Java 8 could not delete <code>java.util.Date</code>, so both are still in the platform, twelve years later. That is the price of a public boundary: you do not fix it, you outlive it.</p>
+    <div class="footer-line"><span>the jdk</span><span>the replacement</span></div>
+  </section>
+
+  <!-- 82 JDK verdict table -->
+  <section class="jdk">
+    <span class="eyebrow">ten exhibits, nine names</span>
+    <h2>The verdict, and what to use instead.</h2>
+    <table class="tbl">
+      <tr><th>Exhibit</th><th>Breaks</th><th>Effective Java</th><th>Use instead</th></tr>
+      <tr><td><code>Stack</code></td><td>inheritance, abstraction</td><td>Item 18</td><td><code>Deque</code>, <code>ArrayDeque</code></td></tr>
+      <tr><td><code>Properties</code></td><td>inheritance, encapsulation</td><td>Item 18</td><td>a private <code>Map&lt;String,String&gt;</code>, forwarded</td></tr>
+      <tr><td><code>Timestamp</code></td><td>L, and the equals contract</td><td>Item 10</td><td><code>Instant</code>, or composition</td></tr>
+      <tr><td><code>Cloneable</code></td><td>abstraction</td><td>Item 13</td><td>a copy constructor, a factory, or a record</td></tr>
+      <tr><td><code>SwingConstants</code></td><td>abstraction, I</td><td>Item 22</td><td>an enum, or a static import</td></tr>
+      <tr><td><code>Date</code></td><td>encapsulation (immutability)</td><td>Items 17, 50</td><td><code>java.time</code></td></tr>
+      <tr><td><code>Point</code>, <code>Dimension</code></td><td>encapsulation</td><td>Item 16</td><td>accessors, or a record</td></tr>
+      <tr><td><code>Collection.add</code> and friends</td><td>L and I</td><td>Items 10, 20</td><td>smaller role interfaces, or a type that cannot lie</td></tr>
+      <tr><td><code>URL.equals</code></td><td>the equals contract, and it does DNS</td><td>Item 10</td><td><code>URI</code>, which compares as a value</td></tr>
+      <tr><td><code>Observable</code></td><td>a class where an interface belonged</td><td>Item 18</td><td>a listener interface, or <code>PropertyChangeListener</code></td></tr>
+    </table>
+    <p class="fragment" style="margin-top:10px; color:var(--muted);">Every one of these is a public promise the JDK can never take back, which is the whole argument for drawing the boundary right the first time. Tomorrow's Collections day is largely you using the replacements.</p>
+    <div class="footer-line"><span>the jdk</span><span>verdict</span></div>
+  </section>
+
+  <!-- 83 QUIZ 10 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 10 of 10</span>
+    <h2>What does this print?</h2>
+<pre><code class="language-java" data-trim>
+Properties p = new Properties();
+p.put("port", 8080);
+p.setProperty("host", "db");
+System.out.println(p.size() + " " + p.stringPropertyNames().size());
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>2 2</code></li>
+      <li><b>B</b> <code>2 1</code></li>
+      <li><b>C</b> <code>1 1</code></li>
+      <li><b>D</b> <code>ClassCastException</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>10 of 10</span></div>
+  </section>
+
+
+  <!-- ================= CAPSTONE ================= -->
+  <!-- 85 BUILD TIME -->
+  <section class="title-wrap part">
+    <span class="eyebrow part-tag"><span class="dot" style="background:var(--accent-2)"></span> now you build</span>
+    <h1 class="display" style="font-size:76px;">Enough talk.<br/><em>Make it green.</em></h1>
+    <p class="subtitle">One capstone, two parts, one finale: every pillar and every principle, checked by a test. First, five minutes to get everyone set up.</p>
+    <div class="footer-line"><span>day 1</span><span>capstone</span></div>
+  </section>
+
+  <!-- 86 SETUP 1/3 · GIT -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge">Setup · 1 of 3</span></div>
+    <h2>Install Git.</h2>
+    <p class="fragment" style="color:var(--muted); margin-bottom:2px;">Git is the tool that downloads the code. Pick your operating system:</p>
+    <div class="setup-steps">
+      <div class="fragment"><span class="oslabel">Windows</span><div class="cmd lg">winget install Git.Git</div></div>
+      <div class="fragment"><span class="oslabel">macOS</span><div class="cmd lg">brew install git</div></div>
+      <div class="fragment"><span class="oslabel">Linux · Debian / Ubuntu</span><div class="cmd lg">sudo apt install git</div></div>
+      <div class="fragment"><span class="oslabel">No package manager? Download</span><div class="setup-link">git-scm.com/downloads</div></div>
+    </div>
+    <p class="fragment setup-note">Then check it worked. Type: <span class="setup-link" style="color:var(--accent)">git --version</span></p>
+    <div class="footer-line"><span>setup</span><span>1 · git</span></div>
+  </section>
+
+  <!-- 87 SETUP 2/3 · JAVA 25 -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge">Setup · 2 of 3</span></div>
+    <h2>Install Java 25 (the JDK).</h2>
+    <p class="fragment" style="color:var(--muted); margin-bottom:2px;">Version 25, the same one we use right through to Day 4. It is free, from Adoptium Temurin:</p>
+    <div class="setup-steps">
+      <div class="fragment"><span class="oslabel">Windows</span><div class="cmd lg">winget install EclipseAdoptium.Temurin.25.JDK</div></div>
+      <div class="fragment"><span class="oslabel">macOS</span><div class="cmd lg">brew install --cask temurin@25</div></div>
+      <div class="fragment"><span class="oslabel">Linux, or any OS: download the installer</span><div class="setup-link">adoptium.net</div></div>
+      <div class="fragment"><span class="oslabel">Then confirm it says 25</span><div class="cmd lg">java -version</div></div>
+    </div>
+    <p class="fragment setup-note">If <code>java -version</code> shows 8 or 17, an older Java is first on your PATH. Flag it now, not mid-exercise.</p>
+    <div class="footer-line"><span>setup</span><span>2 · java 25</span></div>
+  </section>
+
+  <!-- 88 SETUP 3/3 · CLONE, OPEN, RUN -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge">Setup · 3 of 3</span></div>
+    <h2>Get the code, open it, run it.</h2>
+    <span class="oslabel fragment">Clone the repo, same command on every OS</span>
+    <div class="cmd lg fragment">git clone https://github.com/prasannathapa/byts-pre-spring.git</div>
+    <span class="oslabel fragment">Step into today's folder</span>
+    <div class="cmd lg fragment">cd byts-pre-spring/day-1-capstone</div>
+    <span class="oslabel fragment">Run it</span>
+    <div class="cmd lg fragment">./run.sh <span class="c">&nbsp; # macOS, Linux</span><br/>.\run.cmd <span class="c">&nbsp; # Windows, PowerShell</span></div>
+    <p class="fragment setup-note">Open the folder in IntelliJ (File, Open, then Trust project) or in VS Code with the Java extension pack.</p>
+    <p class="fragment setup-note">The <code>./</code> and the <code>.\</code> are part of the command. They tell the shell to run the script right <em>here</em>.</p>
+    <p class="fragment setup-note" style="color:var(--good);">You will see failing tests. That is not a mistake, that is your to-do list.</p>
+    <div class="footer-line"><span>setup</span><span>3 · clone, open, run</span></div>
+  </section>
+
+  <!-- 89 PART 1 BRIEF -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge">Part 1 · the bank</span></div>
+    <h2>What you build.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment"><b>Account</b>: a private balance, guarded so it can never go below zero. <span style="color:var(--muted)">(encapsulation)</span></li>
+        <li class="fragment"><b>Transaction</b>: a sealed interface, one method <code>apply</code>. <span style="color:var(--muted)">(abstraction)</span></li>
+        <li class="fragment"><b>Deposit, Withdraw, Transfer</b>: each applies itself. <span style="color:var(--muted)">(polymorphism)</span></li>
+        <li class="fragment">A <b>Ledger</b> that <em>holds</em> accounts. <span style="color:var(--muted)">(composition, not inheritance)</span></li>
+        <li class="fragment">And the Ledger hands out a copy or an unmodifiable view, never the live map. There is a test for exactly that leak.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 460 300" width="100%">
+          <defs>
+            <marker id="s89h" markerWidth="16" markerHeight="12" refX="12" refY="5" orient="auto"><path d="M1,5 L6,1 L12,5 L6,9 z" fill="var(--accent)"/></marker>
+            <marker id="s89i" markerWidth="22" markerHeight="16" refX="18" refY="7" orient="auto"><path d="M1,1 L18,7 L1,13 z" fill="#0e0e10" stroke="var(--accent)" stroke-width="1.5"/></marker>
+            <marker id="s89a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker>
+          </defs>
+          <rect x="24" y="18" width="150" height="46" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="99" y="46" text-anchor="middle" fill="var(--text)" font-size="14">Ledger</text>
+          <rect x="286" y="18" width="150" height="46" rx="8" fill="#16161a" stroke="var(--line)"/><text x="361" y="46" text-anchor="middle" fill="var(--text)" font-size="14">Account</text>
+          <line x1="174" y1="41" x2="284" y2="41" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#s89h)"/>
+          <text x="229" y="32" text-anchor="middle" fill="var(--muted)" font-size="11">holds *</text>
+          <rect x="155" y="112" width="150" height="50" rx="8" fill="rgba(212,255,58,0.06)" stroke="var(--accent)"/><text x="230" y="134" text-anchor="middle" fill="var(--accent)" font-size="13" class="mono">Transaction</text><text x="230" y="152" text-anchor="middle" fill="var(--muted)" font-size="10">sealed</text>
+          <line x1="305" y1="126" x2="358" y2="68" stroke="var(--dim)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#s89a)"/>
+          <text x="352" y="104" text-anchor="middle" fill="var(--muted)" font-size="11">apply</text>
+          <line x1="230" y1="190" x2="230" y2="164" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#s89i)"/>
+          <line x1="90" y1="190" x2="370" y2="190" stroke="var(--dim)" stroke-width="1.5"/>
+          <line x1="90" y1="224" x2="90" y2="190" stroke="var(--dim)" stroke-width="1.5"/>
+          <line x1="230" y1="224" x2="230" y2="190" stroke="var(--dim)" stroke-width="1.5"/>
+          <line x1="370" y1="224" x2="370" y2="190" stroke="var(--dim)" stroke-width="1.5"/>
+          <rect x="30" y="224" width="120" height="42" rx="7" fill="#16161a" stroke="var(--line)"/><text x="90" y="250" text-anchor="middle" fill="var(--text)" font-size="12">Deposit</text>
+          <rect x="170" y="224" width="120" height="42" rx="7" fill="#16161a" stroke="var(--line)"/><text x="230" y="250" text-anchor="middle" fill="var(--text)" font-size="12">Withdraw</text>
+          <rect x="310" y="224" width="120" height="42" rx="7" fill="#16161a" stroke="var(--line)"/><text x="370" y="250" text-anchor="middle" fill="var(--text)" font-size="12">Transfer</text>
+          <text x="230" y="288" text-anchor="middle" fill="var(--muted)" font-size="11">three variants, one apply()</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>capstone</span><span>part 1 · the shape</span></div>
+  </section>
+
+  <!-- 90 PART 2 BRIEF -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge">Part 2 · the report</span></div>
+    <h2>From a switch to a seam.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment">Define a small <code>ReportFormat</code> interface: one method, <code>format</code>. <span style="color:var(--muted)">(ISP)</span></li>
+        <li class="fragment">A <code>CsvFormat</code> and a <code>JsonFormat</code> implement it. <span style="color:var(--muted)">(OCP, LSP)</span></li>
+        <li class="fragment"><code>ReportService</code> takes a <code>ReportFormat</code> and uses it, never learning the concrete type. <span style="color:var(--muted)">(DIP)</span></li>
+        <li class="fragment">Formatting, validation, and data each live apart. <span style="color:var(--muted)">(SRP)</span></li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 420 250" width="100%">
+          <defs>
+            <marker id="s90a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker>
+            <marker id="s90ai" markerWidth="18" markerHeight="14" refX="14" refY="6" orient="auto"><path d="M1,1 L14,6 L1,11 z" fill="#0e0e10" stroke="var(--accent)" stroke-width="1.5"/></marker>
+          </defs>
+          <rect x="120" y="18" width="180" height="46" rx="8" fill="#16161a" stroke="var(--line)"/><text x="210" y="46" text-anchor="middle" fill="var(--text)" font-size="13">ReportService</text>
+          <rect x="120" y="104" width="180" height="48" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2"/><text x="210" y="126" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">ReportFormat</text><text x="210" y="143" text-anchor="middle" fill="var(--muted)" font-size="10">interface</text>
+          <line x1="210" y1="64" x2="210" y2="102" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#s90a)"/><text x="300" y="88" fill="var(--muted)" font-size="10">uses</text>
+          <rect x="60" y="200" width="140" height="42" rx="7" fill="#16161a" stroke="var(--line)"/><text x="130" y="226" text-anchor="middle" fill="var(--text)" font-size="12">CsvFormat</text>
+          <rect x="220" y="200" width="140" height="42" rx="7" fill="#16161a" stroke="var(--line)"/><text x="290" y="226" text-anchor="middle" fill="var(--text)" font-size="12">JsonFormat</text>
+          <line x1="130" y1="200" x2="195" y2="154" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#s90ai)"/>
+          <line x1="290" y1="200" x2="225" y2="154" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#s90ai)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>capstone</span><span>part 2 · the shape</span></div>
+  </section>
+
+  <!-- 91 FINALE -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge good">Finale · the two, joined</span></div>
+    <h2>Export a bank statement.</h2>
+    <p class="lede fragment">Take the ledger you built in Part 1, and print it through a <code>StatementFormat</code> from Part 2. The pillars produced the data; SOLID decides how it leaves the building.</p>
+    <div class="grid g2" style="margin-top:16px;">
+      <div class="card fragment"><h3>What ties together</h3><p>A <code>StatementExporter</code> takes a list of accounts and an injected <code>StatementFormat</code>. Same rows, any format, and you add one without touching the exporter.</p></div>
+      <div class="card fragment"><h3>Every idea, once</h3><p>Encapsulated balances, a polymorphic format, composition over the account list, and the OCP and DIP seam. All of Day 1 in one small file.</p></div>
+    </div>
+    <div class="footer-line"><span>capstone</span><span>finale</span></div>
+  </section>
+
+  <!-- 92 GO BUILD -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge">Capstone · build time</span></div>
+    <h2>Go build. Tests are the spec.</h2>
+    <div class="cmd lg" style="margin-top:14px;">./run.sh <span class="c">&nbsp; # everything, from the capstone root</span><br/>cd part1-bank &amp;&amp; ./run.sh <span class="c">&nbsp; # just one part</span></div>
+    <ul class="clean" style="margin-top:18px;">
+      <li>Do the parts in order. The finale only makes sense once both halves click.</li>
+      <li>Read <code>RunTests.java</code> top to bottom before you write anything. It is the specification, and you do not edit it.</li>
+      <li>Replace the <code>throw</code>, not the signature.</li>
+      <li>Stuck for more than ten minutes? Hands up. That is what we are here for.</li>
+    </ul>
+    <p style="margin-top:20px; color:var(--muted);">Keep building through the break. We reconvene after it for the debrief.</p>
+    <div class="footer-line"><span>capstone</span><span>go build</span></div>
+  </section>
+
+  <!-- 93 CAPSTONE DEBRIEF -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge">Capstone · debrief</span></div>
+    <h2>Which idea did each test just prove?</h2>
+    <div class="grid g2">
+      <ul class="clean">
+        <li class="fragment"><b>The bank.</b> The overdraw test that throws: your <em>encapsulation</em> held.</li>
+        <li class="fragment">A mixed list of transactions through one loop: <em>polymorphism</em>.</li>
+        <li class="fragment"><code>Transfer</code> added without touching the loop: <em>open for extension</em>.</li>
+        <li class="fragment">The ledger holding a map instead of extending one: <em>composition</em>.</li>
+        <li class="fragment">The test that mutates your map after you handed it out: that is encapsulation's second half, and it is the one the JDK failed with <code>Date</code> and <code>Point</code>.</li>
+      </ul>
+      <ul class="clean">
+        <li class="fragment"><b>The report and the finale.</b> Your own new format just working: <em>DIP</em> and <em>OCP</em>.</li>
+        <li class="fragment">Every format honouring one one-method contract: <em>ISP</em> and <em>LSP</em>.</li>
+        <li class="fragment">The service validating while the formatter formats: <em>SRP</em>.</li>
+        <li class="fragment">The exporter delegating to an injected <code>StatementFormat</code>: that is the seam, and it is the whole reason the finale took ten minutes instead of an afternoon.</li>
+      </ul>
+    </div>
+    <div class="footer-line"><span>capstone</span><span>debrief</span></div>
+  </section>
+
+  <!-- 94 RECAP -->
+  <section>
+    <span class="eyebrow">what to actually remember</span>
+    <h2>Ten lines, the whole day.</h2>
+    <div class="grid g2">
+      <ul class="clean">
+        <li class="fragment"><b>Encapsulation</b>: hide state, expose behaviour.</li>
+        <li class="fragment"><b>Abstraction</b>: program to a simple idea.</li>
+        <li class="fragment"><b>Inheritance</b>: compose by default; seal the is-a family.</li>
+        <li class="fragment"><b>Polymorphism</b>: let the object decide.</li>
+        <li class="fragment"><b>S</b>: one actor, one reason to change.</li>
+      </ul>
+      <ul class="clean">
+        <li class="fragment"><b>O</b>: extend by adding, not editing.</li>
+        <li class="fragment"><b>L</b>: a subtype keeps the parent's promises.</li>
+        <li class="fragment"><b>I</b>: small, role-shaped interfaces.</li>
+        <li class="fragment"><b>D</b>: depend on abstractions, inject the details.</li>
+        <li class="fragment"><b>And four traps that look like features</b>: a constructor that calls an override, a record with a mutable component, an interface method that is optional, and a static call you cannot replace.</li>
+      </ul>
+    </div>
+    <p class="fragment" style="margin-top:16px; color:var(--muted);">Plus one meta-rule, courtesy of the JDK: a public boundary is forever, so draw it right the first time.</p>
+    <div class="footer-line"><span>day 1</span><span>recap</span></div>
+  </section>
+
+  <!-- 95 CLOSE -->
+  <section class="title-wrap">
+    <span class="eyebrow">closing</span>
+    <h1 class="display" style="font-size:60px;">It is not about<br/>classes. It is about<br/><em>boundaries.</em></h1>
+    <p class="subtitle">Draw them well and a large system stays soft: easy to change, hard to break. Tomorrow is Collections, which is the JDK's best boundaries, List, Set, Map and Deque, and the contracts behind them, <code>equals</code> and <code>hashCode</code> included. Then JDBC, then Servlets, and the Spring people take over exactly where our composition root ends.</p>
+    <div class="footer-line"><span>day 1</span><span>now go build</span></div>
+  </section>
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1600, height: 900, margin: 0.04, minScale: 0.2, maxScale: 1.4,
+    hash: true, slideNumber: 'c/t', controls: true, progress: true,
+    center: false, transition: 'fade', backgroundTransition: 'fade',
+    plugins: [ RevealHighlight, RevealNotes ]
+  });
+
+  // Driven by teacher.html in this same folder. Folder-scoped so it never collides with other days.
+  var SCOPE = location.pathname.replace(/[^/]*$/, '');
+  var CH = 'byts-deck' + SCOPE, K_GOTO = 'byts-deck-goto' + SCOPE, K_HELLO = 'byts-deck-hello' + SCOPE;
+  var deckChan = ('BroadcastChannel' in window) ? new BroadcastChannel(CH) : null;
+  function pIdx() { return Reveal.getSlides().indexOf(Reveal.getCurrentSlide()); }
+  function goTo(i) {
+    if (isNaN(i) || i === pIdx()) return;
+    Reveal.slide(i, 0);
+    var n = Reveal.getCurrentSlide().querySelectorAll('.fragment').length;
+    if (n > 0) Reveal.slide(i, 0, n - 1);
+  }
+  function hello() {
+    try { localStorage.setItem(K_HELLO, String(Date.now())); } catch (e) {}
+    if (deckChan) deckChan.postMessage({ type: 'hello' });
+  }
+  Reveal.on('ready', hello);
+  if (deckChan) deckChan.onmessage = function (e) {
+    if (e.data && e.data.type === 'goto' && typeof e.data.slide === 'number') goTo(e.data.slide);
+  };
+  window.addEventListener('storage', function (e) {
+    if (e.key === K_GOTO && e.newValue != null) goTo(parseInt(e.newValue, 10));
+  });
+</script>
+</body>
+</html>
