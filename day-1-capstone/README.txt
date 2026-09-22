@@ -16,7 +16,7 @@ runs it). Do these five steps in order.
   1) INSTALL GIT
        Windows         winget install Git.Git
        macOS           brew install git
-       Linux           sudo apt install git
+       Linux           sudo apt update && sudo apt install git
        no package mgr  download from  https://git-scm.com/downloads
      check it:         git --version          (should print a version)
 
@@ -25,7 +25,7 @@ runs it). Do these five steps in order.
                        then install the id it prints for the 25 JDK row:
                        winget install <that id>
        macOS           brew install --cask temurin@25
-       Linux (apt)     sudo apt install openjdk-25-jdk
+       Linux (apt)     sudo apt update && sudo apt install openjdk-25-jdk
        no package mgr  download from  https://adoptium.net, unpack it, then set
                        JAVA_HOME to the unpacked folder and add its bin to PATH
      check it:         java -version          (must say 25 - not 8 or 17)
