@@ -12,9 +12,9 @@
 
 <style>
   :root{
-    --bg:#0e0e10; --bg-soft:#16161a; --line:#26262c; --text:#e8e8ea;
-    --muted:#8a8a93; --dim:#5a5a63; --accent:#d4ff3a; --accent-2:#6ea8ff;
-    --good:#7ddc9a; --bad:#ff7a7a; --warn:#f5b840;
+    --bg:#ffffff; --bg-soft:#f6f6f7; --line:#e0e0e4; --text:#18181b;
+    --muted:#5f5f6a; --dim:#67676f; --accent:#4b790f; --accent-2:#1d4ed8;
+    --good:#15803d; --bad:#b91c1c; --warn:#a16207;
   }
   html, body { background: var(--bg); }
   .reveal-viewport { background: var(--bg) !important; }
@@ -25,25 +25,25 @@
   .reveal .slides > section { padding:56px 80px; height:100%; box-sizing:border-box; }
 
   /* per-pillar accent tint (part 1) */
-  .reveal section.enc  { --accent:#d4ff3a; }
-  .reveal section.abs  { --accent:#ff8a3d; }
-  .reveal section.inh  { --accent:#6ea8ff; }
-  .reveal section.poly { --accent:#c084fc; }
+  .reveal section.enc  { --accent:#4b790f; }
+  .reveal section.abs  { --accent:#c2410c; }
+  .reveal section.inh  { --accent:#1d4ed8; }
+  .reveal section.poly { --accent:#7e22ce; }
   /* per-principle accent tint (part 2) */
-  .reveal section.srp { --accent:#ff5c8d; }
-  .reveal section.ocp { --accent:#14b8a6; }
-  .reveal section.lsp { --accent:#a78bfa; }
-  .reveal section.isp { --accent:#f59e0b; }
-  .reveal section.dip { --accent:#22d3ee; }
+  .reveal section.srp { --accent:#be123c; }
+  .reveal section.ocp { --accent:#0f766e; }
+  .reveal section.lsp { --accent:#6d28d9; }
+  .reveal section.isp { --accent:#b05109; }
+  .reveal section.dip { --accent:#0e7490; }
   /* the JDK in the dock (part 2, after lunch) */
-  .reveal section.jdk { --accent:#f87171; }
+  .reveal section.jdk { --accent:#da0b0b; }
 
   .reveal h1,.reveal h2,.reveal h3,.reveal h4 { font-family:'Inter',sans-serif; font-weight:600;
     color:var(--text); text-transform:none; letter-spacing:-0.02em; margin:0 0 0.4em 0; line-height:1.12; }
   .reveal h1 { font-size:60px; font-weight:700; letter-spacing:-0.04em; }
   .reveal h2 { font-size:38px; font-weight:600; }
   .reveal h3 { font-size:22px; font-weight:600; }
-  .reveal p,.reveal li { font-size:21px; line-height:1.55; color:#d4d4d8; }
+  .reveal p,.reveal li { font-size:21px; line-height:1.55; color:#3f3f46; }
   .reveal ul,.reveal ol { margin:0.4em 0 0 1.2em; }
   .reveal li { margin:0.4em 0; }
   .reveal strong { color:var(--text); font-weight:600; }
@@ -60,9 +60,9 @@
   .display em { font-style:italic; color:var(--accent); }
   .subtitle { font-size:23px; color:var(--muted); margin-top:1.2em; max-width:62ch; }
 
-  .lede { font-size:27px; line-height:1.4; color:#e8e8ea; max-width:66ch; font-weight:400; }
+  .lede { font-size:27px; line-height:1.4; color:#18181b; max-width:66ch; font-weight:400; }
   .quote { font-family:'Fraunces',serif; font-style:italic; font-size:30px; line-height:1.35;
-    color:#e0e0e4; border-left:2px solid var(--accent); padding-left:22px; max-width:64ch; }
+    color:#27272a; border-left:2px solid var(--accent); padding-left:22px; max-width:64ch; }
   .quote-attr { font-family:'Inter',sans-serif; font-style:normal; font-size:14px; color:var(--muted);
     margin-top:0.6em; letter-spacing:0.1em; text-transform:uppercase; }
 
@@ -122,10 +122,10 @@
       radial-gradient(1200px 500px at 90% -10%, rgba(212,255,58,0.06), transparent 60%); }
   .handson-head { display:flex; align-items:center; gap:14px; margin-bottom:10px; }
   .handson-badge { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em;
-    text-transform:uppercase; color:#0a0a0c; background:var(--accent); padding:5px 12px; border-radius:5px; font-weight:600; }
+    text-transform:uppercase; color:#ffffff; background:var(--accent); padding:5px 12px; border-radius:5px; font-weight:600; }
   .cmd { background:#0a0a0c; border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px;
-    font-family:'JetBrains Mono',monospace; font-size:16px; color:#e0e0e4; padding:14px 18px; margin:12px 0; line-height:1.7; }
-  .cmd .c { color:var(--dim); }
+    font-family:'JetBrains Mono',monospace; font-size:16px; color:#e8e8ea; padding:14px 18px; margin:12px 0; line-height:1.7; }
+  .cmd .c { color:#9a9aa5; }
   .cmd.lg { font-size:24px; padding:16px 20px; margin:6px 0; line-height:1.5; word-break:break-all; }
   .oslabel { font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:0.12em; text-transform:uppercase;
     color:var(--accent); margin:8px 0 2px; display:block; }
@@ -134,9 +134,9 @@
   .setup-link { font-family:'JetBrains Mono',monospace; font-size:22px; color:var(--accent-2); word-break:break-all; }
 
   /* quiz + answer treatment */
-  .reveal section.quiz { --accent:#facc15; background:
+  .reveal section.quiz { --accent:#846a03; background:
       radial-gradient(1200px 520px at 88% -10%, rgba(250,204,21,0.06), transparent 60%); }
-  .reveal section.answer { --accent:#7ddc9a; background:
+  .reveal section.answer { --accent:#157d3c; background:
       radial-gradient(1200px 520px at 10% -10%, rgba(125,220,154,0.06), transparent 60%); }
   .reveal ol.opts { list-style:none; margin:16px 0 0 0; display:grid;
     grid-template-columns:1fr 1fr; gap:12px 24px; }
@@ -149,6 +149,9 @@
   .trap { border-left:2px solid var(--warn); padding-left:16px; margin-top:16px; max-width:88ch; }
   .trap b { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em;
     text-transform:uppercase; color:var(--warn); font-weight:500; display:block; margin-bottom:3px; }
+  /* monokai's own comment grey reads at 4.0:1 on the code plate, so lift it */
+  .reveal pre code .hljs-comment, .reveal pre code .hljs-quote,
+  .reveal pre code .hljs-meta, .reveal pre code .hljs-meta-keyword { color:#9d9884; }
 </style>
 </head>
 <body>
@@ -189,17 +192,17 @@
     <div class="diagram fragment" style="margin-top:16px;">
       <svg viewBox="0 0 940 200" width="100%">
         <defs><marker id="a03" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
-        <rect x="20" y="20" width="285" height="150" rx="10" fill="#0a0a0c" stroke="var(--bad)" stroke-dasharray="4 4"/>
+        <rect x="20" y="20" width="285" height="150" rx="10" fill="#f6f6f7" stroke="var(--bad)" stroke-dasharray="4 4"/>
         <path d="M55,58 C150,38 200,148 280,78 M55,138 C170,88 120,58 285,148 M40,102 C140,168 225,42 296,108 M70,48 C120,118 205,148 255,58" fill="none" stroke="var(--dim)" stroke-width="1.5"/>
         <text x="162" y="192" text-anchor="middle" fill="var(--muted)" font-size="14">one big tangle</text>
         <line x1="325" y1="95" x2="410" y2="95" stroke="var(--accent)" stroke-width="2" marker-end="url(#a03)"/>
         <text x="367" y="83" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">split</text>
-        <rect x="445" y="20" width="205" height="64" rx="10" fill="#16161a" stroke="var(--accent)"/>
-        <rect x="461" y="34" width="56" height="34" rx="5" fill="#0a0a0c" stroke="var(--dim)"/>
+        <rect x="445" y="20" width="205" height="64" rx="10" fill="#ffffff" stroke="var(--accent)"/>
+        <rect x="461" y="34" width="56" height="34" rx="5" fill="#f6f6f7" stroke="var(--dim)"/>
         <text x="489" y="55" text-anchor="middle" fill="var(--muted)" font-size="11">state</text>
         <text x="634" y="55" text-anchor="end" fill="var(--text)" font-size="13">object</text>
-        <rect x="445" y="106" width="205" height="64" rx="10" fill="#16161a" stroke="var(--accent)"/>
-        <rect x="461" y="120" width="56" height="34" rx="5" fill="#0a0a0c" stroke="var(--dim)"/>
+        <rect x="445" y="106" width="205" height="64" rx="10" fill="#ffffff" stroke="var(--accent)"/>
+        <rect x="461" y="120" width="56" height="34" rx="5" fill="#f6f6f7" stroke="var(--dim)"/>
         <text x="489" y="141" text-anchor="middle" fill="var(--muted)" font-size="11">state</text>
         <text x="634" y="141" text-anchor="end" fill="var(--text)" font-size="13">object</text>
         <rect x="680" y="20" width="240" height="150" rx="10" fill="none" stroke="var(--line)" stroke-dasharray="5 4"/>
@@ -223,13 +226,13 @@
         <circle cx="130" cy="32" r="5" fill="var(--accent)"/>
         <text x="130" y="180" text-anchor="middle" fill="var(--text)" font-size="15">Encapsulation</text>
         <text x="130" y="199" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">hide</text>
-        <rect x="270" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="270" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="355" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Abstraction</text>
         <text x="355" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">simplify</text>
-        <rect x="495" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="495" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="580" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Inheritance</text>
         <text x="580" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">structure</text>
-        <rect x="720" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="720" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="805" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Polymorphism</text>
         <text x="805" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">vary</text>
       </svg>
@@ -254,11 +257,11 @@
             <marker id="a05b" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--bad)"/></marker>
           </defs>
           <text x="270" y="30" text-anchor="middle" fill="var(--text)" font-size="15">Account</text>
-          <rect x="120" y="44" width="290" height="228" rx="16" fill="#16161a" stroke="var(--accent)" stroke-width="2"/>
-          <rect x="228" y="96" width="150" height="76" rx="8" fill="#0a0a0c" stroke="var(--dim)"/>
+          <rect x="120" y="44" width="290" height="228" rx="16" fill="#ffffff" stroke="var(--accent)" stroke-width="2"/>
+          <rect x="228" y="96" width="150" height="76" rx="8" fill="#f6f6f7" stroke="var(--dim)"/>
           <text x="303" y="128" text-anchor="middle" fill="var(--muted)" font-size="13" class="mono">private</text>
           <text x="303" y="150" text-anchor="middle" fill="var(--muted)" font-size="13" class="mono">balance</text>
-          <rect x="60" y="204" width="130" height="38" rx="6" fill="#000" stroke="var(--good)"/>
+          <rect x="60" y="204" width="130" height="38" rx="6" fill="#f6f6f7" stroke="var(--good)"/>
           <text x="125" y="228" text-anchor="middle" fill="var(--good)" font-size="12" class="mono">withdraw()</text>
           <line x1="16" y1="223" x2="56" y2="223" stroke="var(--good)" stroke-width="2.5" marker-end="url(#a05g)"/>
           <text x="16" y="200" fill="var(--good)" font-size="11">through the door</text>
@@ -333,18 +336,18 @@ public static final List&lt;String&gt; SUITS_VIEW = List.of(SUITS);
           <marker id="a07t" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--good)"/></marker>
         </defs>
         <text x="20" y="24" fill="var(--bad)" font-size="14" class="mono">ASK   logic leaks to the caller</text>
-        <rect x="20" y="40" width="120" height="58" rx="8" fill="#16161a" stroke="var(--dim)"/>
+        <rect x="20" y="40" width="120" height="58" rx="8" fill="#ffffff" stroke="var(--dim)"/>
         <text x="80" y="74" text-anchor="middle" fill="var(--text)" font-size="13">caller</text>
-        <rect x="300" y="40" width="120" height="58" rx="8" fill="#16161a" stroke="var(--dim)"/>
+        <rect x="300" y="40" width="120" height="58" rx="8" fill="#ffffff" stroke="var(--dim)"/>
         <text x="360" y="74" text-anchor="middle" fill="var(--text)" font-size="13">account</text>
         <line x1="300" y1="60" x2="142" y2="60" stroke="var(--bad)" stroke-width="2" marker-end="url(#a07a)"/>
         <text x="221" y="52" text-anchor="middle" fill="var(--muted)" font-size="11" class="mono">getBalance()</text>
         <text x="80" y="128" text-anchor="middle" fill="var(--bad)" font-size="12">the caller then</text>
         <text x="80" y="146" text-anchor="middle" fill="var(--bad)" font-size="12">decides the rule</text>
         <text x="520" y="24" fill="var(--good)" font-size="14" class="mono">TELL   logic stays inside</text>
-        <rect x="520" y="40" width="120" height="58" rx="8" fill="#16161a" stroke="var(--dim)"/>
+        <rect x="520" y="40" width="120" height="58" rx="8" fill="#ffffff" stroke="var(--dim)"/>
         <text x="580" y="74" text-anchor="middle" fill="var(--text)" font-size="13">caller</text>
-        <rect x="800" y="40" width="120" height="58" rx="8" fill="#16161a" stroke="var(--good)"/>
+        <rect x="800" y="40" width="120" height="58" rx="8" fill="#ffffff" stroke="var(--good)"/>
         <text x="860" y="74" text-anchor="middle" fill="var(--text)" font-size="13">account</text>
         <line x1="642" y1="60" x2="798" y2="60" stroke="var(--good)" stroke-width="2" marker-end="url(#a07t)"/>
         <text x="720" y="52" text-anchor="middle" fill="var(--muted)" font-size="11" class="mono">withdraw(amt)</text>
@@ -444,17 +447,17 @@ System.out.println(t.members().size() + " " + t.equals(new Team("core", m)));
     <div class="diagram" style="margin-top:22px;">
       <svg viewBox="0 0 940 200" width="100%">
         <line x1="20" y1="158" x2="920" y2="158" stroke="var(--line)" stroke-width="1.5"/>
-        <rect x="45" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="45" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="130" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Encapsulation</text>
         <text x="130" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">hide</text>
         <rect x="270" y="44" width="170" height="114" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
         <circle cx="355" cy="32" r="5" fill="var(--accent)"/>
         <text x="355" y="180" text-anchor="middle" fill="var(--text)" font-size="15">Abstraction</text>
         <text x="355" y="199" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">simplify</text>
-        <rect x="495" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="495" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="580" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Inheritance</text>
         <text x="580" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">structure</text>
-        <rect x="720" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="720" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="805" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Polymorphism</text>
         <text x="805" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">vary</text>
       </svg>
@@ -479,11 +482,11 @@ System.out.println(t.members().size() + " " + t.equals(new Team("core", m)));
           <text x="210" y="46" text-anchor="middle" fill="var(--text)" font-size="15">wheel + pedal</text>
           <text x="210" y="80" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">the abstraction you use</text>
           <line x1="210" y1="86" x2="210" y2="104" stroke="var(--dim)" stroke-width="1.5"/>
-          <rect x="60" y="106" width="300" height="34" rx="7" fill="#16161a" stroke="var(--line)"/>
+          <rect x="60" y="106" width="300" height="34" rx="7" fill="#ffffff" stroke="var(--line)"/>
           <text x="210" y="128" text-anchor="middle" fill="var(--muted)" font-size="13">engine</text>
-          <rect x="60" y="148" width="300" height="34" rx="7" fill="#16161a" stroke="var(--line)"/>
+          <rect x="60" y="148" width="300" height="34" rx="7" fill="#ffffff" stroke="var(--line)"/>
           <text x="210" y="170" text-anchor="middle" fill="var(--muted)" font-size="13">pistons, timing</text>
-          <rect x="60" y="190" width="300" height="34" rx="7" fill="#0a0a0c" stroke="var(--line)"/>
+          <rect x="60" y="190" width="300" height="34" rx="7" fill="#f6f6f7" stroke="var(--line)"/>
           <text x="210" y="212" text-anchor="middle" fill="var(--dim)" font-size="13">combustion</text>
           <text x="210" y="242" text-anchor="middle" fill="var(--dim)" font-size="12">hidden: you never touch these</text>
         </svg>
@@ -513,7 +516,7 @@ PaymentGateway gw =
       <div class="diagram fragment">
         <svg viewBox="0 0 420 268" width="100%">
           <defs><marker id="a13" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker></defs>
-          <rect x="140" y="14" width="140" height="44" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="140" y="14" width="140" height="44" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="210" y="41" text-anchor="middle" fill="var(--text)" font-size="14">caller</text>
           <line x1="210" y1="58" x2="210" y2="84" stroke="var(--dim)" stroke-width="2" marker-end="url(#a13)"/>
           <rect x="108" y="86" width="204" height="50" rx="8" fill="rgba(255,138,61,0.14)" stroke="var(--accent)" stroke-width="2"/>
@@ -522,11 +525,11 @@ PaymentGateway gw =
           <line x1="150" y1="158" x2="85" y2="194" stroke="var(--dim)" stroke-width="1.5"/>
           <line x1="210" y1="160" x2="210" y2="194" stroke="var(--dim)" stroke-width="1.5"/>
           <line x1="270" y1="158" x2="335" y2="194" stroke="var(--dim)" stroke-width="1.5"/>
-          <rect x="22" y="196" width="118" height="42" rx="8" fill="#0a0a0c" stroke="var(--line)"/>
+          <rect x="22" y="196" width="118" height="42" rx="8" fill="#f6f6f7" stroke="var(--line)"/>
           <text x="81" y="222" text-anchor="middle" fill="var(--muted)" font-size="13">Stripe</text>
-          <rect x="151" y="196" width="118" height="42" rx="8" fill="#0a0a0c" stroke="var(--line)"/>
+          <rect x="151" y="196" width="118" height="42" rx="8" fill="#f6f6f7" stroke="var(--line)"/>
           <text x="210" y="222" text-anchor="middle" fill="var(--muted)" font-size="13">PayPal</text>
-          <rect x="280" y="196" width="118" height="42" rx="8" fill="#0a0a0c" stroke="var(--line)"/>
+          <rect x="280" y="196" width="118" height="42" rx="8" fill="#f6f6f7" stroke="var(--line)"/>
           <text x="339" y="222" text-anchor="middle" fill="var(--muted)" font-size="13">Mock</text>
           <text x="210" y="260" text-anchor="middle" fill="var(--dim)" font-size="11">caller depends on the box above, not these</text>
         </svg>
@@ -641,17 +644,17 @@ class Point {
     <div class="diagram" style="margin-top:22px;">
       <svg viewBox="0 0 940 200" width="100%">
         <line x1="20" y1="158" x2="920" y2="158" stroke="var(--line)" stroke-width="1.5"/>
-        <rect x="45" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="45" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="130" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Encapsulation</text>
         <text x="130" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">hide</text>
-        <rect x="270" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="270" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="355" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Abstraction</text>
         <text x="355" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">simplify</text>
         <rect x="495" y="44" width="170" height="114" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
         <circle cx="580" cy="32" r="5" fill="var(--accent)"/>
         <text x="580" y="180" text-anchor="middle" fill="var(--text)" font-size="15">Inheritance</text>
         <text x="580" y="199" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">structure</text>
-        <rect x="720" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="720" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="805" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Polymorphism</text>
         <text x="805" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">vary</text>
       </svg>
@@ -672,7 +675,7 @@ class Point {
       </ul>
       <div class="diagram fragment">
         <svg viewBox="0 0 420 240" width="100%">
-          <rect x="130" y="18" width="160" height="48" rx="8" fill="#16161a" stroke="var(--accent)" stroke-width="2"/>
+          <rect x="130" y="18" width="160" height="48" rx="8" fill="#ffffff" stroke="var(--accent)" stroke-width="2"/>
           <text x="210" y="40" text-anchor="middle" fill="var(--text)" font-size="14">Vector</text>
           <text x="210" y="57" text-anchor="middle" fill="var(--muted)" font-size="11">parent (not yours)</text>
           <text x="342" y="34" fill="var(--bad)" font-size="12">edit</text>
@@ -680,11 +683,11 @@ class Point {
           <path d="M172,66 L100,146" stroke="var(--bad)" stroke-width="2" stroke-dasharray="3 3"/>
           <path d="M210,66 L210,146" stroke="var(--bad)" stroke-width="2" stroke-dasharray="3 3"/>
           <path d="M248,66 L320,146" stroke="var(--bad)" stroke-width="2" stroke-dasharray="3 3"/>
-          <rect x="50" y="148" width="100" height="42" rx="8" fill="#0a0a0c" stroke="var(--bad)"/>
+          <rect x="50" y="148" width="100" height="42" rx="8" fill="#f6f6f7" stroke="var(--bad)"/>
           <text x="100" y="174" text-anchor="middle" fill="var(--muted)" font-size="13">Stack</text>
-          <rect x="160" y="148" width="100" height="42" rx="8" fill="#0a0a0c" stroke="var(--bad)"/>
+          <rect x="160" y="148" width="100" height="42" rx="8" fill="#f6f6f7" stroke="var(--bad)"/>
           <text x="210" y="174" text-anchor="middle" fill="var(--muted)" font-size="13">History</text>
-          <rect x="270" y="148" width="100" height="42" rx="8" fill="#0a0a0c" stroke="var(--bad)"/>
+          <rect x="270" y="148" width="100" height="42" rx="8" fill="#f6f6f7" stroke="var(--bad)"/>
           <text x="320" y="174" text-anchor="middle" fill="var(--muted)" font-size="13">Queue</text>
           <text x="210" y="222" text-anchor="middle" fill="var(--bad)" font-size="13">every child can break, silently</text>
         </svg>
@@ -731,20 +734,20 @@ new Sub();
       <div class="diagram fragment">
         <svg viewBox="0 0 420 244" width="100%">
           <defs>
-            <marker id="a19i" markerWidth="18" markerHeight="14" refX="14" refY="6" orient="auto"><path d="M1,1 L14,6 L1,11 z" fill="#0e0e10" stroke="var(--accent)" stroke-width="1.5"/></marker>
+            <marker id="a19i" markerWidth="18" markerHeight="14" refX="14" refY="6" orient="auto"><path d="M1,1 L14,6 L1,11 z" fill="#f6f6f7" stroke="var(--accent)" stroke-width="1.5"/></marker>
             <marker id="a19h" markerWidth="18" markerHeight="14" refX="14" refY="6" orient="auto"><path d="M1,6 L7,2 L14,6 L7,10 z" fill="var(--accent)"/></marker>
           </defs>
           <text x="105" y="24" text-anchor="middle" fill="var(--good)" font-size="14" class="mono">is-a: inherit</text>
-          <rect x="55" y="40" width="100" height="42" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="55" y="40" width="100" height="42" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="105" y="66" text-anchor="middle" fill="var(--text)" font-size="13">Circle</text>
           <line x1="105" y1="82" x2="105" y2="162" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#a19i)"/>
-          <rect x="55" y="166" width="100" height="42" rx="8" fill="#16161a" stroke="var(--accent)"/>
+          <rect x="55" y="166" width="100" height="42" rx="8" fill="#ffffff" stroke="var(--accent)"/>
           <text x="105" y="192" text-anchor="middle" fill="var(--text)" font-size="13">Shape</text>
           <text x="315" y="24" text-anchor="middle" fill="var(--warn)" font-size="14" class="mono">has-a: hold</text>
-          <rect x="265" y="40" width="100" height="42" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="265" y="40" width="100" height="42" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="315" y="66" text-anchor="middle" fill="var(--text)" font-size="13">Car</text>
           <line x1="315" y1="82" x2="315" y2="162" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#a19h)"/>
-          <rect x="265" y="166" width="100" height="42" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="265" y="166" width="100" height="42" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="315" y="192" text-anchor="middle" fill="var(--text)" font-size="13">Engine</text>
           <text x="105" y="232" text-anchor="middle" fill="var(--muted)" font-size="11">hollow arrow</text>
           <text x="315" y="232" text-anchor="middle" fill="var(--muted)" font-size="11">diamond</text>
@@ -809,11 +812,11 @@ sealed interface Shape
           <text x="210" y="41" text-anchor="middle" fill="var(--accent)" font-size="14" class="mono">Shape</text>
           <rect x="28" y="86" width="156" height="150" rx="12" fill="none" stroke="var(--accent)" stroke-dasharray="6 4"/>
           <text x="106" y="106" text-anchor="middle" fill="var(--muted)" font-size="11">sealed: only these</text>
-          <rect x="48" y="118" width="116" height="32" rx="6" fill="#16161a" stroke="var(--line)"/><text x="106" y="139" text-anchor="middle" fill="var(--text)" font-size="12">Circle</text>
-          <rect x="48" y="156" width="116" height="32" rx="6" fill="#16161a" stroke="var(--line)"/><text x="106" y="177" text-anchor="middle" fill="var(--text)" font-size="12">Square</text>
-          <rect x="48" y="194" width="116" height="32" rx="6" fill="#16161a" stroke="var(--line)"/><text x="106" y="215" text-anchor="middle" fill="var(--text)" font-size="12">Triangle</text>
+          <rect x="48" y="118" width="116" height="32" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="106" y="139" text-anchor="middle" fill="var(--text)" font-size="12">Circle</text>
+          <rect x="48" y="156" width="116" height="32" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="106" y="177" text-anchor="middle" fill="var(--text)" font-size="12">Square</text>
+          <rect x="48" y="194" width="116" height="32" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="106" y="215" text-anchor="middle" fill="var(--text)" font-size="12">Triangle</text>
           <line x1="180" y1="58" x2="120" y2="114" stroke="var(--dim)" stroke-width="1.5"/>
-          <rect x="270" y="150" width="126" height="40" rx="6" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="4 3"/>
+          <rect x="270" y="150" width="126" height="40" rx="6" fill="#f6f6f7" stroke="var(--dim)" stroke-dasharray="4 3"/>
           <text x="333" y="174" text-anchor="middle" fill="var(--dim)" font-size="12">Hexagon?</text>
           <line x1="284" y1="156" x2="382" y2="184" stroke="var(--bad)" stroke-width="2.5"/>
           <line x1="382" y1="156" x2="284" y2="184" stroke="var(--bad)" stroke-width="2.5"/>
@@ -859,13 +862,13 @@ new Sub();
     <div class="diagram" style="margin-top:22px;">
       <svg viewBox="0 0 940 200" width="100%">
         <line x1="20" y1="158" x2="920" y2="158" stroke="var(--line)" stroke-width="1.5"/>
-        <rect x="45" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="45" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="130" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Encapsulation</text>
         <text x="130" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">hide</text>
-        <rect x="270" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="270" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="355" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Abstraction</text>
         <text x="355" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">simplify</text>
-        <rect x="495" y="64" width="170" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+        <rect x="495" y="64" width="170" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
         <text x="580" y="180" text-anchor="middle" fill="var(--muted)" font-size="15">Inheritance</text>
         <text x="580" y="199" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">structure</text>
         <rect x="720" y="44" width="170" height="114" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
@@ -895,13 +898,13 @@ new Sub();
           <line x1="150" y1="58" x2="82" y2="146" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#a24)"/>
           <line x1="210" y1="60" x2="210" y2="146" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#a24)"/>
           <line x1="270" y1="58" x2="338" y2="146" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#a24)"/>
-          <rect x="22" y="148" width="118" height="60" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="22" y="148" width="118" height="60" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="81" y="172" text-anchor="middle" fill="var(--text)" font-size="13">Circle</text>
           <text x="81" y="193" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">pi r r</text>
-          <rect x="151" y="148" width="118" height="60" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="151" y="148" width="118" height="60" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="210" y="172" text-anchor="middle" fill="var(--text)" font-size="13">Square</text>
           <text x="210" y="193" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">s * s</text>
-          <rect x="280" y="148" width="118" height="60" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="280" y="148" width="118" height="60" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="339" y="172" text-anchor="middle" fill="var(--text)" font-size="13">Triangle</text>
           <text x="339" y="193" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">b * h / 2</text>
           <text x="210" y="234" text-anchor="middle" fill="var(--muted)" font-size="12">same call; the object picks the behaviour</text>
@@ -968,7 +971,7 @@ System.out.println(x.kind() + " " + x.name() + " " + x.tag);
       <svg viewBox="0 0 940 278" width="100%">
         <defs><marker id="a26b" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--bad)"/></marker></defs>
         <text x="30" y="28" fill="var(--bad)" font-size="15" class="mono">switch on type</text>
-        <rect x="70" y="66" width="220" height="86" rx="10" fill="#0a0a0c" stroke="var(--bad)" stroke-width="2"/>
+        <rect x="70" y="66" width="220" height="86" rx="10" fill="#f6f6f7" stroke="var(--bad)" stroke-width="2"/>
         <text x="180" y="104" text-anchor="middle" fill="var(--muted)" font-size="14" class="mono">switch (type) {</text>
         <text x="180" y="128" text-anchor="middle" fill="var(--muted)" font-size="14" class="mono">CIRCLE, SQUARE }</text>
         <rect x="95" y="196" width="170" height="40" rx="8" fill="rgba(255,122,122,0.1)" stroke="var(--bad)"/>
@@ -979,8 +982,8 @@ System.out.println(x.kind() + " " + x.name() + " " + x.tag);
         <text x="520" y="28" fill="var(--good)" font-size="15" class="mono">polymorphism</text>
         <rect x="640" y="58" width="160" height="42" rx="8" fill="rgba(192,132,252,0.14)" stroke="var(--accent)" stroke-width="2"/>
         <text x="720" y="84" text-anchor="middle" fill="var(--accent)" font-size="14" class="mono">Shape</text>
-        <rect x="530" y="158" width="110" height="38" rx="7" fill="#16161a" stroke="var(--line)"/><text x="585" y="182" text-anchor="middle" fill="var(--text)" font-size="12">Circle</text>
-        <rect x="650" y="158" width="110" height="38" rx="7" fill="#16161a" stroke="var(--line)"/><text x="705" y="182" text-anchor="middle" fill="var(--text)" font-size="12">Square</text>
+        <rect x="530" y="158" width="110" height="38" rx="7" fill="#ffffff" stroke="var(--line)"/><text x="585" y="182" text-anchor="middle" fill="var(--text)" font-size="12">Circle</text>
+        <rect x="650" y="158" width="110" height="38" rx="7" fill="#ffffff" stroke="var(--line)"/><text x="705" y="182" text-anchor="middle" fill="var(--text)" font-size="12">Square</text>
         <rect x="770" y="158" width="146" height="38" rx="7" fill="rgba(125,220,154,0.1)" stroke="var(--good)"/><text x="843" y="182" text-anchor="middle" fill="var(--good)" font-size="12">Triangle (new)</text>
         <line x1="585" y1="158" x2="705" y2="100" stroke="var(--dim)" stroke-width="1.4"/>
         <line x1="705" y1="158" x2="718" y2="100" stroke="var(--dim)" stroke-width="1.4"/>
@@ -1048,27 +1051,27 @@ System.out.println(Printer.show(a));
       <svg viewBox="0 0 940 210" width="100%">
         <line x1="15" y1="150" x2="925" y2="150" stroke="var(--line)" stroke-width="1.5"/>
         <g>
-          <rect x="20" y="56" width="150" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="20" y="56" width="150" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="95" y="112" text-anchor="middle" fill="var(--text)" font-size="36" class="mono">S</text>
           <text x="95" y="172" text-anchor="middle" fill="var(--muted)" font-size="13">one actor, one reason</text>
         </g>
         <g>
-          <rect x="207" y="56" width="150" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="207" y="56" width="150" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="282" y="112" text-anchor="middle" fill="var(--text)" font-size="36" class="mono">O</text>
           <text x="282" y="172" text-anchor="middle" fill="var(--muted)" font-size="13">extend, don't modify</text>
         </g>
         <g>
-          <rect x="395" y="56" width="150" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="395" y="56" width="150" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="470" y="112" text-anchor="middle" fill="var(--text)" font-size="36" class="mono">L</text>
           <text x="470" y="172" text-anchor="middle" fill="var(--muted)" font-size="13">keep the contract</text>
         </g>
         <g>
-          <rect x="582" y="56" width="150" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="582" y="56" width="150" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="657" y="112" text-anchor="middle" fill="var(--text)" font-size="36" class="mono">I</text>
           <text x="657" y="172" text-anchor="middle" fill="var(--muted)" font-size="13">small interfaces</text>
         </g>
         <g>
-          <rect x="770" y="56" width="150" height="94" rx="8" fill="#16161a" stroke="var(--line)"/>
+          <rect x="770" y="56" width="150" height="94" rx="8" fill="#ffffff" stroke="var(--line)"/>
           <text x="845" y="112" text-anchor="middle" fill="var(--text)" font-size="36" class="mono">D</text>
           <text x="845" y="172" text-anchor="middle" fill="var(--muted)" font-size="13">depend on abstractions</text>
         </g>
@@ -1090,10 +1093,10 @@ System.out.println(Printer.show(a));
         <rect x="20" y="34" width="150" height="86" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
         <circle cx="95" cy="24" r="5" fill="var(--accent)"/>
         <text x="95" y="88" text-anchor="middle" fill="var(--accent)" font-size="32" class="mono">S</text>
-        <rect x="207" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
-        <rect x="395" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
-        <rect x="582" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
-        <rect x="770" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
+        <rect x="207" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
+        <rect x="395" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
+        <rect x="582" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
+        <rect x="770" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
       </svg>
     </div>
     <div class="footer-line"><span>single responsibility</span><span>question</span></div>
@@ -1111,7 +1114,7 @@ System.out.println(Printer.show(a));
       </div>
       <div class="diagram fragment">
         <svg viewBox="0 0 420 250" width="100%">
-          <rect x="60" y="24" width="300" height="202" rx="12" fill="#16161a" stroke="var(--good)" stroke-width="2"/>
+          <rect x="60" y="24" width="300" height="202" rx="12" fill="#ffffff" stroke="var(--good)" stroke-width="2"/>
           <text x="210" y="52" text-anchor="middle" fill="var(--good)" font-size="15" class="mono">ArrayList</text>
           <text x="210" y="80" text-anchor="middle" fill="var(--muted)" font-size="13">~60 methods</text>
           <text x="210" y="104" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">add · remove · get · set</text>
@@ -1156,15 +1159,15 @@ System.out.println(Printer.show(a));
           <rect x="258" y="102" width="160" height="56" rx="9" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2"/>
           <text x="338" y="126" text-anchor="middle" fill="var(--accent)" font-size="15">Employee</text>
           <text x="338" y="145" text-anchor="middle" fill="var(--bad)" font-size="11">three masters, one class</text>
-          <rect x="20" y="14" width="180" height="56" rx="8" fill="#16161a" stroke="#6ea8ff"/>
+          <rect x="20" y="14" width="180" height="56" rx="8" fill="#ffffff" stroke="#6ea8ff"/>
           <text x="110" y="37" text-anchor="middle" fill="var(--text)" font-size="13">CFO / Accounting</text>
           <text x="110" y="56" text-anchor="middle" fill="var(--muted)" font-size="11" class="mono">calculatePay()</text>
           <line x1="200" y1="42" x2="256" y2="114" stroke="var(--dim)" stroke-width="1.4" marker-end="url(#s41asrp)"/>
-          <rect x="20" y="102" width="180" height="56" rx="8" fill="#16161a" stroke="#7ddc9a"/>
+          <rect x="20" y="102" width="180" height="56" rx="8" fill="#ffffff" stroke="#7ddc9a"/>
           <text x="110" y="125" text-anchor="middle" fill="var(--text)" font-size="13">COO / HR</text>
           <text x="110" y="144" text-anchor="middle" fill="var(--muted)" font-size="11" class="mono">reportHours()</text>
           <line x1="200" y1="130" x2="256" y2="130" stroke="var(--dim)" stroke-width="1.4" marker-end="url(#s41asrp)"/>
-          <rect x="20" y="190" width="180" height="56" rx="8" fill="#16161a" stroke="#f5b840"/>
+          <rect x="20" y="190" width="180" height="56" rx="8" fill="#ffffff" stroke="#f5b840"/>
           <text x="110" y="213" text-anchor="middle" fill="var(--text)" font-size="13">CTO / DBA</text>
           <text x="110" y="232" text-anchor="middle" fill="var(--muted)" font-size="11" class="mono">save()</text>
           <line x1="200" y1="218" x2="256" y2="146" stroke="var(--dim)" stroke-width="1.4" marker-end="url(#s41asrp)"/>
@@ -1261,12 +1264,12 @@ System.out.println(e.pay() + " " + e.report());
     <div class="diagram" style="margin-top:20px;">
       <svg viewBox="0 0 940 150" width="100%">
         <line x1="15" y1="120" x2="925" y2="120" stroke="var(--line)" stroke-width="1.5"/>
-        <rect x="20" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
+        <rect x="20" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
         <rect x="207" y="34" width="150" height="86" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
         <circle cx="282" cy="24" r="5" fill="var(--accent)"/><text x="282" y="88" text-anchor="middle" fill="var(--accent)" font-size="32" class="mono">O</text>
-        <rect x="395" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
-        <rect x="582" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
-        <rect x="770" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
+        <rect x="395" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
+        <rect x="582" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
+        <rect x="770" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
       </svg>
     </div>
     <div class="footer-line"><span>open-closed</span><span>question</span></div>
@@ -1362,12 +1365,12 @@ class Shapes {
     <div class="diagram" style="margin-top:20px;">
       <svg viewBox="0 0 940 150" width="100%">
         <line x1="15" y1="120" x2="925" y2="120" stroke="var(--line)" stroke-width="1.5"/>
-        <rect x="20" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
-        <rect x="207" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
+        <rect x="20" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
+        <rect x="207" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
         <rect x="395" y="34" width="150" height="86" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
         <circle cx="470" cy="24" r="5" fill="var(--accent)"/><text x="470" y="88" text-anchor="middle" fill="var(--accent)" font-size="32" class="mono">L</text>
-        <rect x="582" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
-        <rect x="770" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
+        <rect x="582" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
+        <rect x="770" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
       </svg>
     </div>
     <div class="footer-line"><span>liskov substitution</span><span>question</span></div>
@@ -1385,11 +1388,11 @@ class Shapes {
       </ul>
       <div class="diagram fragment">
         <svg viewBox="0 0 420 250" width="100%">
-          <rect x="20" y="20" width="380" height="100" rx="10" fill="#16161a" stroke="var(--good)"/>
+          <rect x="20" y="20" width="380" height="100" rx="10" fill="#ffffff" stroke="var(--good)"/>
           <text x="36" y="46" fill="var(--good)" font-size="13" class="mono">Rectangle</text>
           <text x="36" y="72" fill="var(--muted)" font-size="13" class="mono">setWidth(5); setHeight(4);</text>
           <text x="36" y="98" fill="var(--text)" font-size="13" class="mono">area == 20   (as promised)</text>
-          <rect x="20" y="134" width="380" height="100" rx="10" fill="#0a0a0c" stroke="var(--bad)"/>
+          <rect x="20" y="134" width="380" height="100" rx="10" fill="#f6f6f7" stroke="var(--bad)"/>
           <text x="36" y="160" fill="var(--bad)" font-size="13" class="mono">Square extends Rectangle</text>
           <text x="36" y="186" fill="var(--muted)" font-size="13" class="mono">setWidth(5)  also sets height 5</text>
           <text x="36" y="212" fill="var(--bad)" font-size="13" class="mono">area == 25   promise broken</text>
@@ -1491,12 +1494,12 @@ System.out.println(d.equals(t) + " " + t.equals(d));
     <div class="diagram" style="margin-top:20px;">
       <svg viewBox="0 0 940 150" width="100%">
         <line x1="15" y1="120" x2="925" y2="120" stroke="var(--line)" stroke-width="1.5"/>
-        <rect x="20" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
-        <rect x="207" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
-        <rect x="395" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
+        <rect x="20" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
+        <rect x="207" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
+        <rect x="395" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
         <rect x="582" y="34" width="150" height="86" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
         <circle cx="657" cy="24" r="5" fill="var(--accent)"/><text x="657" y="88" text-anchor="middle" fill="var(--accent)" font-size="32" class="mono">I</text>
-        <rect x="770" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
+        <rect x="770" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="845" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">D</text>
       </svg>
     </div>
     <div class="footer-line"><span>interface segregation</span><span>question</span></div>
@@ -1603,10 +1606,10 @@ b.set(0, "z");      // 3
     <div class="diagram" style="margin-top:20px;">
       <svg viewBox="0 0 940 150" width="100%">
         <line x1="15" y1="120" x2="925" y2="120" stroke="var(--line)" stroke-width="1.5"/>
-        <rect x="20" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
-        <rect x="207" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
-        <rect x="395" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
-        <rect x="582" y="48" width="150" height="72" rx="8" fill="#16161a" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
+        <rect x="20" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="95" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">S</text>
+        <rect x="207" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="282" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">O</text>
+        <rect x="395" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="470" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">L</text>
+        <rect x="582" y="48" width="150" height="72" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="657" y="94" text-anchor="middle" fill="var(--dim)" font-size="28" class="mono">I</text>
         <rect x="770" y="34" width="150" height="86" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2.5"/>
         <circle cx="845" cy="24" r="5" fill="var(--accent)"/><text x="845" y="88" text-anchor="middle" fill="var(--accent)" font-size="32" class="mono">D</text>
       </svg>
@@ -1628,11 +1631,11 @@ b.set(0, "z");      // 3
         <svg viewBox="0 0 420 250" width="100%">
           <defs>
             <marker id="s63adip" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker>
-            <marker id="s63adipi" markerWidth="18" markerHeight="14" refX="14" refY="6" orient="auto"><path d="M1,1 L14,6 L1,11 z" fill="#0e0e10" stroke="var(--accent)" stroke-width="1.5"/></marker>
+            <marker id="s63adipi" markerWidth="18" markerHeight="14" refX="14" refY="6" orient="auto"><path d="M1,1 L14,6 L1,11 z" fill="#f6f6f7" stroke="var(--accent)" stroke-width="1.5"/></marker>
           </defs>
-          <rect x="120" y="16" width="180" height="46" rx="8" fill="#16161a" stroke="var(--line)"/><text x="210" y="38" text-anchor="middle" fill="var(--text)" font-size="13">OrderService</text><text x="210" y="54" text-anchor="middle" fill="var(--muted)" font-size="10">policy</text>
+          <rect x="120" y="16" width="180" height="46" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="210" y="38" text-anchor="middle" fill="var(--text)" font-size="13">OrderService</text><text x="210" y="54" text-anchor="middle" fill="var(--muted)" font-size="10">policy</text>
           <rect x="120" y="102" width="180" height="46" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2"/><text x="210" y="124" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">PaymentGateway</text><text x="210" y="140" text-anchor="middle" fill="var(--muted)" font-size="10">interface</text>
-          <rect x="120" y="192" width="180" height="46" rx="8" fill="#16161a" stroke="var(--line)"/><text x="210" y="214" text-anchor="middle" fill="var(--text)" font-size="13">StripeGateway</text><text x="210" y="230" text-anchor="middle" fill="var(--muted)" font-size="10">detail</text>
+          <rect x="120" y="192" width="180" height="46" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="210" y="214" text-anchor="middle" fill="var(--text)" font-size="13">StripeGateway</text><text x="210" y="230" text-anchor="middle" fill="var(--muted)" font-size="10">detail</text>
           <line x1="210" y1="62" x2="210" y2="100" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#s63adip)"/><text x="300" y="86" fill="var(--muted)" font-size="10">uses</text>
           <line x1="210" y1="192" x2="210" y2="150" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#s63adipi)"/><text x="300" y="176" fill="var(--muted)" font-size="10">implements</text>
         </svg>
@@ -1787,7 +1790,7 @@ System.out.println(Registry.INSTANCE.sink());
       <svg viewBox="0 0 940 212" width="100%">
         <defs><marker id="s70axis" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker></defs>
         <line x1="30" y1="170" x2="905" y2="170" stroke="var(--line)" stroke-width="1.5" marker-end="url(#s70axis)"/>
-        <rect x="45" y="20" width="176" height="134" rx="9" fill="#0a0a0c" stroke="var(--bad)" stroke-dasharray="5 4"/>
+        <rect x="45" y="20" width="176" height="134" rx="9" fill="#f6f6f7" stroke="var(--bad)" stroke-dasharray="5 4"/>
         <text x="60" y="42" fill="var(--text)" font-size="12">Stack</text><text x="206" y="42" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">inherit</text>
         <text x="60" y="68" fill="var(--text)" font-size="12">Properties</text><text x="206" y="68" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">inherit</text>
         <text x="60" y="94" fill="var(--text)" font-size="12">Cloneable</text><text x="206" y="94" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">marker</text>
@@ -1796,12 +1799,12 @@ System.out.println(Registry.INSTANCE.sink());
         <line x1="133" y1="154" x2="133" y2="168" stroke="var(--dim)" stroke-width="1.4"/>
         <circle cx="133" cy="170" r="4" fill="var(--bad)"/>
         <text x="133" y="194" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">JDK 1.0 · 1996</text>
-        <rect x="258" y="94" width="176" height="60" rx="9" fill="#0a0a0c" stroke="var(--bad)" stroke-dasharray="5 4"/>
+        <rect x="258" y="94" width="176" height="60" rx="9" fill="#f6f6f7" stroke="var(--bad)" stroke-dasharray="5 4"/>
         <text x="273" y="130" fill="var(--text)" font-size="12">Timestamp</text><text x="419" y="130" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">equals</text>
         <line x1="346" y1="154" x2="346" y2="168" stroke="var(--dim)" stroke-width="1.4"/>
         <circle cx="346" cy="170" r="4" fill="var(--bad)"/>
         <text x="346" y="194" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">JDK 1.1 · 1997</text>
-        <rect x="471" y="94" width="212" height="60" rx="9" fill="#0a0a0c" stroke="var(--bad)" stroke-dasharray="5 4"/>
+        <rect x="471" y="94" width="212" height="60" rx="9" fill="#f6f6f7" stroke="var(--bad)" stroke-dasharray="5 4"/>
         <text x="486" y="130" fill="var(--text)" font-size="12">SwingConstants</text><text x="668" y="130" text-anchor="end" fill="var(--bad)" font-size="11" class="mono">constants</text>
         <line x1="577" y1="154" x2="577" y2="168" stroke="var(--dim)" stroke-width="1.4"/>
         <circle cx="577" cy="170" r="4" fill="var(--bad)"/>
@@ -2163,11 +2166,11 @@ System.out.println(p.size() + " " + p.stringPropertyNames().size());
         <svg viewBox="0 0 460 300" width="100%">
           <defs>
             <marker id="s89h" markerWidth="16" markerHeight="12" refX="12" refY="5" orient="auto"><path d="M1,5 L6,1 L12,5 L6,9 z" fill="var(--accent)"/></marker>
-            <marker id="s89i" markerWidth="22" markerHeight="16" refX="18" refY="7" orient="auto"><path d="M1,1 L18,7 L1,13 z" fill="#0e0e10" stroke="var(--accent)" stroke-width="1.5"/></marker>
+            <marker id="s89i" markerWidth="22" markerHeight="16" refX="18" refY="7" orient="auto"><path d="M1,1 L18,7 L1,13 z" fill="#f6f6f7" stroke="var(--accent)" stroke-width="1.5"/></marker>
             <marker id="s89a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker>
           </defs>
-          <rect x="24" y="18" width="150" height="46" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="99" y="46" text-anchor="middle" fill="var(--text)" font-size="14">Ledger</text>
-          <rect x="286" y="18" width="150" height="46" rx="8" fill="#16161a" stroke="var(--line)"/><text x="361" y="46" text-anchor="middle" fill="var(--text)" font-size="14">Account</text>
+          <rect x="24" y="18" width="150" height="46" rx="8" fill="#ffffff" stroke="var(--accent)"/><text x="99" y="46" text-anchor="middle" fill="var(--text)" font-size="14">Ledger</text>
+          <rect x="286" y="18" width="150" height="46" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="361" y="46" text-anchor="middle" fill="var(--text)" font-size="14">Account</text>
           <line x1="174" y1="41" x2="284" y2="41" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#s89h)"/>
           <text x="229" y="32" text-anchor="middle" fill="var(--muted)" font-size="11">holds *</text>
           <rect x="155" y="112" width="150" height="50" rx="8" fill="rgba(212,255,58,0.06)" stroke="var(--accent)"/><text x="230" y="134" text-anchor="middle" fill="var(--accent)" font-size="13" class="mono">Transaction</text><text x="230" y="152" text-anchor="middle" fill="var(--muted)" font-size="10">sealed</text>
@@ -2178,9 +2181,9 @@ System.out.println(p.size() + " " + p.stringPropertyNames().size());
           <line x1="90" y1="224" x2="90" y2="190" stroke="var(--dim)" stroke-width="1.5"/>
           <line x1="230" y1="224" x2="230" y2="190" stroke="var(--dim)" stroke-width="1.5"/>
           <line x1="370" y1="224" x2="370" y2="190" stroke="var(--dim)" stroke-width="1.5"/>
-          <rect x="30" y="224" width="120" height="42" rx="7" fill="#16161a" stroke="var(--line)"/><text x="90" y="250" text-anchor="middle" fill="var(--text)" font-size="12">Deposit</text>
-          <rect x="170" y="224" width="120" height="42" rx="7" fill="#16161a" stroke="var(--line)"/><text x="230" y="250" text-anchor="middle" fill="var(--text)" font-size="12">Withdraw</text>
-          <rect x="310" y="224" width="120" height="42" rx="7" fill="#16161a" stroke="var(--line)"/><text x="370" y="250" text-anchor="middle" fill="var(--text)" font-size="12">Transfer</text>
+          <rect x="30" y="224" width="120" height="42" rx="7" fill="#ffffff" stroke="var(--line)"/><text x="90" y="250" text-anchor="middle" fill="var(--text)" font-size="12">Deposit</text>
+          <rect x="170" y="224" width="120" height="42" rx="7" fill="#ffffff" stroke="var(--line)"/><text x="230" y="250" text-anchor="middle" fill="var(--text)" font-size="12">Withdraw</text>
+          <rect x="310" y="224" width="120" height="42" rx="7" fill="#ffffff" stroke="var(--line)"/><text x="370" y="250" text-anchor="middle" fill="var(--text)" font-size="12">Transfer</text>
           <text x="230" y="288" text-anchor="middle" fill="var(--muted)" font-size="11">three variants, one apply()</text>
         </svg>
       </div>
@@ -2203,13 +2206,13 @@ System.out.println(p.size() + " " + p.stringPropertyNames().size());
         <svg viewBox="0 0 420 250" width="100%">
           <defs>
             <marker id="s90a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker>
-            <marker id="s90ai" markerWidth="18" markerHeight="14" refX="14" refY="6" orient="auto"><path d="M1,1 L14,6 L1,11 z" fill="#0e0e10" stroke="var(--accent)" stroke-width="1.5"/></marker>
+            <marker id="s90ai" markerWidth="18" markerHeight="14" refX="14" refY="6" orient="auto"><path d="M1,1 L14,6 L1,11 z" fill="#f6f6f7" stroke="var(--accent)" stroke-width="1.5"/></marker>
           </defs>
-          <rect x="120" y="18" width="180" height="46" rx="8" fill="#16161a" stroke="var(--line)"/><text x="210" y="46" text-anchor="middle" fill="var(--text)" font-size="13">ReportService</text>
+          <rect x="120" y="18" width="180" height="46" rx="8" fill="#ffffff" stroke="var(--line)"/><text x="210" y="46" text-anchor="middle" fill="var(--text)" font-size="13">ReportService</text>
           <rect x="120" y="104" width="180" height="48" rx="8" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2"/><text x="210" y="126" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">ReportFormat</text><text x="210" y="143" text-anchor="middle" fill="var(--muted)" font-size="10">interface</text>
           <line x1="210" y1="64" x2="210" y2="102" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#s90a)"/><text x="300" y="88" fill="var(--muted)" font-size="10">uses</text>
-          <rect x="60" y="200" width="140" height="42" rx="7" fill="#16161a" stroke="var(--line)"/><text x="130" y="226" text-anchor="middle" fill="var(--text)" font-size="12">CsvFormat</text>
-          <rect x="220" y="200" width="140" height="42" rx="7" fill="#16161a" stroke="var(--line)"/><text x="290" y="226" text-anchor="middle" fill="var(--text)" font-size="12">JsonFormat</text>
+          <rect x="60" y="200" width="140" height="42" rx="7" fill="#ffffff" stroke="var(--line)"/><text x="130" y="226" text-anchor="middle" fill="var(--text)" font-size="12">CsvFormat</text>
+          <rect x="220" y="200" width="140" height="42" rx="7" fill="#ffffff" stroke="var(--line)"/><text x="290" y="226" text-anchor="middle" fill="var(--text)" font-size="12">JsonFormat</text>
           <line x1="130" y1="200" x2="195" y2="154" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#s90ai)"/>
           <line x1="290" y1="200" x2="225" y2="154" stroke="var(--dim)" stroke-width="1.5" marker-end="url(#s90ai)"/>
         </svg>

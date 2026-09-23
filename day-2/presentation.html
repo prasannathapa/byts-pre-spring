@@ -12,9 +12,9 @@
 
 <style>
   :root{
-    --bg:#0e0e10; --bg-soft:#16161a; --line:#26262c; --text:#e8e8ea;
-    --muted:#8a8a93; --dim:#5a5a63; --accent:#d4ff3a; --accent-2:#6ea8ff;
-    --good:#7ddc9a; --bad:#ff7a7a; --warn:#f5b840;
+    --bg:#ffffff; --bg-soft:#f6f6f7; --line:#e0e0e4; --text:#18181b;
+    --muted:#5f5f6a; --dim:#67676f; --accent:#4b790f; --accent-2:#1d4ed8;
+    --good:#15803d; --bad:#b91c1c; --warn:#a16207;
   }
   html, body { background: var(--bg); }
   .reveal-viewport { background: var(--bg) !important; }
@@ -25,23 +25,23 @@
   .reveal .slides > section { padding:56px 80px; height:100%; box-sizing:border-box; }
 
   /* per-pillar accent tint (part 1) */
-  .reveal section.enc  { --accent:#d4ff3a; }
-  .reveal section.abs  { --accent:#ff8a3d; }
-  .reveal section.inh  { --accent:#6ea8ff; }
-  .reveal section.poly { --accent:#c084fc; }
+  .reveal section.enc  { --accent:#4b790f; }
+  .reveal section.abs  { --accent:#c2410c; }
+  .reveal section.inh  { --accent:#1d4ed8; }
+  .reveal section.poly { --accent:#7e22ce; }
   /* per-principle accent tint (part 2) */
-  .reveal section.srp { --accent:#ff5c8d; }
-  .reveal section.ocp { --accent:#14b8a6; }
-  .reveal section.lsp { --accent:#a78bfa; }
-  .reveal section.isp { --accent:#f59e0b; }
-  .reveal section.dip { --accent:#22d3ee; }
+  .reveal section.srp { --accent:#be123c; }
+  .reveal section.ocp { --accent:#0f766e; }
+  .reveal section.lsp { --accent:#6d28d9; }
+  .reveal section.isp { --accent:#b05109; }
+  .reveal section.dip { --accent:#0e7490; }
 
   .reveal h1,.reveal h2,.reveal h3,.reveal h4 { font-family:'Inter',sans-serif; font-weight:600;
     color:var(--text); text-transform:none; letter-spacing:-0.02em; margin:0 0 0.4em 0; line-height:1.12; }
   .reveal h1 { font-size:66px; font-weight:700; letter-spacing:-0.04em; }
   .reveal h2 { font-size:44px; font-weight:600; }
   .reveal h3 { font-size:24px; font-weight:600; }
-  .reveal p,.reveal li { font-size:25px; line-height:1.55; color:#d4d4d8; }
+  .reveal p,.reveal li { font-size:25px; line-height:1.55; color:#3f3f46; }
   .reveal ul,.reveal ol { margin:0.4em 0 0 1.2em; }
   .reveal li { margin:0.4em 0; }
   .reveal strong { color:var(--text); font-weight:600; }
@@ -58,9 +58,9 @@
   .display em { font-style:italic; color:var(--accent); }
   .subtitle { font-size:23px; color:var(--muted); margin-top:1.2em; max-width:62ch; }
 
-  .lede { font-size:30px; line-height:1.4; color:#e8e8ea; max-width:66ch; font-weight:400; }
+  .lede { font-size:30px; line-height:1.4; color:#18181b; max-width:66ch; font-weight:400; }
   .quote { font-family:'Fraunces',serif; font-style:italic; font-size:30px; line-height:1.35;
-    color:#e0e0e4; border-left:2px solid var(--accent); padding-left:22px; max-width:64ch; }
+    color:#27272a; border-left:2px solid var(--accent); padding-left:22px; max-width:64ch; }
   .quote-attr { font-family:'Inter',sans-serif; font-style:normal; font-size:14px; color:var(--muted);
     margin-top:0.6em; letter-spacing:0.1em; text-transform:uppercase; }
 
@@ -120,10 +120,10 @@
       radial-gradient(1200px 500px at 90% -10%, rgba(212,255,58,0.06), transparent 60%); }
   .handson-head { display:flex; align-items:center; gap:14px; margin-bottom:10px; }
   .handson-badge { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em;
-    text-transform:uppercase; color:#0a0a0c; background:var(--accent); padding:5px 12px; border-radius:5px; font-weight:600; }
+    text-transform:uppercase; color:#ffffff; background:var(--accent); padding:5px 12px; border-radius:5px; font-weight:600; }
   .cmd { background:#0a0a0c; border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px;
-    font-family:'JetBrains Mono',monospace; font-size:16px; color:#e0e0e4; padding:14px 18px; margin:12px 0; line-height:1.7; }
-  .cmd .c { color:var(--dim); }
+    font-family:'JetBrains Mono',monospace; font-size:16px; color:#e8e8ea; padding:14px 18px; margin:12px 0; line-height:1.7; }
+  .cmd .c { color:#9a9aa5; }
   .cmd.lg { font-size:24px; padding:16px 20px; margin:6px 0; line-height:1.5; word-break:break-all; }
   .oslabel { font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:0.12em; text-transform:uppercase;
     color:var(--accent); margin:8px 0 2px; display:block; }
@@ -131,31 +131,31 @@
   .setup-note { font-size:19px; color:var(--muted); margin-top:12px; max-width:70ch; }
   .setup-link { font-family:'JetBrains Mono',monospace; font-size:22px; color:var(--accent-2); word-break:break-all; }
   /* per-topic accent tint (part 1) */
-  .reveal section.hier { --accent:#6ea8ff; }
-  .reveal section.list { --accent:#14b8a6; }
-  .reveal section.set  { --accent:#ff8a3d; }
-  .reveal section.hmap { --accent:#d4ff3a; }
-  .reveal section.lhm  { --accent:#c084fc; }
-  .reveal section.tree { --accent:#a78bfa; }
-  .reveal section.lam  { --accent:#fbbf24; }
-  .reveal section.enum { --accent:#f59e0b; }
+  .reveal section.hier { --accent:#1d4ed8; }
+  .reveal section.list { --accent:#0f766e; }
+  .reveal section.set  { --accent:#c2410c; }
+  .reveal section.hmap { --accent:#4b790f; }
+  .reveal section.lhm  { --accent:#7e22ce; }
+  .reveal section.tree { --accent:#6d28d9; }
+  .reveal section.lam  { --accent:#8d6603; }
+  .reveal section.enum { --accent:#b05109; }
   /* per-topic accent tint (part 2) */
-  .reveal section.queue  { --accent:#22d3ee; }
-  .reveal section.box    { --accent:#94a3b8; }
-  .reveal section.iter   { --accent:#ff5c8d; }
-  .reveal section.fn     { --accent:#facc15; }
-  .reveal section.gen    { --accent:#fb7185; }
-  .reveal section.immut  { --accent:#34d399; }
-  .reveal section.conc   { --accent:#60a5fa; }
-  .reveal section.map    { --accent:#2dd4bf; }
-  .reveal section.stream { --accent:#38bdf8; }
-  .reveal section.opt    { --accent:#a3e635; }
-  .reveal section.choose { --accent:#e879f9; }
+  .reveal section.queue  { --accent:#0e7490; }
+  .reveal section.box    { --accent:#5b6e89; }
+  .reveal section.iter   { --accent:#be123c; }
+  .reveal section.fn     { --accent:#846a03; }
+  .reveal section.gen    { --accent:#da0725; }
+  .reveal section.immut  { --accent:#1b7b58; }
+  .reveal section.conc   { --accent:#0868df; }
+  .reveal section.map    { --accent:#197a6e; }
+  .reveal section.stream { --accent:#0674a6; }
+  .reveal section.opt    { --accent:#50780e; }
+  .reveal section.choose { --accent:#b909d3; }
 
   /* quiz + answer treatment */
-  .reveal section.quiz { --accent:#facc15; background:
+  .reveal section.quiz { --accent:#846a03; background:
       radial-gradient(1200px 520px at 88% -10%, rgba(250,204,21,0.06), transparent 60%); }
-  .reveal section.answer { --accent:#7ddc9a; background:
+  .reveal section.answer { --accent:#157d3c; background:
       radial-gradient(1200px 520px at 10% -10%, rgba(125,220,154,0.06), transparent 60%); }
   .reveal ol.opts { list-style:none; margin:16px 0 0 0; display:grid;
     grid-template-columns:1fr 1fr; gap:12px 24px; }
@@ -168,6 +168,9 @@
   .trap { border-left:2px solid var(--warn); padding-left:16px; margin-top:16px; max-width:88ch; }
   .trap b { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em;
     text-transform:uppercase; color:var(--warn); font-weight:500; display:block; margin-bottom:3px; }
+  /* monokai's own comment grey reads at 4.0:1 on the code plate, so lift it */
+  .reveal pre code .hljs-comment, .reveal pre code .hljs-quote,
+  .reveal pre code .hljs-meta, .reveal pre code .hljs-meta-keyword { color:#9d9884; }
 </style>
 </head>
 <body>
@@ -193,10 +196,10 @@
     <div class="diagram fragment" style="margin-top:14px;">
       <svg viewBox="0 0 940 200" width="100%">
         <defs><marker id="s03a" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
-        <rect x="20" y="10" width="200" height="46" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="120" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">HashMap</text>
-        <rect x="250" y="10" width="200" height="46" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="350" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">TreeMap</text>
-        <rect x="480" y="10" width="200" height="46" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="580" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">for (T t : list)</text>
-        <rect x="710" y="10" width="200" height="46" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="810" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">removeIf</text>
+        <rect x="20" y="10" width="200" height="46" rx="8" fill="#ffffff" stroke="var(--accent)"/><text x="120" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">HashMap</text>
+        <rect x="250" y="10" width="200" height="46" rx="8" fill="#ffffff" stroke="var(--accent)"/><text x="350" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">TreeMap</text>
+        <rect x="480" y="10" width="200" height="46" rx="8" fill="#ffffff" stroke="var(--accent)"/><text x="580" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">for (T t : list)</text>
+        <rect x="710" y="10" width="200" height="46" rx="8" fill="#ffffff" stroke="var(--accent)"/><text x="810" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">removeIf</text>
         <line x1="120" y1="58" x2="120" y2="106" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#s03a)"/>
         <line x1="350" y1="58" x2="350" y2="106" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#s03a)"/>
         <line x1="580" y1="58" x2="580" y2="106" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#s03a)"/>
@@ -205,10 +208,10 @@
         <text x="360" y="88" fill="var(--muted)" font-size="11" class="mono">trusts</text>
         <text x="590" y="88" fill="var(--muted)" font-size="11" class="mono">trusts</text>
         <text x="820" y="88" fill="var(--muted)" font-size="11" class="mono">trusts</text>
-        <rect x="20" y="112" width="200" height="52" rx="8" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="120" y="135" text-anchor="middle" fill="var(--muted)" font-size="13">your hashCode</text><text x="120" y="154" text-anchor="middle" fill="var(--muted)" font-size="13">and your equals</text>
-        <rect x="250" y="112" width="200" height="52" rx="8" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="350" y="144" text-anchor="middle" fill="var(--muted)" font-size="13">your compareTo</text>
-        <rect x="480" y="112" width="200" height="52" rx="8" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="580" y="144" text-anchor="middle" fill="var(--muted)" font-size="13">an int called modCount</text>
-        <rect x="710" y="112" width="200" height="52" rx="8" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="810" y="144" text-anchor="middle" fill="var(--muted)" font-size="13">the Predicate you wrote</text>
+        <rect x="20" y="112" width="200" height="52" rx="8" fill="#f6f6f7" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="120" y="135" text-anchor="middle" fill="var(--muted)" font-size="13">your hashCode</text><text x="120" y="154" text-anchor="middle" fill="var(--muted)" font-size="13">and your equals</text>
+        <rect x="250" y="112" width="200" height="52" rx="8" fill="#f6f6f7" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="350" y="144" text-anchor="middle" fill="var(--muted)" font-size="13">your compareTo</text>
+        <rect x="480" y="112" width="200" height="52" rx="8" fill="#f6f6f7" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="580" y="144" text-anchor="middle" fill="var(--muted)" font-size="13">an int called modCount</text>
+        <rect x="710" y="112" width="200" height="52" rx="8" fill="#f6f6f7" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="810" y="144" text-anchor="middle" fill="var(--muted)" font-size="13">the Predicate you wrote</text>
         <text x="470" y="190" text-anchor="middle" fill="var(--dim)" font-size="12">break any of these four and nothing throws. It just goes quietly wrong.</text>
       </svg>
     </div>
@@ -224,23 +227,23 @@
       <div class="diagram">
         <svg viewBox="0 0 440 300" width="100%">
           <line x1="296" y1="4" x2="296" y2="292" stroke="var(--line)" stroke-dasharray="5 5"/>
-          <rect x="8" y="6" width="120" height="26" rx="6" fill="#16161a" stroke="var(--accent)"/><text x="68" y="24" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">Iterable</text>
+          <rect x="8" y="6" width="120" height="26" rx="6" fill="#ffffff" stroke="var(--accent)"/><text x="68" y="24" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">Iterable</text>
           <line x1="68" y1="32" x2="68" y2="48" stroke="var(--dim)" stroke-width="1.4"/>
-          <rect x="8" y="48" width="120" height="26" rx="6" fill="#16161a" stroke="var(--accent)"/><text x="68" y="66" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">Collection</text>
+          <rect x="8" y="48" width="120" height="26" rx="6" fill="#ffffff" stroke="var(--accent)"/><text x="68" y="66" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">Collection</text>
           <line x1="68" y1="74" x2="68" y2="86" stroke="var(--dim)" stroke-width="1.4"/>
           <line x1="47" y1="86" x2="239" y2="86" stroke="var(--dim)" stroke-width="1.4"/>
           <line x1="47" y1="86" x2="47" y2="96" stroke="var(--dim)" stroke-width="1.4"/>
           <line x1="143" y1="86" x2="143" y2="96" stroke="var(--dim)" stroke-width="1.4"/>
           <line x1="239" y1="86" x2="239" y2="96" stroke="var(--dim)" stroke-width="1.4"/>
-          <rect x="4" y="96" width="86" height="24" rx="6" fill="#16161a" stroke="var(--line)"/><text x="47" y="112" text-anchor="middle" fill="var(--text)" font-size="11" class="mono">List</text>
-          <rect x="100" y="96" width="86" height="24" rx="6" fill="#16161a" stroke="var(--line)"/><text x="143" y="112" text-anchor="middle" fill="var(--text)" font-size="11" class="mono">Set</text>
-          <rect x="196" y="96" width="86" height="24" rx="6" fill="#16161a" stroke="var(--line)"/><text x="239" y="112" text-anchor="middle" fill="var(--text)" font-size="11" class="mono">Queue</text>
+          <rect x="4" y="96" width="86" height="24" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="47" y="112" text-anchor="middle" fill="var(--text)" font-size="11" class="mono">List</text>
+          <rect x="100" y="96" width="86" height="24" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="143" y="112" text-anchor="middle" fill="var(--text)" font-size="11" class="mono">Set</text>
+          <rect x="196" y="96" width="86" height="24" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="239" y="112" text-anchor="middle" fill="var(--text)" font-size="11" class="mono">Queue</text>
           <line x1="143" y1="120" x2="143" y2="134" stroke="var(--dim)" stroke-width="1.4"/>
-          <rect x="100" y="134" width="86" height="22" rx="6" fill="#16161a" stroke="var(--line)"/><text x="143" y="149" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">SortedSet</text>
+          <rect x="100" y="134" width="86" height="22" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="143" y="149" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">SortedSet</text>
           <line x1="143" y1="156" x2="143" y2="168" stroke="var(--dim)" stroke-width="1.4"/>
-          <rect x="100" y="168" width="86" height="22" rx="6" fill="#16161a" stroke="var(--line)"/><text x="143" y="183" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">NavigableSet</text>
+          <rect x="100" y="168" width="86" height="22" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="143" y="183" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">NavigableSet</text>
           <line x1="239" y1="120" x2="239" y2="134" stroke="var(--dim)" stroke-width="1.4"/>
-          <rect x="196" y="134" width="86" height="22" rx="6" fill="#16161a" stroke="var(--line)"/><text x="239" y="149" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">Deque</text>
+          <rect x="196" y="134" width="86" height="22" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="239" y="149" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">Deque</text>
           <text x="47" y="140" text-anchor="middle" fill="var(--dim)" font-size="10">ArrayList</text>
           <text x="47" y="154" text-anchor="middle" fill="var(--dim)" font-size="10">LinkedList</text>
           <text x="143" y="204" text-anchor="middle" fill="var(--dim)" font-size="10">HashSet</text>
@@ -248,11 +251,11 @@
           <text x="143" y="232" text-anchor="middle" fill="var(--dim)" font-size="10">TreeSet</text>
           <text x="239" y="172" text-anchor="middle" fill="var(--dim)" font-size="10">ArrayDeque</text>
           <text x="239" y="186" text-anchor="middle" fill="var(--dim)" font-size="10">PriorityQueue</text>
-          <rect x="310" y="48" width="120" height="26" rx="6" fill="#16161a" stroke="var(--accent-2)"/><text x="370" y="66" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">Map</text>
+          <rect x="310" y="48" width="120" height="26" rx="6" fill="#ffffff" stroke="var(--accent-2)"/><text x="370" y="66" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">Map</text>
           <line x1="370" y1="74" x2="370" y2="96" stroke="var(--dim)" stroke-width="1.4"/>
-          <rect x="320" y="96" width="100" height="24" rx="6" fill="#16161a" stroke="var(--line)"/><text x="370" y="112" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">SortedMap</text>
+          <rect x="320" y="96" width="100" height="24" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="370" y="112" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">SortedMap</text>
           <line x1="370" y1="120" x2="370" y2="134" stroke="var(--dim)" stroke-width="1.4"/>
-          <rect x="320" y="134" width="100" height="24" rx="6" fill="#16161a" stroke="var(--line)"/><text x="370" y="150" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">NavigableMap</text>
+          <rect x="320" y="134" width="100" height="24" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="370" y="150" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">NavigableMap</text>
           <text x="370" y="172" text-anchor="middle" fill="var(--dim)" font-size="10">HashMap</text>
           <text x="370" y="186" text-anchor="middle" fill="var(--dim)" font-size="10">LinkedHashMap</text>
           <text x="370" y="200" text-anchor="middle" fill="var(--dim)" font-size="10">TreeMap</text>
@@ -319,12 +322,12 @@ List&lt;String&gt; load() { ... }
         <svg viewBox="0 0 440 300" width="100%">
           <defs><marker id="s08a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
           <text x="10" y="16" fill="var(--accent)" font-size="12" class="mono">ArrayList: one Object[]</text>
-          <rect x="10" y="26" width="46" height="34" fill="#16161a" stroke="var(--accent)"/><text x="33" y="48" text-anchor="middle" fill="var(--text)" font-size="12">a</text>
-          <rect x="56" y="26" width="46" height="34" fill="#16161a" stroke="var(--accent)"/><text x="79" y="48" text-anchor="middle" fill="var(--text)" font-size="12">b</text>
-          <rect x="102" y="26" width="46" height="34" fill="#16161a" stroke="var(--accent)"/><text x="125" y="48" text-anchor="middle" fill="var(--text)" font-size="12">c</text>
-          <rect x="148" y="26" width="46" height="34" fill="#16161a" stroke="var(--accent)"/><text x="171" y="48" text-anchor="middle" fill="var(--text)" font-size="12">d</text>
-          <rect x="194" y="26" width="46" height="34" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="3 3"/>
-          <rect x="240" y="26" width="46" height="34" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="3 3"/>
+          <rect x="10" y="26" width="46" height="34" fill="#ffffff" stroke="var(--accent)"/><text x="33" y="48" text-anchor="middle" fill="var(--text)" font-size="12">a</text>
+          <rect x="56" y="26" width="46" height="34" fill="#ffffff" stroke="var(--accent)"/><text x="79" y="48" text-anchor="middle" fill="var(--text)" font-size="12">b</text>
+          <rect x="102" y="26" width="46" height="34" fill="#ffffff" stroke="var(--accent)"/><text x="125" y="48" text-anchor="middle" fill="var(--text)" font-size="12">c</text>
+          <rect x="148" y="26" width="46" height="34" fill="#ffffff" stroke="var(--accent)"/><text x="171" y="48" text-anchor="middle" fill="var(--text)" font-size="12">d</text>
+          <rect x="194" y="26" width="46" height="34" fill="#f6f6f7" stroke="var(--dim)" stroke-dasharray="3 3"/>
+          <rect x="240" y="26" width="46" height="34" fill="#f6f6f7" stroke="var(--dim)" stroke-dasharray="3 3"/>
           <text x="300" y="40" fill="var(--muted)" font-size="11" class="mono">size = 4</text>
           <text x="300" y="56" fill="var(--muted)" font-size="11" class="mono">capacity = 6</text>
           <text x="10" y="80" fill="var(--muted)" font-size="11">get(i) is one multiply and one load.</text>
@@ -332,10 +335,10 @@ List&lt;String&gt; load() { ... }
           <text x="158" y="96" fill="var(--dim)" font-size="10" class="mono">full? Arrays.copyOf(old, old + (old &gt;&gt; 1))</text>
           <line x1="8" y1="112" x2="432" y2="112" stroke="var(--line)"/>
           <text x="10" y="132" fill="var(--accent)" font-size="12" class="mono">LinkedList: Node objects, anywhere</text>
-          <rect x="16" y="146" width="84" height="40" rx="6" fill="#16161a" stroke="var(--line)"/><text x="58" y="164" text-anchor="middle" fill="var(--text)" font-size="11">a</text><text x="58" y="179" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
-          <rect x="160" y="196" width="84" height="40" rx="6" fill="#16161a" stroke="var(--line)"/><text x="202" y="214" text-anchor="middle" fill="var(--text)" font-size="11">b</text><text x="202" y="229" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
-          <rect x="300" y="142" width="84" height="40" rx="6" fill="#16161a" stroke="var(--line)"/><text x="342" y="160" text-anchor="middle" fill="var(--text)" font-size="11">c</text><text x="342" y="175" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
-          <rect x="100" y="246" width="84" height="40" rx="6" fill="#16161a" stroke="var(--line)"/><text x="142" y="264" text-anchor="middle" fill="var(--text)" font-size="11">d</text><text x="142" y="279" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
+          <rect x="16" y="146" width="84" height="40" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="58" y="164" text-anchor="middle" fill="var(--text)" font-size="11">a</text><text x="58" y="179" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
+          <rect x="160" y="196" width="84" height="40" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="202" y="214" text-anchor="middle" fill="var(--text)" font-size="11">b</text><text x="202" y="229" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
+          <rect x="300" y="142" width="84" height="40" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="342" y="160" text-anchor="middle" fill="var(--text)" font-size="11">c</text><text x="342" y="175" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
+          <rect x="100" y="246" width="84" height="40" rx="6" fill="#ffffff" stroke="var(--line)"/><text x="142" y="264" text-anchor="middle" fill="var(--text)" font-size="11">d</text><text x="142" y="279" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
           <line x1="100" y1="170" x2="158" y2="208" stroke="var(--bad)" stroke-width="1.4" marker-end="url(#s08a)"/>
           <line x1="244" y1="210" x2="298" y2="168" stroke="var(--bad)" stroke-width="1.4" marker-end="url(#s08a)"/>
           <line x1="300" y1="178" x2="186" y2="256" stroke="var(--bad)" stroke-width="1.4" marker-end="url(#s08a)"/>
@@ -522,29 +525,29 @@ System.out.println(s.size() + " " + l.contains(new K(2, "a")));
     <div class="diagram">
       <svg viewBox="0 0 940 200" width="100%">
         <text x="10" y="16" fill="var(--muted)" font-size="12" class="mono">Node&lt;K,V&gt;[] table</text>
-        <rect x="10" y="24" width="52" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="36" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
-        <rect x="62" y="24" width="52" height="36" fill="#16161a" stroke="var(--accent)"/><text x="88" y="47" text-anchor="middle" fill="var(--accent)" font-size="11">1</text>
-        <rect x="114" y="24" width="52" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="140" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">2</text>
-        <rect x="166" y="24" width="52" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="192" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
-        <rect x="218" y="24" width="52" height="36" fill="#16161a" stroke="var(--accent)"/><text x="244" y="47" text-anchor="middle" fill="var(--accent)" font-size="11">4</text>
-        <rect x="270" y="24" width="52" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="296" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">5</text>
-        <rect x="322" y="24" width="52" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="348" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">6</text>
-        <rect x="374" y="24" width="52" height="36" fill="#16161a" stroke="var(--warn)"/><text x="400" y="47" text-anchor="middle" fill="var(--warn)" font-size="11">7</text>
-        <rect x="426" y="24" width="364" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="608" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">8 .. 15, empty</text>
+        <rect x="10" y="24" width="52" height="36" fill="#f6f6f7" stroke="var(--line)"/><text x="36" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
+        <rect x="62" y="24" width="52" height="36" fill="#ffffff" stroke="var(--accent)"/><text x="88" y="47" text-anchor="middle" fill="var(--accent)" font-size="11">1</text>
+        <rect x="114" y="24" width="52" height="36" fill="#f6f6f7" stroke="var(--line)"/><text x="140" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">2</text>
+        <rect x="166" y="24" width="52" height="36" fill="#f6f6f7" stroke="var(--line)"/><text x="192" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
+        <rect x="218" y="24" width="52" height="36" fill="#ffffff" stroke="var(--accent)"/><text x="244" y="47" text-anchor="middle" fill="var(--accent)" font-size="11">4</text>
+        <rect x="270" y="24" width="52" height="36" fill="#f6f6f7" stroke="var(--line)"/><text x="296" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">5</text>
+        <rect x="322" y="24" width="52" height="36" fill="#f6f6f7" stroke="var(--line)"/><text x="348" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">6</text>
+        <rect x="374" y="24" width="52" height="36" fill="#ffffff" stroke="var(--warn)"/><text x="400" y="47" text-anchor="middle" fill="var(--warn)" font-size="11">7</text>
+        <rect x="426" y="24" width="364" height="36" fill="#f6f6f7" stroke="var(--line)"/><text x="608" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">8 .. 15, empty</text>
         <text x="812" y="38" fill="var(--muted)" font-size="11" class="mono">table.length = 16</text>
         <text x="812" y="54" fill="var(--muted)" font-size="11" class="mono">loadFactor = 0.75</text>
         <text x="812" y="70" fill="var(--muted)" font-size="11" class="mono">threshold = 12</text>
         <line x1="88" y1="60" x2="88" y2="80" stroke="var(--dim)"/>
-        <rect x="46" y="80" width="86" height="30" rx="5" fill="#16161a" stroke="var(--line)"/><text x="89" y="99" text-anchor="middle" fill="var(--text)" font-size="10" class="mono">hash key val</text>
+        <rect x="46" y="80" width="86" height="30" rx="5" fill="#ffffff" stroke="var(--line)"/><text x="89" y="99" text-anchor="middle" fill="var(--text)" font-size="10" class="mono">hash key val</text>
         <line x1="244" y1="60" x2="244" y2="80" stroke="var(--dim)"/>
-        <rect x="202" y="80" width="86" height="30" rx="5" fill="#16161a" stroke="var(--line)"/><text x="245" y="99" text-anchor="middle" fill="var(--text)" font-size="10" class="mono">hash key val</text>
+        <rect x="202" y="80" width="86" height="30" rx="5" fill="#ffffff" stroke="var(--line)"/><text x="245" y="99" text-anchor="middle" fill="var(--text)" font-size="10" class="mono">hash key val</text>
         <line x1="245" y1="110" x2="245" y2="126" stroke="var(--dim)"/>
-        <rect x="202" y="126" width="86" height="30" rx="5" fill="#16161a" stroke="var(--line)"/><text x="245" y="145" text-anchor="middle" fill="var(--text)" font-size="10" class="mono">hash key val</text>
+        <rect x="202" y="126" width="86" height="30" rx="5" fill="#ffffff" stroke="var(--line)"/><text x="245" y="145" text-anchor="middle" fill="var(--text)" font-size="10" class="mono">hash key val</text>
         <text x="298" y="146" fill="var(--muted)" font-size="11">a collision: same bucket, different key</text>
         <line x1="400" y1="60" x2="400" y2="80" stroke="var(--dim)"/>
-        <rect x="358" y="80" width="86" height="26" rx="5" fill="#16161a" stroke="var(--warn)"/><text x="401" y="97" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">node</text>
+        <rect x="358" y="80" width="86" height="26" rx="5" fill="#ffffff" stroke="var(--warn)"/><text x="401" y="97" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">node</text>
         <line x1="401" y1="106" x2="401" y2="114" stroke="var(--dim)"/>
-        <rect x="358" y="114" width="86" height="26" rx="5" fill="#16161a" stroke="var(--warn)"/><text x="401" y="131" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">node</text>
+        <rect x="358" y="114" width="86" height="26" rx="5" fill="#ffffff" stroke="var(--warn)"/><text x="401" y="131" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">node</text>
         <line x1="401" y1="140" x2="401" y2="148" stroke="var(--dim)"/>
         <text x="401" y="164" text-anchor="middle" fill="var(--warn)" font-size="11" class="mono">... a ninth here? treeify.</text>
         <text x="10" y="192" fill="var(--dim)" font-size="12">index = (n - 1) &amp; hash, and that trick only works because n is a power of two.</text>
@@ -592,29 +595,29 @@ if (++size &gt; threshold) resize();
       <svg viewBox="0 0 940 200" width="100%">
         <defs><marker id="s23a" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
         <text x="20" y="18" fill="var(--muted)" font-size="12" class="mono">oldCap = 4</text>
-        <rect x="20" y="26" width="64" height="32" fill="#0a0a0c" stroke="var(--line)"/><text x="52" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
-        <rect x="20" y="58" width="64" height="32" fill="#16161a" stroke="var(--accent)"/><text x="52" y="79" text-anchor="middle" fill="var(--accent)" font-size="11">1</text>
-        <rect x="20" y="90" width="64" height="32" fill="#0a0a0c" stroke="var(--line)"/><text x="52" y="111" text-anchor="middle" fill="var(--dim)" font-size="11">2</text>
-        <rect x="20" y="122" width="64" height="32" fill="#0a0a0c" stroke="var(--line)"/><text x="52" y="143" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
-        <rect x="100" y="60" width="54" height="28" rx="5" fill="#16161a" stroke="var(--good)"/><text x="127" y="79" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
-        <rect x="164" y="60" width="54" height="28" rx="5" fill="#16161a" stroke="var(--warn)"/><text x="191" y="79" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">hi</text>
-        <rect x="228" y="60" width="54" height="28" rx="5" fill="#16161a" stroke="var(--good)"/><text x="255" y="79" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
+        <rect x="20" y="26" width="64" height="32" fill="#f6f6f7" stroke="var(--line)"/><text x="52" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
+        <rect x="20" y="58" width="64" height="32" fill="#ffffff" stroke="var(--accent)"/><text x="52" y="79" text-anchor="middle" fill="var(--accent)" font-size="11">1</text>
+        <rect x="20" y="90" width="64" height="32" fill="#f6f6f7" stroke="var(--line)"/><text x="52" y="111" text-anchor="middle" fill="var(--dim)" font-size="11">2</text>
+        <rect x="20" y="122" width="64" height="32" fill="#f6f6f7" stroke="var(--line)"/><text x="52" y="143" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
+        <rect x="100" y="60" width="54" height="28" rx="5" fill="#ffffff" stroke="var(--good)"/><text x="127" y="79" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
+        <rect x="164" y="60" width="54" height="28" rx="5" fill="#ffffff" stroke="var(--warn)"/><text x="191" y="79" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">hi</text>
+        <rect x="228" y="60" width="54" height="28" rx="5" fill="#ffffff" stroke="var(--good)"/><text x="255" y="79" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
         <line x1="84" y1="74" x2="98" y2="74" stroke="var(--dim)"/><line x1="154" y1="74" x2="163" y2="74" stroke="var(--dim)"/><line x1="218" y1="74" x2="227" y2="74" stroke="var(--dim)"/>
         <line x1="330" y1="92" x2="420" y2="92" stroke="var(--accent)" stroke-width="2" marker-end="url(#s23a)"/>
         <text x="375" y="80" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">(hash &amp; oldCap) == 0 ?</text>
         <text x="375" y="112" text-anchor="middle" fill="var(--muted)" font-size="11">lo stays, hi moves by oldCap</text>
         <text x="470" y="18" fill="var(--muted)" font-size="12" class="mono">newCap = 8</text>
-        <rect x="470" y="26" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="40" text-anchor="middle" fill="var(--dim)" font-size="10">0</text>
-        <rect x="470" y="46" width="64" height="20" fill="#16161a" stroke="var(--good)"/><text x="502" y="60" text-anchor="middle" fill="var(--good)" font-size="10">1</text>
-        <rect x="470" y="66" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="80" text-anchor="middle" fill="var(--dim)" font-size="10">2</text>
-        <rect x="470" y="86" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="100" text-anchor="middle" fill="var(--dim)" font-size="10">3</text>
-        <rect x="470" y="106" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="120" text-anchor="middle" fill="var(--dim)" font-size="10">4</text>
-        <rect x="470" y="126" width="64" height="20" fill="#16161a" stroke="var(--warn)"/><text x="502" y="140" text-anchor="middle" fill="var(--warn)" font-size="10">5</text>
-        <rect x="470" y="146" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="160" text-anchor="middle" fill="var(--dim)" font-size="10">6</text>
-        <rect x="470" y="166" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="180" text-anchor="middle" fill="var(--dim)" font-size="10">7</text>
-        <rect x="550" y="46" width="54" height="20" rx="4" fill="#16161a" stroke="var(--good)"/><text x="577" y="60" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
-        <rect x="610" y="46" width="54" height="20" rx="4" fill="#16161a" stroke="var(--good)"/><text x="637" y="60" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
-        <rect x="550" y="126" width="54" height="20" rx="4" fill="#16161a" stroke="var(--warn)"/><text x="577" y="140" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">hi</text>
+        <rect x="470" y="26" width="64" height="20" fill="#f6f6f7" stroke="var(--line)"/><text x="502" y="40" text-anchor="middle" fill="var(--dim)" font-size="10">0</text>
+        <rect x="470" y="46" width="64" height="20" fill="#ffffff" stroke="var(--good)"/><text x="502" y="60" text-anchor="middle" fill="var(--good)" font-size="10">1</text>
+        <rect x="470" y="66" width="64" height="20" fill="#f6f6f7" stroke="var(--line)"/><text x="502" y="80" text-anchor="middle" fill="var(--dim)" font-size="10">2</text>
+        <rect x="470" y="86" width="64" height="20" fill="#f6f6f7" stroke="var(--line)"/><text x="502" y="100" text-anchor="middle" fill="var(--dim)" font-size="10">3</text>
+        <rect x="470" y="106" width="64" height="20" fill="#f6f6f7" stroke="var(--line)"/><text x="502" y="120" text-anchor="middle" fill="var(--dim)" font-size="10">4</text>
+        <rect x="470" y="126" width="64" height="20" fill="#ffffff" stroke="var(--warn)"/><text x="502" y="140" text-anchor="middle" fill="var(--warn)" font-size="10">5</text>
+        <rect x="470" y="146" width="64" height="20" fill="#f6f6f7" stroke="var(--line)"/><text x="502" y="160" text-anchor="middle" fill="var(--dim)" font-size="10">6</text>
+        <rect x="470" y="166" width="64" height="20" fill="#f6f6f7" stroke="var(--line)"/><text x="502" y="180" text-anchor="middle" fill="var(--dim)" font-size="10">7</text>
+        <rect x="550" y="46" width="54" height="20" rx="4" fill="#ffffff" stroke="var(--good)"/><text x="577" y="60" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
+        <rect x="610" y="46" width="54" height="20" rx="4" fill="#ffffff" stroke="var(--good)"/><text x="637" y="60" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
+        <rect x="550" y="126" width="54" height="20" rx="4" fill="#ffffff" stroke="var(--warn)"/><text x="577" y="140" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">hi</text>
         <text x="700" y="60" fill="var(--good)" font-size="11">index 1, unchanged</text>
         <text x="700" y="140" fill="var(--warn)" font-size="11">index 1 + oldCap = 5</text>
         <text x="688" y="186" fill="var(--dim)" font-size="11">no hashCode is called. The hash is in the node.</text>
@@ -642,27 +645,27 @@ if (++size &gt; threshold) resize();
         <svg viewBox="0 0 440 300" width="100%">
           <defs><marker id="s24a" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
           <text x="10" y="16" fill="var(--bad)" font-size="11" class="mono">9 nodes, one bin</text>
-          <rect x="16" y="26" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
-          <rect x="16" y="52" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
-          <rect x="16" y="78" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
-          <rect x="16" y="104" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
-          <rect x="16" y="130" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
-          <rect x="16" y="156" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
-          <rect x="16" y="182" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
-          <rect x="16" y="208" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
-          <rect x="16" y="234" width="58" height="20" rx="4" fill="#16161a" stroke="var(--bad)"/>
+          <rect x="16" y="26" width="58" height="20" rx="4" fill="#ffffff" stroke="var(--line)"/>
+          <rect x="16" y="52" width="58" height="20" rx="4" fill="#ffffff" stroke="var(--line)"/>
+          <rect x="16" y="78" width="58" height="20" rx="4" fill="#ffffff" stroke="var(--line)"/>
+          <rect x="16" y="104" width="58" height="20" rx="4" fill="#ffffff" stroke="var(--line)"/>
+          <rect x="16" y="130" width="58" height="20" rx="4" fill="#ffffff" stroke="var(--line)"/>
+          <rect x="16" y="156" width="58" height="20" rx="4" fill="#ffffff" stroke="var(--line)"/>
+          <rect x="16" y="182" width="58" height="20" rx="4" fill="#ffffff" stroke="var(--line)"/>
+          <rect x="16" y="208" width="58" height="20" rx="4" fill="#ffffff" stroke="var(--line)"/>
+          <rect x="16" y="234" width="58" height="20" rx="4" fill="#ffffff" stroke="var(--bad)"/>
           <text x="45" y="272" text-anchor="middle" fill="var(--bad)" font-size="11">O(n) walk</text>
           <line x1="96" y1="140" x2="160" y2="140" stroke="var(--accent)" stroke-width="2" marker-end="url(#s24a)"/>
           <text x="128" y="128" text-anchor="middle" fill="var(--accent)" font-size="10" class="mono">treeify</text>
-          <circle cx="330" cy="50" r="17" fill="#16161a" stroke="var(--text)"/>
-          <circle cx="270" cy="120" r="17" fill="#16161a" stroke="var(--bad)"/>
-          <circle cx="390" cy="120" r="17" fill="#16161a" stroke="var(--bad)"/>
-          <circle cx="234" cy="190" r="17" fill="#16161a" stroke="var(--text)"/>
-          <circle cx="306" cy="190" r="17" fill="#16161a" stroke="var(--text)"/>
-          <circle cx="360" cy="190" r="17" fill="#16161a" stroke="var(--text)"/>
-          <circle cx="420" cy="190" r="17" fill="#16161a" stroke="var(--text)"/>
-          <circle cx="210" cy="248" r="14" fill="#16161a" stroke="var(--bad)"/>
-          <circle cx="258" cy="248" r="14" fill="#16161a" stroke="var(--bad)"/>
+          <circle cx="330" cy="50" r="17" fill="#ffffff" stroke="var(--text)"/>
+          <circle cx="270" cy="120" r="17" fill="#ffffff" stroke="var(--bad)"/>
+          <circle cx="390" cy="120" r="17" fill="#ffffff" stroke="var(--bad)"/>
+          <circle cx="234" cy="190" r="17" fill="#ffffff" stroke="var(--text)"/>
+          <circle cx="306" cy="190" r="17" fill="#ffffff" stroke="var(--text)"/>
+          <circle cx="360" cy="190" r="17" fill="#ffffff" stroke="var(--text)"/>
+          <circle cx="420" cy="190" r="17" fill="#ffffff" stroke="var(--text)"/>
+          <circle cx="210" cy="248" r="14" fill="#ffffff" stroke="var(--bad)"/>
+          <circle cx="258" cy="248" r="14" fill="#ffffff" stroke="var(--bad)"/>
           <line x1="318" y1="64" x2="282" y2="106" stroke="var(--dim)"/><line x1="342" y1="64" x2="378" y2="106" stroke="var(--dim)"/>
           <line x1="258" y1="134" x2="242" y2="174" stroke="var(--dim)"/><line x1="282" y1="134" x2="298" y2="174" stroke="var(--dim)"/>
           <line x1="378" y1="134" x2="366" y2="174" stroke="var(--dim)"/><line x1="402" y1="134" x2="414" y2="174" stroke="var(--dim)"/>
@@ -872,16 +875,16 @@ System.out.println(m.keySet());
       <svg viewBox="0 0 940 200" width="100%">
         <defs><marker id="s36a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
         <text x="20" y="16" fill="var(--muted)" font-size="12" class="mono">the same table, the same buckets</text>
-        <rect x="20" y="24" width="60" height="30" fill="#0a0a0c" stroke="var(--line)"/><text x="50" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
-        <rect x="80" y="24" width="60" height="30" fill="#16161a" stroke="var(--line)"/><text x="110" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">1</text>
-        <rect x="140" y="24" width="60" height="30" fill="#0a0a0c" stroke="var(--line)"/><text x="170" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">2</text>
-        <rect x="200" y="24" width="60" height="30" fill="#16161a" stroke="var(--line)"/><text x="230" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
-        <rect x="260" y="24" width="60" height="30" fill="#0a0a0c" stroke="var(--line)"/><text x="290" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">4</text>
-        <rect x="320" y="24" width="60" height="30" fill="#16161a" stroke="var(--line)"/><text x="350" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">5</text>
-        <rect x="380" y="24" width="480" height="30" fill="#0a0a0c" stroke="var(--line)"/><text x="620" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">6 .. 15</text>
-        <rect x="140" y="96" width="140" height="44" rx="7" fill="#16161a" stroke="var(--accent)"/><text x="210" y="116" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">banana</text><text x="210" y="132" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">before after</text>
-        <rect x="400" y="96" width="140" height="44" rx="7" fill="#16161a" stroke="var(--accent)"/><text x="470" y="116" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">apple</text><text x="470" y="132" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">before after</text>
-        <rect x="660" y="96" width="140" height="44" rx="7" fill="#16161a" stroke="var(--accent)"/><text x="730" y="116" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">cherry</text><text x="730" y="132" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">before after</text>
+        <rect x="20" y="24" width="60" height="30" fill="#f6f6f7" stroke="var(--line)"/><text x="50" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
+        <rect x="80" y="24" width="60" height="30" fill="#ffffff" stroke="var(--line)"/><text x="110" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">1</text>
+        <rect x="140" y="24" width="60" height="30" fill="#f6f6f7" stroke="var(--line)"/><text x="170" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">2</text>
+        <rect x="200" y="24" width="60" height="30" fill="#ffffff" stroke="var(--line)"/><text x="230" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
+        <rect x="260" y="24" width="60" height="30" fill="#f6f6f7" stroke="var(--line)"/><text x="290" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">4</text>
+        <rect x="320" y="24" width="60" height="30" fill="#ffffff" stroke="var(--line)"/><text x="350" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">5</text>
+        <rect x="380" y="24" width="480" height="30" fill="#f6f6f7" stroke="var(--line)"/><text x="620" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">6 .. 15</text>
+        <rect x="140" y="96" width="140" height="44" rx="7" fill="#ffffff" stroke="var(--accent)"/><text x="210" y="116" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">banana</text><text x="210" y="132" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">before after</text>
+        <rect x="400" y="96" width="140" height="44" rx="7" fill="#ffffff" stroke="var(--accent)"/><text x="470" y="116" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">apple</text><text x="470" y="132" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">before after</text>
+        <rect x="660" y="96" width="140" height="44" rx="7" fill="#ffffff" stroke="var(--accent)"/><text x="730" y="116" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">cherry</text><text x="730" y="132" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">before after</text>
         <line x1="110" y1="54" x2="180" y2="94" stroke="var(--dim)"/>
         <line x1="230" y1="54" x2="450" y2="94" stroke="var(--dim)"/>
         <line x1="350" y1="54" x2="700" y2="94" stroke="var(--dim)"/>
@@ -1128,11 +1131,11 @@ System.out.println(d);
       <svg viewBox="0 0 940 200" width="100%">
         <defs><marker id="s51a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
         <text x="330" y="18" fill="var(--muted)" font-size="12" class="mono">Object[] elements, used as a ring</text>
-        <rect x="330" y="30" width="72" height="44" fill="#0a0a0c" stroke="var(--line)"/><text x="366" y="58" text-anchor="middle" fill="var(--dim)" font-size="12">empty</text>
-        <rect x="402" y="30" width="72" height="44" fill="#16161a" stroke="var(--accent)"/><text x="438" y="58" text-anchor="middle" fill="var(--text)" font-size="14">2</text>
-        <rect x="474" y="30" width="72" height="44" fill="#16161a" stroke="var(--accent)"/><text x="510" y="58" text-anchor="middle" fill="var(--text)" font-size="14">1</text>
-        <rect x="546" y="30" width="72" height="44" fill="#16161a" stroke="var(--accent)"/><text x="582" y="58" text-anchor="middle" fill="var(--text)" font-size="14">3</text>
-        <rect x="618" y="30" width="72" height="44" fill="#0a0a0c" stroke="var(--line)"/><text x="654" y="58" text-anchor="middle" fill="var(--dim)" font-size="12">empty</text>
+        <rect x="330" y="30" width="72" height="44" fill="#f6f6f7" stroke="var(--line)"/><text x="366" y="58" text-anchor="middle" fill="var(--dim)" font-size="12">empty</text>
+        <rect x="402" y="30" width="72" height="44" fill="#ffffff" stroke="var(--accent)"/><text x="438" y="58" text-anchor="middle" fill="var(--text)" font-size="14">2</text>
+        <rect x="474" y="30" width="72" height="44" fill="#ffffff" stroke="var(--accent)"/><text x="510" y="58" text-anchor="middle" fill="var(--text)" font-size="14">1</text>
+        <rect x="546" y="30" width="72" height="44" fill="#ffffff" stroke="var(--accent)"/><text x="582" y="58" text-anchor="middle" fill="var(--text)" font-size="14">3</text>
+        <rect x="618" y="30" width="72" height="44" fill="#f6f6f7" stroke="var(--line)"/><text x="654" y="58" text-anchor="middle" fill="var(--dim)" font-size="12">empty</text>
         <text x="438" y="92" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">head</text>
         <text x="582" y="92" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">tail</text>
         <line x1="300" y1="44" x2="326" y2="44" stroke="var(--accent)" stroke-width="2" marker-end="url(#s51a)"/>
@@ -1260,17 +1263,17 @@ System.out.println(l);
         <svg viewBox="0 0 440 300" width="100%">
           <defs><marker id="s59a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
           <text x="10" y="18" fill="var(--muted)" font-size="12" class="mono">before: cursor 2, size 3</text>
-          <rect x="20" y="30" width="80" height="38" fill="#16161a" stroke="var(--line)"/><text x="60" y="54" text-anchor="middle" fill="var(--text)" font-size="13">a</text>
-          <rect x="100" y="30" width="80" height="38" fill="#16161a" stroke="var(--line)"/><text x="140" y="54" text-anchor="middle" fill="var(--text)" font-size="13">b</text>
-          <rect x="180" y="30" width="80" height="38" fill="#16161a" stroke="var(--line)"/><text x="220" y="54" text-anchor="middle" fill="var(--text)" font-size="13">c</text>
+          <rect x="20" y="30" width="80" height="38" fill="#ffffff" stroke="var(--line)"/><text x="60" y="54" text-anchor="middle" fill="var(--text)" font-size="13">a</text>
+          <rect x="100" y="30" width="80" height="38" fill="#ffffff" stroke="var(--line)"/><text x="140" y="54" text-anchor="middle" fill="var(--text)" font-size="13">b</text>
+          <rect x="180" y="30" width="80" height="38" fill="#ffffff" stroke="var(--line)"/><text x="220" y="54" text-anchor="middle" fill="var(--text)" font-size="13">c</text>
           <line x1="180" y1="92" x2="180" y2="72" stroke="var(--accent)" stroke-width="2" marker-end="url(#s59a)"/>
           <text x="180" y="108" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">cursor = 2</text>
           <line x1="260" y1="92" x2="260" y2="72" stroke="var(--good)" stroke-width="2" marker-end="url(#s59a)"/>
           <text x="284" y="108" text-anchor="middle" fill="var(--good)" font-size="11" class="mono">size = 3</text>
           <text x="10" y="150" fill="var(--muted)" font-size="12" class="mono">after l.remove("b")</text>
-          <rect x="20" y="162" width="80" height="38" fill="#16161a" stroke="var(--line)"/><text x="60" y="186" text-anchor="middle" fill="var(--text)" font-size="13">a</text>
-          <rect x="100" y="162" width="80" height="38" fill="#16161a" stroke="var(--line)"/><text x="140" y="186" text-anchor="middle" fill="var(--text)" font-size="13">c</text>
-          <rect x="180" y="162" width="80" height="38" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="3 3"/>
+          <rect x="20" y="162" width="80" height="38" fill="#ffffff" stroke="var(--line)"/><text x="60" y="186" text-anchor="middle" fill="var(--text)" font-size="13">a</text>
+          <rect x="100" y="162" width="80" height="38" fill="#ffffff" stroke="var(--line)"/><text x="140" y="186" text-anchor="middle" fill="var(--text)" font-size="13">c</text>
+          <rect x="180" y="162" width="80" height="38" fill="#f6f6f7" stroke="var(--dim)" stroke-dasharray="3 3"/>
           <line x1="180" y1="224" x2="180" y2="204" stroke="var(--accent)" stroke-width="2" marker-end="url(#s59a)"/>
           <text x="180" y="240" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">cursor = 2</text>
           <line x1="180" y1="256" x2="180" y2="250" stroke="var(--good)" stroke-width="2"/>
@@ -1372,7 +1375,7 @@ System.out.println(l);
       </ul>
       <div class="diagram fragment">
         <svg viewBox="0 0 440 300" width="100%">
-          <rect x="16" y="24" width="184" height="240" rx="12" fill="#16161a" stroke="var(--bad)"/>
+          <rect x="16" y="24" width="184" height="240" rx="12" fill="#ffffff" stroke="var(--bad)"/>
           <text x="108" y="50" text-anchor="middle" fill="var(--bad)" font-size="14">arrays</text>
           <text x="108" y="86" text-anchor="middle" fill="var(--muted)" font-size="12">covariant</text>
           <text x="108" y="108" text-anchor="middle" fill="var(--muted)" font-size="12">reified</text>
@@ -1381,7 +1384,7 @@ System.out.println(l);
           <text x="108" y="198" text-anchor="middle" fill="var(--bad)" font-size="12" class="mono">ArrayStore-</text>
           <text x="108" y="216" text-anchor="middle" fill="var(--bad)" font-size="12" class="mono">Exception</text>
           <text x="108" y="240" text-anchor="middle" fill="var(--muted)" font-size="11">at run time, in production</text>
-          <rect x="240" y="24" width="184" height="240" rx="12" fill="#16161a" stroke="var(--good)"/>
+          <rect x="240" y="24" width="184" height="240" rx="12" fill="#ffffff" stroke="var(--good)"/>
           <text x="332" y="50" text-anchor="middle" fill="var(--good)" font-size="14">generics</text>
           <text x="332" y="86" text-anchor="middle" fill="var(--muted)" font-size="12">invariant</text>
           <text x="332" y="108" text-anchor="middle" fill="var(--muted)" font-size="12">erased</text>
@@ -1559,21 +1562,21 @@ u.add(4);
         <defs><marker id="s77a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker>
           <marker id="s77b" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--warn)"/></marker></defs>
         <text x="10" y="16" fill="var(--muted)" font-size="12" class="mono">Node&lt;K,V&gt;[] table</text>
-        <rect x="10" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="40" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
-        <rect x="70" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="100" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">1</text>
-        <rect x="130" y="24" width="60" height="34" fill="#16161a" stroke="var(--accent)"/><text x="160" y="46" text-anchor="middle" fill="var(--accent)" font-size="11">2</text>
-        <rect x="190" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="220" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
-        <rect x="250" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="280" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">4</text>
-        <rect x="310" y="24" width="60" height="34" fill="#16161a" stroke="var(--warn)"/><text x="340" y="46" text-anchor="middle" fill="var(--warn)" font-size="11">5</text>
-        <rect x="370" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="400" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">6</text>
-        <rect x="430" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="460" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">7</text>
+        <rect x="10" y="24" width="60" height="34" fill="#f6f6f7" stroke="var(--line)"/><text x="40" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
+        <rect x="70" y="24" width="60" height="34" fill="#f6f6f7" stroke="var(--line)"/><text x="100" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">1</text>
+        <rect x="130" y="24" width="60" height="34" fill="#ffffff" stroke="var(--accent)"/><text x="160" y="46" text-anchor="middle" fill="var(--accent)" font-size="11">2</text>
+        <rect x="190" y="24" width="60" height="34" fill="#f6f6f7" stroke="var(--line)"/><text x="220" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
+        <rect x="250" y="24" width="60" height="34" fill="#f6f6f7" stroke="var(--line)"/><text x="280" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">4</text>
+        <rect x="310" y="24" width="60" height="34" fill="#ffffff" stroke="var(--warn)"/><text x="340" y="46" text-anchor="middle" fill="var(--warn)" font-size="11">5</text>
+        <rect x="370" y="24" width="60" height="34" fill="#f6f6f7" stroke="var(--line)"/><text x="400" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">6</text>
+        <rect x="430" y="24" width="60" height="34" fill="#f6f6f7" stroke="var(--line)"/><text x="460" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">7</text>
         <text x="160" y="76" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">empty</text>
-        <rect x="297" y="82" width="86" height="30" rx="5" fill="#16161a" stroke="var(--warn)"/><text x="340" y="101" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">head node</text>
+        <rect x="297" y="82" width="86" height="30" rx="5" fill="#ffffff" stroke="var(--warn)"/><text x="340" y="101" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">head node</text>
         <line x1="340" y1="58" x2="340" y2="80" stroke="var(--dim)"/>
-        <rect x="40" y="136" width="230" height="44" rx="7" fill="#16161a" stroke="var(--accent)"/>
+        <rect x="40" y="136" width="230" height="44" rx="7" fill="#ffffff" stroke="var(--accent)"/>
         <text x="155" y="154" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">thread A: put into bin 2</text>
         <text x="155" y="171" text-anchor="middle" fill="var(--accent)" font-size="11">one CAS, no lock taken</text>
-        <rect x="300" y="136" width="230" height="44" rx="7" fill="#16161a" stroke="var(--warn)"/>
+        <rect x="300" y="136" width="230" height="44" rx="7" fill="#ffffff" stroke="var(--warn)"/>
         <text x="415" y="154" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">thread B: put into bin 5</text>
         <text x="415" y="171" text-anchor="middle" fill="var(--warn)" font-size="11">synchronized on that node</text>
         <line x1="155" y1="134" x2="158" y2="84" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#s77a)"/>
@@ -1771,16 +1774,16 @@ String t = v.orElseGet(this::expensive);  // only when empty
     <div class="diagram">
       <svg viewBox="0 0 940 300" width="100%">
         <defs><marker id="s93a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker></defs>
-        <rect x="380" y="8" width="180" height="34" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="470" y="31" text-anchor="middle" fill="var(--accent)" font-size="14">are they pairs?</text>
+        <rect x="380" y="8" width="180" height="34" rx="8" fill="#ffffff" stroke="var(--accent)"/><text x="470" y="31" text-anchor="middle" fill="var(--accent)" font-size="14">are they pairs?</text>
         <line x1="420" y1="42" x2="230" y2="66" stroke="var(--dim)" marker-end="url(#s93a)"/><text x="300" y="50" fill="var(--good)" font-size="12" class="mono">yes</text>
         <line x1="520" y1="42" x2="700" y2="66" stroke="var(--dim)" marker-end="url(#s93a)"/><text x="620" y="50" fill="var(--bad)" font-size="12" class="mono">no</text>
-        <rect x="150" y="68" width="160" height="30" rx="7" fill="#16161a" stroke="var(--line)"/><text x="230" y="88" text-anchor="middle" fill="var(--text)" font-size="13">Map</text>
+        <rect x="150" y="68" width="160" height="30" rx="7" fill="#ffffff" stroke="var(--line)"/><text x="230" y="88" text-anchor="middle" fill="var(--text)" font-size="13">Map</text>
         <text x="30" y="126" fill="var(--muted)" font-size="12">no order needed</text><text x="200" y="126" fill="var(--text)" font-size="12" class="mono">HashMap</text>
         <text x="30" y="150" fill="var(--muted)" font-size="12">insertion order, or an LRU</text><text x="200" y="150" fill="var(--text)" font-size="12" class="mono">LinkedHashMap</text>
         <text x="30" y="174" fill="var(--muted)" font-size="12">sorted, or range queries</text><text x="200" y="174" fill="var(--text)" font-size="12" class="mono">TreeMap</text>
         <text x="30" y="198" fill="var(--muted)" font-size="12">enum keys</text><text x="200" y="198" fill="var(--text)" font-size="12" class="mono">EnumMap</text>
         <text x="30" y="222" fill="var(--muted)" font-size="12">shared writers</text><text x="200" y="222" fill="var(--text)" font-size="12" class="mono">ConcurrentHashMap</text>
-        <rect x="620" y="68" width="200" height="30" rx="7" fill="#16161a" stroke="var(--line)"/><text x="720" y="88" text-anchor="middle" fill="var(--text)" font-size="13">duplicates allowed?</text>
+        <rect x="620" y="68" width="200" height="30" rx="7" fill="#ffffff" stroke="var(--line)"/><text x="720" y="88" text-anchor="middle" fill="var(--text)" font-size="13">duplicates allowed?</text>
         <text x="480" y="126" fill="var(--good)" font-size="12" class="mono">yes, a List</text><text x="610" y="126" fill="var(--text)" font-size="12" class="mono">ArrayList</text><text x="700" y="126" fill="var(--dim)" font-size="11">(LinkedList only with a ListIterator in hand)</text>
         <text x="480" y="156" fill="var(--bad)" font-size="12" class="mono">no, a Set</text><text x="610" y="156" fill="var(--text)" font-size="12" class="mono">HashSet / LinkedHashSet / TreeSet / EnumSet</text>
         <text x="480" y="186" fill="var(--muted)" font-size="12">ends only</text><text x="610" y="186" fill="var(--text)" font-size="12" class="mono">ArrayDeque</text>
