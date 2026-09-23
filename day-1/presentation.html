@@ -7,7 +7,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:wght@400;600&display=swap">
 
 <style>
@@ -78,7 +78,7 @@
   .tag.bad { background:rgba(255,122,122,0.06); color:var(--bad); border-color:rgba(255,122,122,0.25); }
   .tag.good { background:rgba(125,220,154,0.06); color:var(--good); border-color:rgba(125,220,154,0.25); }
 
-  .reveal pre { background:#0a0a0c; border:1px solid var(--line); border-radius:10px; box-shadow:none;
+  .reveal pre { background:#f6f8fa; border:1px solid var(--line); border-radius:10px; box-shadow:none;
     margin:12px 0; width:100%; }
   .reveal pre code { font-family:'JetBrains Mono',monospace; font-size:15px; line-height:1.5;
     padding:18px 20px; border-radius:10px; background:transparent; }
@@ -123,9 +123,9 @@
   .handson-head { display:flex; align-items:center; gap:14px; margin-bottom:10px; }
   .handson-badge { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em;
     text-transform:uppercase; color:#ffffff; background:var(--accent); padding:5px 12px; border-radius:5px; font-weight:600; }
-  .cmd { background:#0a0a0c; border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px;
-    font-family:'JetBrains Mono',monospace; font-size:16px; color:#e8e8ea; padding:14px 18px; margin:12px 0; line-height:1.7; }
-  .cmd .c { color:#9a9aa5; }
+  .cmd { background:#f6f8fa; border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px;
+    font-family:'JetBrains Mono',monospace; font-size:16px; color:#24292e; padding:14px 18px; margin:12px 0; line-height:1.7; }
+  .cmd .c { color:#57606a; }
   .cmd.lg { font-size:24px; padding:16px 20px; margin:6px 0; line-height:1.5; word-break:break-all; }
   .oslabel { font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:0.12em; text-transform:uppercase;
     color:var(--accent); margin:8px 0 2px; display:block; }
@@ -151,7 +151,16 @@
     text-transform:uppercase; color:var(--warn); font-weight:500; display:block; margin-bottom:3px; }
   /* monokai's own comment grey reads at 4.0:1 on the code plate, so lift it */
   .reveal pre code .hljs-comment, .reveal pre code .hljs-quote,
-  .reveal pre code .hljs-meta, .reveal pre code .hljs-meta-keyword { color:#9d9884; }
+  .reveal pre code .hljs-meta, .reveal pre code .hljs-meta-keyword { color:#57606a; }
+  .reveal pre code.hljs, .reveal pre code { background:#f6f8fa; color:#24292e; }
+  /* GitHub's keyword red and built-in orange read under 4.5:1 on this plate, so darken them */
+  .reveal pre code .hljs-keyword, .reveal pre code .hljs-type,
+  .reveal pre code .hljs-doctag, .reveal pre code .hljs-template-tag,
+  .reveal pre code .hljs-variable.language_ { color:#ce2a3a; }
+  .reveal pre code .hljs-built_in, .reveal pre code .hljs-symbol { color:#b44e07; }
+  .reveal pre code .hljs-name, .reveal pre code .hljs-section,
+  .reveal pre code .hljs-selector-tag, .reveal pre code .hljs-title.function_,
+  .reveal pre code .hljs-title { color:#207d36; }
 </style>
 </head>
 <body>
