@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Day 3: JDBC / Build Your Technical Skills</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:wght@400;600&display=swap">
+
+<style>
+  :root{
+    --bg:#0e0e10; --bg-soft:#16161a; --line:#26262c; --text:#e8e8ea;
+    --muted:#8a8a93; --dim:#5a5a63; --accent:#d4ff3a; --accent-2:#6ea8ff;
+    --good:#7ddc9a; --bad:#ff7a7a; --warn:#f5b840;
+  }
+  html, body { background: var(--bg); }
+  .reveal-viewport { background: var(--bg) !important; }
+
+  .reveal { font-family:'Inter',system-ui,sans-serif; font-weight:400; color:var(--text);
+            font-size:22px; letter-spacing:-0.005em; }
+  .reveal .slides { text-align:left; }
+  .reveal .slides > section { padding:56px 80px; height:100%; box-sizing:border-box; }
+
+  /* per-pillar accent tint (part 1) */
+  .reveal section.enc  { --accent:#d4ff3a; }
+  .reveal section.abs  { --accent:#ff8a3d; }
+  .reveal section.inh  { --accent:#6ea8ff; }
+  .reveal section.poly { --accent:#c084fc; }
+  /* per-principle accent tint (part 2) */
+  .reveal section.srp { --accent:#ff5c8d; }
+  .reveal section.ocp { --accent:#14b8a6; }
+  .reveal section.lsp { --accent:#a78bfa; }
+  .reveal section.isp { --accent:#f59e0b; }
+  .reveal section.dip { --accent:#22d3ee; }
+
+  .reveal h1,.reveal h2,.reveal h3,.reveal h4 { font-family:'Inter',sans-serif; font-weight:600;
+    color:var(--text); text-transform:none; letter-spacing:-0.02em; margin:0 0 0.4em 0; line-height:1.12; }
+  .reveal h1 { font-size:66px; font-weight:700; letter-spacing:-0.04em; }
+  .reveal h2 { font-size:44px; font-weight:600; }
+  .reveal h3 { font-size:24px; font-weight:600; }
+  .reveal p,.reveal li { font-size:25px; line-height:1.55; color:#d4d4d8; }
+  .reveal ul,.reveal ol { margin:0.4em 0 0 1.2em; }
+  .reveal li { margin:0.4em 0; }
+  .reveal strong { color:var(--text); font-weight:600; }
+  .reveal em { font-style:italic; color:var(--accent); }
+
+  .eyebrow { font-family:'JetBrains Mono',monospace; font-size:15px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:1.1em; display:block; }
+  .eyebrow .dot { display:inline-block; width:8px; height:8px; border-radius:50%;
+    background:var(--accent); vertical-align:middle; margin-right:6px; }
+
+  .title-wrap { display:flex; flex-direction:column; justify-content:center; height:100%; }
+  .display { font-family:'Fraunces',serif; font-weight:400; font-size:104px; line-height:0.96;
+    letter-spacing:-0.04em; margin:0; }
+  .display em { font-style:italic; color:var(--accent); }
+  .subtitle { font-size:23px; color:var(--muted); margin-top:1.2em; max-width:62ch; }
+
+  .lede { font-size:30px; line-height:1.4; color:#e8e8ea; max-width:66ch; font-weight:400; }
+  .quote { font-family:'Fraunces',serif; font-style:italic; font-size:30px; line-height:1.35;
+    color:#e0e0e4; border-left:2px solid var(--accent); padding-left:22px; max-width:64ch; }
+  .quote-attr { font-family:'Inter',sans-serif; font-style:normal; font-size:14px; color:var(--muted);
+    margin-top:0.6em; letter-spacing:0.1em; text-transform:uppercase; }
+
+  .grid { display:grid; gap:24px; margin-top:20px; }
+  .g2 { grid-template-columns:1fr 1fr; } .g3 { grid-template-columns:1fr 1fr 1fr; }
+  .card { background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:18px 20px; }
+  .card h3 { margin-bottom:8px; font-size:18px; color:var(--accent); }
+  .card p { font-size:18px; color:var(--muted); margin:0; line-height:1.5; }
+
+  .tag { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; padding:4px 10px; border-radius:4px; background:rgba(212,255,58,0.08);
+    color:var(--accent); border:1px solid rgba(212,255,58,0.2); margin-bottom:12px; }
+  .tag.bad { background:rgba(255,122,122,0.06); color:var(--bad); border-color:rgba(255,122,122,0.25); }
+  .tag.good { background:rgba(125,220,154,0.06); color:var(--good); border-color:rgba(125,220,154,0.25); }
+
+  .reveal pre { background:#0a0a0c; border:1px solid var(--line); border-radius:10px; box-shadow:none;
+    margin:12px 0; width:100%; }
+  .reveal pre code { font-family:'JetBrains Mono',monospace; font-size:18px; line-height:1.5;
+    padding:18px 20px; border-radius:10px; background:transparent; }
+  .reveal pre.sm code { font-size:15px; line-height:1.45; padding:14px 16px; }
+  .reveal code:not(pre code) { font-family:'JetBrains Mono',monospace; font-size:0.86em;
+    background:var(--bg-soft); border:1px solid var(--line); padding:1px 6px; border-radius:4px; color:var(--accent); }
+
+  table.tbl { width:100%; border-collapse:collapse; font-size:20px; margin-top:14px; }
+  table.tbl th, table.tbl td { padding:11px 14px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+  table.tbl th { color:var(--muted); font-weight:500; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; }
+  table.tbl tr:last-child td { border-bottom:none; }
+  table.tbl td code { font-size:14px; }
+
+  .codeflex { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+  .diagram { background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .dgrid { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; margin-top:8px; }
+  .reveal svg text { font-family:'Inter',sans-serif; }
+  .reveal svg .mono { font-family:'JetBrains Mono',monospace; }
+  .footer-line { position:absolute; bottom:26px; left:80px; right:80px; display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--dim); letter-spacing:0.1em; text-transform:uppercase; }
+
+  .reveal ul.clean { list-style:none; margin-left:0; }
+  .reveal ul.clean li { padding-left:22px; position:relative; }
+  .reveal ul.clean li::before { content:''; position:absolute; left:0; top:13px; width:9px; height:1px; background:var(--accent); }
+
+  .reveal .slide-number { background:transparent; color:var(--dim); font-family:'JetBrains Mono',monospace; font-size:12px; }
+  .reveal .progress { color:var(--accent); height:2px; }
+  .reveal .controls { color:var(--dim); }
+
+  .brand { position:fixed; top:20px; right:26px; z-index:40; display:flex; align-items:center; gap:8px; opacity:0.9; }
+  .brand img { height:26px; width:auto; display:block; }
+
+  /* part divider treatment */
+  .reveal section.part { background:
+      radial-gradient(1200px 520px at 12% -10%, rgba(110,168,255,0.07), transparent 60%); }
+  .part-tag { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--accent-2); }
+
+  /* hands-on / capstone treatment */
+  .reveal section.handson { background:
+      radial-gradient(1200px 500px at 90% -10%, rgba(212,255,58,0.06), transparent 60%); }
+  .handson-head { display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+  .handson-badge { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em;
+    text-transform:uppercase; color:#0a0a0c; background:var(--accent); padding:5px 12px; border-radius:5px; font-weight:600; }
+  .cmd { background:#0a0a0c; border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px;
+    font-family:'JetBrains Mono',monospace; font-size:16px; color:#e0e0e4; padding:14px 18px; margin:12px 0; line-height:1.7; }
+  .cmd .c { color:var(--dim); }
+  .cmd.lg { font-size:24px; padding:16px 20px; margin:6px 0; line-height:1.5; word-break:break-all; }
+  .oslabel { font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--accent); margin:8px 0 2px; display:block; }
+  .setup-steps { display:grid; grid-template-columns:1fr 1fr; gap:10px 28px; margin-top:10px; }
+  .setup-note { font-size:19px; color:var(--muted); margin-top:12px; max-width:70ch; }
+  .setup-link { font-family:'JetBrains Mono',monospace; font-size:22px; color:var(--accent-2); word-break:break-all; }
+
+  /* per-topic accent tint, day 3 */
+  .reveal section.drv  { --accent:#7dd3fc; }
+  .reveal section.stmt { --accent:#f472b6; }
+  .reveal section.rs   { --accent:#fbbf24; }
+  .reveal section.res  { --accent:#a78bfa; }
+  .reveal section.tx   { --accent:#34d399; }
+  .reveal section.bat  { --accent:#fb923c; }
+  .reveal section.pool { --accent:#22d3ee; }
+  .reveal section.dao  { --accent:#c084fc; }
+  .reveal section.call { --accent:#f87171; }
+
+  /* quiz + answer treatment */
+  .reveal section.quiz { --accent:#facc15; background:
+      radial-gradient(1200px 520px at 88% -10%, rgba(250,204,21,0.06), transparent 60%); }
+  .reveal section.answer { --accent:#7ddc9a; background:
+      radial-gradient(1200px 520px at 10% -10%, rgba(125,220,154,0.06), transparent 60%); }
+  .reveal ol.opts { list-style:none; margin:16px 0 0 0; display:grid;
+    grid-template-columns:1fr 1fr; gap:12px 24px; }
+  .reveal ol.opts.w1 { grid-template-columns:1fr; }
+  .reveal ol.opts li { background:var(--bg-soft); border:1px solid var(--line); border-radius:9px;
+    padding:12px 16px; margin:0; font-size:19px; line-height:1.4; }
+  .reveal ol.opts li b { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.12em;
+    color:var(--accent); font-weight:500; margin-right:12px; }
+  .reveal ol.opts li code { font-size:0.84em; }
+  .trap { border-left:2px solid var(--warn); padding-left:16px; margin-top:16px; max-width:88ch; }
+  .trap b { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--warn); font-weight:500; display:block; margin-bottom:3px; }
+</style>
+</head>
+<body>
+
+<div class="brand"><img src="https://byts.co.in/imgs/bytsLogo.png" alt="Byts" /></div>
+
+<div class="reveal"><div class="slides">
+
+
+  <!-- 01 TITLE -->
+  <section class="title-wrap">
+    <span class="eyebrow"><span class="dot"></span> day 3 / two parts, then you build</span>
+    <h1 class="display">Talking to the <em>database</em>:<br/>JDBC, <em>honestly</em>.</h1>
+    <p class="subtitle">Part 1 is the plumbing: what a driver is and how one gets found, what a Connection costs, why a Statement is a loaded gun and a PreparedStatement is not, how a ResultSet really moves, what the metadata knows, and how not to leak any of it. Part 2 is the hard part: transactions, isolation and the lost update, batches and generated keys, stored procedures, pools, the repository, and the honest reason JdbcTemplate and ORMs exist. Then you build a small bank on H2, with tests as your spec.</p>
+    <div class="footer-line"><span>day 3</span><span>build your technical skills</span></div>
+  </section>
+
+  <!-- 02 HOW TODAY RUNS -->
+  <section>
+    <span class="eyebrow">how today runs</span>
+    <h2>Two halves, one database, then the build.</h2>
+    <ul class="clean">
+      <li class="fragment"><b>Part 1:</b> what a driver is and how one is found, a real MySQL setup and why we use H2, what a Connection costs, Statement against PreparedStatement and injection, the four verbs, the cursor, both metadata interfaces, mapping rows to records, resources and exceptions.</li>
+      <li class="fragment"><b>Part 2:</b> transactions and autocommit, isolation and a live lost update, batch and generated keys, CallableStatement, javax.sql and pooling, the repository, Optional, N+1, and why Spring wraps all of it.</li>
+      <li class="fragment">Every idea opens with a <em>question</em>. Guess first, out loud, and be wrong cheaply.</li>
+      <li class="fragment">Nine quiz questions, scattered through the day: each one lands right after the thing it tests.</li>
+      <li class="fragment">Three short hands-on blocks in between, in the jshell you are about to open. Type along: they are five and ten minutes each, not homework.</li>
+      <li class="fragment"><b>Then you build:</b> a bank on an in-memory H2 database. Three parts, nothing to install, tests you make green.</li>
+    </ul>
+    <div class="footer-line"><span>day 3</span><span>overview</span></div>
+  </section>
+
+  <!-- 03 FRAMING -->
+  <section>
+    <span class="eyebrow">first, the point of all of it</span>
+    <h2>One API. Any database. Your code never knows which.</h2>
+    <p class="lede fragment">JDBC is a set of interfaces in <code>java.sql</code>. The driver jar is the implementation. The database gets chosen at runtime, by a string.</p>
+    <div class="diagram fragment" style="margin-top:14px;">
+      <svg viewBox="0 0 940 200" width="100%">
+        <defs><marker id="s03a" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+        <rect x="16" y="52" width="150" height="70" rx="9" fill="#16161a" stroke="var(--accent)"/>
+        <text x="91" y="93" text-anchor="middle" fill="var(--text)" font-size="14">your code</text>
+        <line x1="166" y1="87" x2="228" y2="87" stroke="var(--accent)" stroke-width="2" marker-end="url(#s03a)"/>
+        <rect x="236" y="34" width="250" height="106" rx="9" fill="#0a0a0c" stroke="var(--accent)" stroke-width="2"/>
+        <text x="361" y="60" text-anchor="middle" fill="var(--accent)" font-size="13" class="mono">java.sql</text>
+        <text x="361" y="84" text-anchor="middle" fill="var(--muted)" font-size="12">Driver, Connection, Statement,</text>
+        <text x="361" y="104" text-anchor="middle" fill="var(--muted)" font-size="12">PreparedStatement, ResultSet</text>
+        <line x1="236" y1="152" x2="486" y2="152" stroke="var(--dim)" stroke-dasharray="5 4"/>
+        <text x="361" y="172" text-anchor="middle" fill="var(--dim)" font-size="12">the seam</text>
+        <line x1="486" y1="87" x2="548" y2="87" stroke="var(--accent)" stroke-width="2" marker-end="url(#s03a)"/>
+        <rect x="556" y="26" width="224" height="36" rx="7" fill="#16161a" stroke="var(--line)"/><text x="668" y="50" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">org.h2.Driver</text>
+        <rect x="556" y="69" width="224" height="36" rx="7" fill="#16161a" stroke="var(--line)"/><text x="668" y="93" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">org.postgresql.Driver</text>
+        <rect x="556" y="112" width="224" height="36" rx="7" fill="#16161a" stroke="var(--line)"/><text x="668" y="136" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">com.mysql.cj.jdbc.Driver</text>
+        <line x1="780" y1="87" x2="838" y2="87" stroke="var(--dim)" stroke-width="2" marker-end="url(#s03a)"/>
+        <ellipse cx="884" cy="46" rx="38" ry="12" fill="#16161a" stroke="var(--accent-2)"/>
+        <path d="M846,46 L846,128 A38,12 0 0 0 922,128 L922,46" fill="#16161a" stroke="var(--accent-2)"/>
+        <text x="884" y="164" text-anchor="middle" fill="var(--muted)" font-size="12">database</text>
+      </svg>
+    </div>
+    <ul class="clean">
+      <li class="fragment">This API is from 1997. It is boring, and it is on every machine you will ever deploy to.</li>
+      <li class="fragment">Every data framework you meet sits on exactly this, including the one somebody teaches you next week.</li>
+      <li class="fragment">Know the floor before you stand on the carpet.</li>
+    </ul>
+    <div class="footer-line"><span>day 3</span><span>the point</span></div>
+  </section>
+
+  <!-- 04 DRIVER TYPES -->
+  <section class="drv">
+    <span class="eyebrow">architecture / the driver's job</span>
+    <h2>Four kinds of driver. Only one of them still matters.</h2>
+    <p class="fragment" style="color:var(--muted); margin:0;">A driver is a jar that implements <code>java.sql.Driver</code> and friends, and turns your interface calls into that vendor's wire protocol.</p>
+    <table class="tbl">
+      <tr><th>Type</th><th>What it is</th><th>Where it lives now</th></tr>
+      <tr><td>1</td><td>JDBC-ODBC bridge, native ODBC underneath</td><td>removed from the JDK in Java 8. Dead.</td></tr>
+      <tr><td>2</td><td>thin Java over a vendor C library</td><td>you must install the client. Oracle OCI is the survivor.</td></tr>
+      <tr><td>3</td><td>talks to a middleware server, which talks to the database</td><td>historical.</td></tr>
+      <tr><td>4</td><td>pure Java, speaks the database's own protocol over a socket</td><td>one jar, no install: h2, postgresql, mysql-connector-j, ojdbc11.</td></tr>
+    </table>
+    <ul class="clean">
+      <li class="fragment">A driver implements <code>Driver</code>, <code>Connection</code>, <code>Statement</code>, <code>PreparedStatement</code>, <code>CallableStatement</code> and <code>ResultSet</code>. That is all it is.</li>
+      <li class="fragment">It is a <em>runtime</em> dependency. Your code never imports it.</li>
+      <li class="fragment">A driver that does not recognise your URL returns null and says nothing, which is how several of them live on one classpath.</li>
+    </ul>
+    <div class="footer-line"><span>architecture</span><span>driver types</span></div>
+  </section>
+
+  <!-- 05 FOLLOW ALONG: JSHELL -->
+  <section class="handson">
+    <span class="eyebrow"><span class="dot"></span> hands-on / setup for the day</span>
+    <div class="handson-head"><span class="handson-badge">Follow along</span></div>
+    <h2>H2 in jshell, zero install.</h2>
+    <span class="oslabel fragment">Get the jar (once)</span>
+    <div class="cmd fragment">git pull<br/>cd day-3-capstone<br/>./get-deps.sh <span class="c">&nbsp; # Windows: .\get-deps.cmd</span></div>
+    <span class="oslabel fragment">Start a Java shell with it on the classpath</span>
+    <div class="cmd fragment">jshell --class-path lib/h2-2.3.232.jar</div>
+    <span class="oslabel fragment">Then, in jshell</span>
+    <div class="cmd fragment">import java.sql.*;<br/>var c = DriverManager.getConnection("jdbc:h2:mem:play;DB_CLOSE_DELAY=-1");<br/>var s = c.createStatement();<br/>s.execute("CREATE TABLE t(id INT)");</div>
+    <p class="fragment setup-note"><code>mem:</code> means the database lives in this JVM and nowhere else, and <code>DB_CLOSE_DELAY=-1</code> keeps it alive after the last connection closes, which is the difference between a table that survives your next command and one that vanishes. Keep <code>c</code> and <code>s</code>: every hands-on block today reuses them, and you have just downloaded the jar this afternoon's capstone needs.</p>
+    <div class="footer-line"><span>setup</span><span>jshell + h2</span></div>
+  </section>
+
+  <!-- 06 DRIVER LOADING AND SERVICELOADER -->
+  <section class="drv">
+    <span class="eyebrow"><span class="dot"></span> driver loading / guess first</span>
+    <h2>How does <code>DriverManager</code> find a driver it has never heard of?</h2>
+    <p style="margin:0; color:var(--muted);">You never wrote <code>new org.h2.Driver()</code> and you never named H2 in code at all. Does something scan the classpath, does the URL carry the class name, or does the jar say who it is?</p>
+    <div class="dgrid" style="margin-top:10px;">
+      <ul class="clean">
+        <li class="fragment">The jar says who it is. Since JDBC 4.0 every driver ships one text file, <code>META-INF/services/java.sql.Driver</code>, holding its <code>Driver</code> class name.</li>
+        <li class="fragment">Your first <code>getConnection</code> runs <code>ServiceLoader.load(Driver.class)</code> once, instantiates each class named in those files, and each one registers itself from its own static initialiser. It is lazy, and I checked this on JDK 25: the lookup happens on first use.</li>
+        <li class="fragment">Then <code>getConnection(url)</code> walks the registered drivers in order and calls <code>connect(url, props)</code>. Not yours? Return null. First non-null wins. All null and you get <em>No suitable driver found</em>.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 300" width="100%">
+          <defs><marker id="s06a" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+          <rect x="14" y="20" width="168" height="40" rx="7" fill="#16161a" stroke="var(--line)"/><text x="98" y="38" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">h2.jar</text><text x="98" y="54" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">META-INF/services</text>
+          <rect x="14" y="72" width="168" height="40" rx="7" fill="#16161a" stroke="var(--line)"/><text x="98" y="90" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">postgresql.jar</text><text x="98" y="106" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">META-INF/services</text>
+          <rect x="14" y="124" width="168" height="40" rx="7" fill="#16161a" stroke="var(--line)"/><text x="98" y="142" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">mysql.jar</text><text x="98" y="158" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">META-INF/services</text>
+          <line x1="182" y1="92" x2="246" y2="92" stroke="var(--accent)" stroke-width="2" marker-end="url(#s06a)"/>
+          <text x="214" y="82" text-anchor="middle" fill="var(--accent)" font-size="10" class="mono">load</text>
+          <rect x="252" y="30" width="176" height="124" rx="9" fill="#0a0a0c" stroke="var(--accent)" stroke-width="2"/>
+          <text x="340" y="56" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">registered drivers</text>
+          <text x="340" y="82" text-anchor="middle" fill="var(--muted)" font-size="12">org.h2.Driver</text>
+          <text x="340" y="104" text-anchor="middle" fill="var(--muted)" font-size="12">org.postgresql.Driver</text>
+          <text x="340" y="126" text-anchor="middle" fill="var(--muted)" font-size="12">com.mysql.cj.jdbc.Driver</text>
+          <text x="220" y="206" text-anchor="middle" fill="var(--text)" font-size="13" class="mono">connect("jdbc:h2:...")?</text>
+          <line x1="340" y1="154" x2="340" y2="186" stroke="var(--dim)" stroke-width="1.5"/>
+          <rect x="100" y="228" width="240" height="44" rx="8" fill="rgba(125,220,154,0.07)" stroke="var(--good)"/>
+          <text x="220" y="256" text-anchor="middle" fill="var(--good)" font-size="13">first non-null answer wins</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>driver loading</span><span>serviceloader</span></div>
+  </section>
+
+  <!-- 07 CLASS.FORNAME -->
+  <section class="drv">
+    <span class="eyebrow">the fine print</span>
+    <h2><code>Class.forName</code>, and the global that outlives your app.</h2>
+    <ul class="clean">
+      <li class="fragment"><code>Class.forName("org.h2.Driver")</code> is the pre-2006 trick: it initialised the class, whose static block called <code>DriverManager.registerDriver</code>.</li>
+      <li class="fragment">Today it is redundant, and since registration is lazy it makes registration happen <em>earlier</em>, not later.</li>
+      <li class="fragment">A class initialiser runs at most once, so it cannot register twice. <code>getDrivers()</code> still shows one H2 driver.</li>
+      <li class="fragment">You will see that line in every tutorial older than you are. It is a tell, not a bug.</li>
+      <li class="fragment">What it is really telling you: <code>DriverManager</code> is a static, JVM-wide global, with all the trouble Day 1 said globals cause.</li>
+      <li class="fragment">Tomorrow's version of that trouble: a driver jar inside a WAR registers itself with the JVM-wide <code>DriverManager</code> and never deregisters, so Tomcat logs "the web application registered the JDBC driver but failed to unregister it" and leaks a classloader on every redeploy.</li>
+      <li class="fragment">Which is one more reason production code asks a <code>DataSource</code> for its connections. That is part 2.</li>
+    </ul>
+    <div class="footer-line"><span>driver loading</span><span>the legacy line</span></div>
+  </section>
+
+  <!-- 08 JDBC URL -->
+  <section class="drv">
+    <span class="eyebrow">the move</span>
+    <h2>Anatomy of a JDBC URL.</h2>
+    <p class="fragment" style="margin:0; color:var(--muted);"><code>jdbc</code> : <code>subprotocol</code> : <code>subname</code>. The subprotocol is what each driver's <code>connect(url)</code> matches on, and everything after it belongs to that vendor.</p>
+    <table class="tbl">
+      <tr><th>URL</th><th>What the pieces mean</th></tr>
+      <tr><td><code>jdbc:h2:mem:bank;DB_CLOSE_DELAY=-1</code></td><td>in memory, this JVM only, and it survives the last close</td></tr>
+      <tr><td><code>jdbc:h2:./data/bank</code></td><td>the same H2, writing files on disk</td></tr>
+      <tr><td><code>jdbc:postgresql://db.example:5432/bank</code></td><td>host, port, database name</td></tr>
+      <tr><td><code>jdbc:mysql://db.example:3306/bank?serverTimezone=UTC</code></td><td>options ride in a query string</td></tr>
+      <tr><td><code>jdbc:oracle:thin:@host:1521/orcl</code></td><td><em>thin</em> is Oracle's word for Type 4</td></tr>
+    </table>
+    <ul class="clean">
+      <li class="fragment">Credentials go in <code>getConnection(url, user, password)</code>, or in a <code>Properties</code> read from the environment. Never in a string literal in source.</li>
+      <li class="fragment">The URL is configuration, so it belongs outside the class that uses it. You will feel why in part 2.</li>
+    </ul>
+    <div class="footer-line"><span>driver loading</span><span>the url</span></div>
+  </section>
+
+  <!-- 09 SETUP: MYSQL, ORACLE -->
+  <section class="handson drv">
+    <span class="eyebrow"><span class="dot"></span> setup / the way the syllabus asks for it</span>
+    <div class="handson-head"><span class="handson-badge">Reference</span></div>
+    <h2>The syllabus setup: a real MySQL, its jar, the classpath.</h2>
+    <p class="fragment" style="color:var(--muted); margin:0 0 4px;">Written out properly, because you will do exactly this in your first month on the job.</p>
+    <div class="setup-steps">
+      <div class="fragment"><span class="oslabel">1 · the server</span><div class="cmd">mysql -u root -p<br/>CREATE DATABASE bank;<br/>CREATE USER 'app'@'localhost' IDENTIFIED BY '...';<br/>GRANT ALL ON bank.* TO 'app'@'localhost';</div></div>
+      <div class="fragment"><span class="oslabel">2 · the driver jar, one file</span><div class="cmd">repo1.maven.org/maven2/com/mysql/<br/>mysql-connector-j/9.1.0/<br/>mysql-connector-j-9.1.0.jar</div></div>
+      <div class="fragment"><span class="oslabel">3 · the classpath, at runtime</span><div class="cmd">java -cp "lib/mysql-connector-j-9.1.0.jar:." App <span class="c">&nbsp;# mac, linux</span><br/>java -cp "lib\mysql-connector-j-9.1.0.jar;." App <span class="c">&nbsp;# windows</span></div></div>
+      <div class="fragment"><span class="oslabel">4 · connect</span><div class="cmd">DriverManager.getConnection(<br/>&nbsp;&nbsp;"jdbc:mysql://localhost:3306/bank?serverTimezone=UTC",<br/>&nbsp;&nbsp;user, pw);</div></div>
+    </div>
+    <p class="fragment" style="margin:14px 0 2px; color:var(--accent);">Oracle, which the syllabus also names: <code>jdbc:oracle:thin:@//host:1521/SERVICE_NAME</code> is the modern URL, and <code>jdbc:oracle:thin:@host:1521:SID</code> is the older one your textbook still prints.</p>
+    <ul class="clean">
+      <li class="fragment">Its jar is <code>ojdbc11.jar</code>, from Oracle's own site behind a licence click rather than Maven Central. Step 3 is character for character identical and zero lines of your Java change, and you never needed the jar to <em>compile</em>, which is why a missing driver is a runtime <code>SQLException</code>.</li>
+    </ul>
+    <div class="footer-line"><span>setup</span><span>mysql, oracle, the real thing</span></div>
+  </section>
+
+  <!-- 10 MYSQL OR H2 -->
+  <section class="drv">
+    <span class="eyebrow">the conflict, said out loud</span>
+    <h2>MySQL in the syllabus, H2 in the exercise. Both are true.</h2>
+    <div class="grid g2">
+      <div class="card fragment">
+        <h3>what the syllabus asks for</h3>
+        <p>Install MySQL or Oracle, download the vendor jar, set the classpath, <code>jdbc:mysql://host:3306/bank</code>. That is production. Learn it, and expect an interviewer to ask you about it.</p>
+      </div>
+      <div class="card fragment">
+        <h3>what this exercise uses</h3>
+        <p>H2, <code>jdbc:h2:mem:bank</code>, one 2.5 MB jar you already have, a database that lives in your JVM and disappears when it exits. One reason: nobody loses a morning to an install, and a broken MySQL service teaches you nothing about JDBC.</p>
+      </div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">The code in both columns is character for character the same except the URL and the jar, because you compile against <code>java.sql</code> and never name the driver.</li>
+      <li class="fragment">Switching the capstone to MySQL is two lines of configuration and zero lines of Java.</li>
+      <li class="fragment">That is not a happy accident. It is Day 1's dependency inversion, cashed in at platform scale.</li>
+    </ul>
+    <p class="fragment" style="margin-top:10px; color:var(--muted);">H2 is a real SQL database with real transactions, real constraints and real isolation, and before lunch it will punish you with a real lock timeout. Do not treat it as a toy.</p>
+    <div class="footer-line"><span>setup</span><span>h2 or mysql</span></div>
+  </section>
+
+  <!-- 11 QUIZ 1 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 1 of 9</span>
+    <h2>Only the H2 jar is on the classpath. What happens here?</h2>
+    <p style="color:var(--muted); margin:0;">MySQL itself is running and healthy on port 3306.</p>
+<pre><code class="language-java" data-trim>
+// classpath: lib/h2-2.3.232.jar   (no mysql-connector-j)
+Connection c = DriverManager.getConnection(
+    "jdbc:mysql://localhost:3306/bank", "root", "pw");
+</code></pre>
+    <ol class="opts w1">
+      <li><b>A</b> <code>ClassNotFoundException</code>: com.mysql.cj.jdbc.Driver is not on the classpath</li>
+      <li><b>B</b> It connects: H2 answers <code>jdbc:mysql</code> URLs in its MySQL compatibility mode</li>
+      <li><b>C</b> <code>SQLException</code>: No suitable driver found for jdbc:mysql://localhost:3306/bank</li>
+      <li><b>D</b> It blocks until the login timeout expires, then returns null</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>1 of 9</span></div>
+  </section>
+
+
+  <!-- 13 WHAT A CONNECTION IS -->
+  <section class="drv">
+    <span class="eyebrow"><span class="dot"></span> connection / guess first</span>
+    <h2>What does one <code>getConnection()</code> actually cost?</h2>
+    <p style="margin:0; color:var(--muted);">It is one line of Java. Nanoseconds, like <code>new ArrayList()</code>? Microseconds? Or milliseconds, plural?</p>
+    <div class="dgrid" style="margin-top:10px;">
+      <ul class="clean">
+        <li class="fragment">Milliseconds, plural, and here is where they go: DNS lookup, TCP handshake, TLS handshake, authentication round trips, session setup on the server.</li>
+        <li class="fragment">5 to 50 milliseconds and several round trips to make one. Four orders of magnitude more than allocating an object.</li>
+        <li class="fragment">It holds an open socket plus a server-side session that costs the database memory, and in PostgreSQL a whole backend process.</li>
+        <li class="fragment">It is not thread-safe. One thread at a time, ever.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 300" width="100%">
+          <rect x="52" y="20" width="372" height="262" rx="12" fill="#0a0a0c" stroke="var(--accent)" stroke-width="2"/>
+          <text x="72" y="46" fill="var(--accent)" font-size="14" class="mono">Connection</text>
+          <text x="238" y="46" fill="var(--dim)" font-size="11" class="mono">autocommit=true</text>
+          <text x="238" y="64" fill="var(--dim)" font-size="11" class="mono">isolation=READ_COMMITTED</text>
+          <rect x="74" y="82" width="328" height="180" rx="10" fill="#16161a" stroke="var(--line)"/>
+          <text x="94" y="108" fill="var(--text)" font-size="13" class="mono">Statement</text>
+          <rect x="96" y="128" width="284" height="114" rx="8" fill="#0a0a0c" stroke="var(--dim)"/>
+          <text x="116" y="154" fill="var(--muted)" font-size="13" class="mono">ResultSet</text>
+          <text x="116" y="184" fill="var(--dim)" font-size="12">a live cursor on the server</text>
+          <text x="116" y="210" fill="var(--dim)" font-size="12">all three are AutoCloseable</text>
+          <line x1="16" y1="150" x2="50" y2="150" stroke="var(--accent-2)" stroke-width="3"/>
+          <circle cx="16" cy="150" r="7" fill="none" stroke="var(--accent-2)" stroke-width="2"/>
+          <text x="6" y="182" fill="var(--accent-2)" font-size="11" class="mono">socket</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>connection</span><span>what it is</span></div>
+  </section>
+
+  <!-- 14 FIRST PROGRAM -->
+  <section class="drv">
+    <span class="eyebrow">the move</span>
+    <h2>Hello, H2: from URL to a printed row.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+import java.sql.*;
+
+try (Connection c = DriverManager.getConnection("jdbc:h2:mem:bank;DB_CLOSE_DELAY=-1");
+     Statement s = c.createStatement()) {
+
+    s.execute("CREATE TABLE account(id BIGINT PRIMARY KEY,"
+            + " owner VARCHAR(60), balance_cents BIGINT NOT NULL)");
+
+    int n = s.executeUpdate("INSERT INTO account VALUES (1, 'Ana', 10000)");
+
+    try (ResultSet rs = s.executeQuery(
+             "SELECT id, owner, balance_cents FROM account")) {
+        while (rs.next())
+            System.out.println(rs.getLong("id") + " " + rs.getString("owner")
+                             + " " + rs.getLong("balance_cents"));
+    }
+}
+</code></pre>
+    <ul class="clean">
+      <li class="fragment"><code>execute</code> for DDL, <code>executeUpdate</code> returns a row count, <code>executeQuery</code> returns a cursor.</li>
+      <li class="fragment">Money is cents in a <code>BIGINT</code>, never a double. Same rule as the Day 1 bank.</li>
+      <li class="fragment">Ignore the shape of the <code>try</code> for now. There is a slide for it.</li>
+    </ul>
+    <div class="footer-line"><span>connection</span><span>first program</span></div>
+  </section>
+
+  <!-- 15 SIX STEPS -->
+  <section class="drv">
+    <span class="eyebrow">the standard recipe</span>
+    <h2>The six steps, and which ones you still write.</h2>
+    <table class="tbl">
+      <tr><th>Step</th><th>What the textbook says</th><th>What you actually write in 2026</th></tr>
+      <tr><td>1</td><td>load and register the driver, <code>Class.forName</code></td><td>nothing. ServiceLoader did it.</td></tr>
+      <tr><td>2</td><td>establish a connection, <code>DriverManager.getConnection</code></td><td>yes, or <code>ds.getConnection()</code> from a pool in production</td></tr>
+      <tr><td>3</td><td>create a statement, <code>createStatement</code></td><td><code>prepareStatement</code>, almost always</td></tr>
+      <tr><td>4</td><td>execute the SQL</td><td>yes, after binding every parameter</td></tr>
+      <tr><td>5</td><td>process the ResultSet, <code>while (rs.next())</code></td><td>yes, through one mapper per table</td></tr>
+      <tr><td>6</td><td>close everything in reverse</td><td>the <code>try</code> header does it for you</td></tr>
+    </table>
+    <p class="fragment" style="margin-top:12px; color:var(--muted);">Steps 1 and 6 were half the old boilerplate, and both are now the language's job or the platform's. That is what twenty years of a stable API looks like.</p>
+    <div class="footer-line"><span>connection</span><span>the six steps</span></div>
+  </section>
+
+  <!-- ================= STATEMENTS AND INJECTION ================= -->
+  <!-- 16 INJECTION Q -->
+  <section class="stmt">
+    <span class="eyebrow"><span class="dot"></span> statement / question</span>
+    <h2>What does this query return for the name <code>x' OR '1'='1</code> ?</h2>
+<pre><code class="language-java" data-trim>
+String sql = "SELECT * FROM account WHERE owner = '" + name + "'";
+try (Statement s = c.createStatement();
+     ResultSet rs = s.executeQuery(sql)) {
+    ...
+}
+</code></pre>
+    <ul class="clean">
+      <li class="fragment">No rows. Nobody is called that.</li>
+      <li class="fragment">One row.</li>
+      <li class="fragment">Every row in the table.</li>
+      <li class="fragment">A <code>SQLException</code>: the quotes are unbalanced.</li>
+    </ul>
+    <div class="footer-line"><span>statement</span><span>question</span></div>
+  </section>
+
+  <!-- 17 INJECTION WHY -->
+  <section class="stmt">
+    <span class="eyebrow">the answer</span>
+    <h2>Every row. Your data just became code.</h2>
+    <p class="fragment" style="margin:0;">The string the parser actually receives: <code>SELECT * FROM account WHERE owner = 'x' OR '1'='1'</code></p>
+    <div class="dgrid" style="margin-top:10px;">
+      <ul class="clean">
+        <li class="fragment">The parser cannot see where your SQL ended and the user's text began, because there is no boundary. It is one string.</li>
+        <li class="fragment">Escaping apostrophes is an arms race, and you lose it to encodings, comments and vendor syntax.</li>
+        <li class="fragment">The fix is structural: send the code and the data as two separate things, so the parser has finished before the value arrives.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 300" width="100%">
+          <text x="220" y="28" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">WHERE</text>
+          <line x1="220" y1="38" x2="120" y2="78" stroke="var(--dim)"/>
+          <line x1="220" y1="38" x2="320" y2="78" stroke="var(--bad)" stroke-width="2"/>
+          <rect x="52" y="82" width="136" height="42" rx="7" fill="#16161a" stroke="var(--dim)"/>
+          <text x="120" y="108" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">owner = 'x'</text>
+          <rect x="252" y="82" width="136" height="42" rx="7" fill="rgba(255,122,122,0.08)" stroke="var(--bad)" stroke-width="2"/>
+          <text x="320" y="108" text-anchor="middle" fill="var(--bad)" font-size="12" class="mono">OR '1'='1'</text>
+          <text x="220" y="62" text-anchor="middle" fill="var(--bad)" font-size="11" class="mono">injected</text>
+          <line x1="204" y1="150" x2="204" y2="240" stroke="var(--warn)" stroke-width="2" stroke-dasharray="6 5"/>
+          <text x="216" y="186" fill="var(--warn)" font-size="12">you meant the boundary here</text>
+          <text x="216" y="208" fill="var(--dim)" font-size="12">the parser never saw one</text>
+          <rect x="52" y="256" width="336" height="36" rx="7" fill="#0a0a0c" stroke="var(--line)"/>
+          <text x="220" y="280" text-anchor="middle" fill="var(--muted)" font-size="12" class="mono">one string: code and data together</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>statement</span><span>why</span></div>
+  </section>
+
+  <!-- 18 PREPAREDSTATEMENT -->
+  <section class="stmt">
+    <span class="eyebrow">the move</span>
+    <h2>PreparedStatement: the SQL is fixed before the data arrives.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">concatenated</span>
+<pre><code class="language-java" data-trim>
+String sql = "SELECT * FROM account"
+    + " WHERE owner = '" + name + "'";
+Statement s = c.createStatement();
+ResultSet rs = s.executeQuery(sql);
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">bound</span>
+<pre><code class="language-java" data-trim>
+try (PreparedStatement ps = c.prepareStatement(
+        "SELECT id, owner, balance_cents"
+      + " FROM account WHERE owner = ?")) {
+    ps.setString(1, name);
+    try (ResultSet rs = ps.executeQuery()) { ... }
+}
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">The <code>?</code> is a hole in a statement that has already been parsed.</li>
+      <li class="fragment">The value travels as a typed parameter and is never re-parsed, so <code>x' OR '1'='1</code> is just an odd name that matches nobody.</li>
+      <li class="fragment">Parameters are 1-based, because JDBC is older than you are and everything in it is 1-based.</li>
+      <li class="fragment">The server can cache the plan and reuse it, so the safe way is also the fast way.</li>
+    </ul>
+    <div class="footer-line"><span>statement</span><span>how</span></div>
+  </section>
+
+  <!-- 19 QUIZ 2 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 2 of 9</span>
+    <h2><code>msg</code> holds one row, ('why?', 'ana'). What happens on the last line?</h2>
+    <p style="color:var(--muted); margin:0;">Table <code>msg(id BIGINT, body VARCHAR, author VARCHAR)</code> exists and holds exactly one row, whose body is <code>why?</code> and whose author is <code>ana</code>.</p>
+<pre><code class="language-java" data-trim>
+PreparedStatement ps = c.prepareStatement(
+    "SELECT id FROM msg WHERE body = 'why?' AND author = ?");
+ps.setString(1, "ana");
+ResultSet rs = ps.executeQuery();
+</code></pre>
+    <ol class="opts w1">
+      <li><b>A</b> <code>SQLException</code>: parameter 2 was never set</li>
+      <li><b>B</b> It runs: the statement has exactly one parameter, it is bound to <code>"ana"</code>, and the one row comes back</li>
+      <li><b>C</b> <code>SQLException</code>: <code>"ana"</code> is bound to the <code>?</code> inside the quotes, so author has no value</li>
+      <li><b>D</b> Compile error: a <code>?</code> is not allowed inside a string literal in JDBC SQL</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>2 of 9</span></div>
+  </section>
+
+
+  <!-- 21 WHAT A ? CAN BIND -->
+  <section class="stmt">
+    <span class="eyebrow">the fine print</span>
+    <h2>What a <code>?</code> can bind, and what it cannot.</h2>
+    <ul class="clean">
+      <li class="fragment">A <code>?</code> binds a <em>value</em>: a string, a number, a date, a null. That is the whole list.</li>
+      <li class="fragment">It cannot bind a table name, a column name, an <code>ORDER BY</code> direction, or a whole list for <code>IN (?)</code>. For those you whitelist and concatenate, or write one <code>?</code> per element.</li>
+      <li class="fragment">Null needs a type. <code>setNull(i, Types.BIGINT)</code> always works; <code>setObject(i, null)</code> works on H2 and PostgreSQL and fails on Oracle and Derby, because the driver cannot guess the column type.</li>
+      <li class="fragment"><code>LIKE</code>: put <em>your</em> wildcard in the value, <code>ps.setString(1, prefix + "%")</code>. Never <code>LIKE '?%'</code>.</li>
+      <li class="fragment">And escape <em>theirs</em>. Binding stops injection; it does not stop a user-typed <code>%</code> from being a wildcard. Use <code>LIKE ? ESCAPE '!'</code> with <code>esc(s) = s.replace("!","!!").replace("%","!%").replace("_","!_")</code>, or a search box for one customer will list all of them.</li>
+      <li class="fragment">Prefer <code>setObject(i, LocalDate)</code>, JDBC 4.2, over <code>java.sql.Date</code>. Day 1 told you why <code>java.sql.Timestamp</code> is a trap.</li>
+      <li class="fragment">Set every parameter before you execute. Reusing a PreparedStatement in a loop is set, execute, repeat, and batching builds straight on that.</li>
+    </ul>
+    <div class="footer-line"><span>statement</span><span>fine print</span></div>
+  </section>
+
+  <!-- 22 THREE TYPES, FOUR METHODS -->
+  <section class="stmt">
+    <span class="eyebrow">which tool, when</span>
+    <h2>Three statement types, four ways to execute one.</h2>
+    <table class="tbl">
+      <tr><th>Type</th><th>Use it for</th></tr>
+      <tr><td><code>Statement</code></td><td>SQL fixed in your source, with no user data in it. DDL you wrote yourself.</td></tr>
+      <tr><td><code>PreparedStatement</code></td><td>any SQL that carries a value. This is your default.</td></tr>
+      <tr><td><code>CallableStatement</code></td><td>stored procedures and functions, with IN, OUT and INOUT parameters. It gets its own slides later this morning.</td></tr>
+    </table>
+    <table class="tbl" style="margin-top:6px;">
+      <tr><th>Method</th><th>Returns</th><th>For</th></tr>
+      <tr><td><code>executeQuery</code></td><td>a <code>ResultSet</code></td><td>SELECT, and only SELECT</td></tr>
+      <tr><td><code>executeUpdate</code></td><td><code>int</code>, the row count (0 for DDL)</td><td>INSERT, UPDATE, DELETE, DDL</td></tr>
+      <tr><td><code>execute</code></td><td><code>boolean</code>: true means a ResultSet is waiting</td><td>when you genuinely do not know what the SQL was. Then <code>getResultSet</code> or <code>getUpdateCount</code>.</td></tr>
+      <tr><td><code>executeLargeUpdate</code></td><td><code>long</code></td><td>when a count can exceed an int</td></tr>
+    </table>
+    <p class="fragment" style="margin-top:10px; color:var(--muted);">Default to <code>PreparedStatement</code>. Reach for a plain <code>Statement</code> only when the SQL contains no data at all.</p>
+    <div class="footer-line"><span>statement</span><span>which</span></div>
+  </section>
+
+  <!-- 23 CRUD WRITES -->
+  <section class="stmt">
+    <span class="eyebrow">crud / the other three verbs</span>
+    <h2>Insert, update, delete: the count is the answer.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+try (PreparedStatement ps = c.prepareStatement(
+        "INSERT INTO account(owner, balance_cents) VALUES (?, ?)")) {
+    ps.setString(1, owner);
+    ps.setLong(2, cents);
+    int rows = ps.executeUpdate();          // 1
+}
+
+try (PreparedStatement ps = c.prepareStatement(
+        "UPDATE account SET balance_cents = balance_cents + ? WHERE id = ?")) {
+    ps.setLong(1, cents);
+    ps.setLong(2, id);
+    if (ps.executeUpdate() != 1) throw new NoSuchAccountException(id);
+}
+</code></pre>
+    <ul class="clean">
+      <li class="fragment"><code>executeUpdate</code> returns the number of rows the statement <em>changed</em>, and that number is the only way you learn an UPDATE matched nothing. A zero-row update is not an error, so compare the count to what you expected every time. That one habit will save you in the capstone.</li>
+      <li class="fragment">A delete is the same shape, <code>DELETE FROM account WHERE id = ?</code>, and you check the count the same way. A DELETE or an UPDATE with no WHERE is valid SQL and will ruin an afternoon, so write the WHERE first.</li>
+      <li class="fragment">The arithmetic in <code>balance_cents = balance_cents + ?</code> happens in the database. That matters enormously later today.</li>
+    </ul>
+    <div class="footer-line"><span>crud</span><span>writes</span></div>
+  </section>
+
+  <!-- 24 HANDS-ON: BREAK THE LOGIN -->
+  <section class="handson stmt">
+    <span class="eyebrow"><span class="dot"></span> hands-on / 5 minutes</span>
+    <div class="handson-head"><span class="handson-badge">Hands-on · 5 min</span></div>
+    <h2>Break the login, then fix it.</h2>
+    <p class="fragment" style="color:var(--muted); margin:0 0 4px;">In the follow-along jshell.</p>
+    <div class="setup-steps">
+      <div class="fragment"><span class="oslabel">1 · two rows to steal</span><div class="cmd">s.execute("CREATE TABLE account(id INT, owner VARCHAR(40))");<br/>s.execute("INSERT INTO account VALUES (1,'Ana'), (2,'Bo')");</div></div>
+      <div class="fragment"><span class="oslabel">2 · concatenate, then count what comes back</span><div class="cmd">String name = "x' OR '1'='1";<br/>s.executeQuery("SELECT * FROM account WHERE owner = '" + name + "'");</div></div>
+      <div class="fragment"><span class="oslabel">3 · now the famous one</span><div class="cmd">name = "Ana'; DROP TABLE account; --";<br/><span class="c">// one row (Ana), and the table is gone. Recreate it.</span></div></div>
+      <div class="fragment"><span class="oslabel">4 · the same two strings through a ?</span><div class="cmd">var ps = c.prepareStatement("SELECT * FROM account WHERE owner = ?");<br/>ps.setString(1, name); ps.executeQuery();</div></div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">H2 happily executes a command list, so Bobby Tables works here exactly as advertised.</li>
+      <li class="fragment">MySQL Connector/J is the odd one out: it refuses multiple statements unless the URL says <code>allowMultiQueries=true</code>. Building your safety on that accident of configuration is how people get breached.</li>
+    </ul>
+    <p class="fragment setup-note">Keep this jshell open. We come back to this table later today.</p>
+    <div class="footer-line"><span>statement</span><span>hands-on</span></div>
+  </section>
+
+  <!-- ================= THE RESULT SET ================= -->
+  <!-- 25 THE CURSOR -->
+  <section class="rs">
+    <span class="eyebrow"><span class="dot"></span> resultset / guess first</span>
+    <h2>The table has one row. What does <code>rs.getString("owner")</code> return?</h2>
+<pre><code class="language-java" data-trim>
+try (ResultSet rs = ps.executeQuery()) {
+    String owner = rs.getString("owner");
+}
+</code></pre>
+    <div class="dgrid" style="margin-top:6px;">
+      <ul class="clean">
+        <li class="fragment">It throws. The cursor starts <em>before</em> the first row, so the idiom is <code>while (rs.next())</code>, or <code>if (rs.next())</code> for a single row.</li>
+        <li class="fragment">The default is <code>TYPE_FORWARD_ONLY</code> and <code>CONCUR_READ_ONLY</code>: one pass, no <code>size()</code>, no going back. Scrollable types exist and they cost memory.</li>
+        <li class="fragment">The cursor is live. It keeps the Statement and the Connection busy until it is closed, so read it, map it, close it, and never hand a ResultSet to another layer.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 300" width="100%">
+          <defs><marker id="s25a" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+          <rect x="120" y="14" width="250" height="36" rx="7" fill="#16161a" stroke="var(--dim)" stroke-dasharray="5 4"/>
+          <text x="245" y="38" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">before first</text>
+          <rect x="120" y="60" width="250" height="40" rx="7" fill="#0a0a0c" stroke="var(--accent)"/><text x="245" y="86" text-anchor="middle" fill="var(--text)" font-size="13">row 1</text>
+          <rect x="120" y="110" width="250" height="40" rx="7" fill="#0a0a0c" stroke="var(--line)"/><text x="245" y="136" text-anchor="middle" fill="var(--muted)" font-size="13">row 2</text>
+          <rect x="120" y="160" width="250" height="40" rx="7" fill="#0a0a0c" stroke="var(--line)"/><text x="245" y="186" text-anchor="middle" fill="var(--muted)" font-size="13">row 3</text>
+          <rect x="120" y="210" width="250" height="36" rx="7" fill="#16161a" stroke="var(--dim)" stroke-dasharray="5 4"/>
+          <text x="245" y="234" text-anchor="middle" fill="var(--dim)" font-size="12" class="mono">after last</text>
+          <line x1="96" y1="32" x2="96" y2="76" stroke="var(--accent)" stroke-width="2" marker-end="url(#s25a)"/>
+          <text x="86" y="26" text-anchor="end" fill="var(--accent)" font-size="11" class="mono">next()</text>
+          <text x="245" y="274" text-anchor="middle" fill="var(--good)" font-size="12">true while a row is there</text>
+          <text x="245" y="294" text-anchor="middle" fill="var(--muted)" font-size="12">false once, and only once, at the end</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>resultset</span><span>the cursor</span></div>
+  </section>
+
+  <!-- 26 ONE CURSOR PER STATEMENT -->
+  <section class="rs">
+    <span class="eyebrow">the trap</span>
+    <h2>One Statement, one open cursor.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">one statement, two queries</span>
+<pre class="sm"><code class="language-java" data-trim>
+try (Statement s = c.createStatement();
+     ResultSet a = s.executeQuery("SELECT id FROM account")) {
+    while (a.next()) {
+        try (ResultSet t = s.executeQuery(
+            "SELECT COUNT(*) FROM txn WHERE account_id = "
+            + a.getLong(1))) { ... }
+    }
+}
+// the inner executeQuery closes a, and the next a.next() throws
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">one statement each</span>
+<pre class="sm"><code class="language-java" data-trim>
+try (Statement s = c.createStatement();
+     PreparedStatement inner = c.prepareStatement(
+         "SELECT COUNT(*) FROM txn WHERE account_id = ?");
+     ResultSet a = s.executeQuery("SELECT id FROM account")) {
+    while (a.next()) {
+        inner.setLong(1, a.getLong(1));
+        try (ResultSet t = inner.executeQuery()) { ... }
+    }
+}
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">Every execution method on a Statement implicitly closes that Statement's current ResultSet. It is in the Javadoc, and it is the most common beginner crash in JDBC.</li>
+      <li class="fragment">A parent closes its children, but a sibling <em>replaces</em> them. One Statement means one open cursor at a time.</li>
+      <li class="fragment">And once you have fixed it this way, you have written a query per row. That is N+1, and there is a slide for it after lunch.</li>
+    </ul>
+    <div class="footer-line"><span>resultset</span><span>one cursor</span></div>
+  </section>
+
+  <!-- 27 QUIZ 3 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 3 of 9</span>
+    <h2><code>account</code> holds 3 rows. What does this print?</h2>
+<pre><code class="language-java" data-trim>
+try (Statement s = c.createStatement();
+     ResultSet a = s.executeQuery("SELECT id FROM account")) {
+    int n = 0;
+    while (a.next()) {
+        ResultSet t = s.executeQuery("SELECT 1");
+        t.close();
+        n++;
+    }
+    System.out.println(n);
+}
+</code></pre>
+    <ol class="opts w1">
+      <li><b>A</b> It prints <code>3</code></li>
+      <li><b>B</b> <code>SQLException</code> at the inner <code>executeQuery</code>: only one ResultSet per Statement may be open</li>
+      <li><b>C</b> It prints <code>0</code>: the inner query replaced the outer one before the first <code>next()</code></li>
+      <li><b>D</b> The loop body runs once, then <code>SQLException</code>: the outer ResultSet is closed</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>3 of 9</span></div>
+  </section>
+
+
+  <!-- 29 METADATA, BOTH INTERFACES -->
+  <section class="rs">
+    <span class="eyebrow">metadata / both of them</span>
+    <h2>Two metadata interfaces: one for the database, one for the result set.</h2>
+    <div class="dgrid" style="margin-top:6px;">
+      <div>
+        <h3 style="color:var(--accent);">DatabaseMetaData md = c.getMetaData()</h3>
+        <ul class="clean">
+          <li class="fragment"><b>Who am I talking to:</b> <code>getDatabaseProductName()</code>, <code>getDatabaseProductVersion()</code>, <code>getDriverName()</code>. On my machine: <em>H2 2.3.232, JDBC 4.3</em>. That is how your capstone test proves the driver really is H2.</li>
+          <li class="fragment"><b>What is in there:</b> <code>md.getTables(null, null, "ACCOUNT", new String[]{"TABLE"})</code>, then <code>getColumns</code>, <code>getPrimaryKeys</code>, <code>getImportedKeys</code>. H2 and Oracle upper-case unquoted identifiers, so <code>"account"</code> is not an error, it is an empty result set, which is much worse.</li>
+          <li class="fragment"><b>What can you do here:</b> <code>supportsBatchUpdates()</code>, <code>supportsGetGeneratedKeys()</code>, <code>supportsTransactionIsolationLevel(level)</code>. Flyway, Liquibase and Hibernate all read this at startup.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:var(--accent);">ResultSetMetaData md = rs.getMetaData()</h3>
+        <ul class="clean">
+          <li class="fragment"><code>getColumnCount()</code>, then <code>getColumnLabel(i)</code> for the alias you selected and <code>getColumnName(i)</code> for the underlying name. They differ the moment you write <code>AS</code>, and every <code>getX(String)</code> takes the <em>label</em>. Alias it, read the alias.</li>
+          <li class="fragment"><code>getColumnType(i)</code> is the <code>java.sql.Types</code> int, <code>getColumnTypeName(i)</code> is the vendor's spelling, and <code>getColumnClassName(i)</code> tells you what <code>getObject</code> will hand back. That is how you discover your SUM came back as a <code>BigDecimal</code>.</li>
+          <li class="fragment">You will rarely reach for it in application code, because you wrote the SELECT. It earns its keep where the code does not know its own query: a database browser, a CSV export, a generic <code>Map</code> mapper.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-line"><span>metadata</span><span>database and resultset</span></div>
+  </section>
+
+  <!-- 30 TYPED READS AND NULLS -->
+  <section class="rs">
+    <span class="eyebrow">resultset / nulls and types</span>
+    <h2>Reading typed values without lying.</h2>
+    <p style="margin:0; color:var(--muted);">The Java type <code>int</code> has no null, so something has to give. What it gives is a zero and a flag.</p>
+<pre class="sm"><code class="language-java" data-trim>
+int b = rs.getInt("balance");                         // 0 when the column is NULL
+if (rs.wasNull()) { /* and this is how you know which 0 it was */ }
+
+Integer boxed = rs.getObject("balance", Integer.class);  // null. JDBC 4.1, honest.
+LocalDate d   = rs.getObject("opened", LocalDate.class); // JDBC 4.2, skip java.sql.Date
+long cents    = rs.getLong("balance_cents");             // or store cents, as we do
+</code></pre>
+    <div class="codeflex">
+      <div><span class="tag bad">guessing the box</span>
+<pre class="sm"><code class="language-java" data-trim>
+long id = (Long) rs.getObject("id");
+// ClassCastException when the column
+// is INT: that is an Integer.
+</code></pre>
+      </div>
+      <div><span class="tag good">saying the type</span>
+<pre class="sm"><code class="language-java" data-trim>
+long id = rs.getObject("id", Long.class);
+// or just rs.getLong("id"),
+// which converts for you.
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">Primitive getters map SQL NULL to 0, false or 0.0 and raise a flag you must read with <code>wasNull()</code> straight after, before the next getter.</li>
+      <li class="fragment">The untyped <code>getObject</code> returns whatever the type map says: INT gives Integer, BIGINT gives Long, NUMERIC gives BigDecimal, and a SUM changes the type under you on PostgreSQL. Pass the Class, or use a typed getter.</li>
+    </ul>
+    <div class="footer-line"><span>resultset</span><span>nulls and types</span></div>
+  </section>
+
+  <!-- 31 QUIZ 4 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 4 of 9</span>
+    <h2><code>balance</code> is SQL NULL on this row. What does it print?</h2>
+<pre><code class="language-java" data-trim>
+rs.next();
+Integer a = rs.getObject("balance", Integer.class);
+int b = rs.getInt("balance");
+System.out.println(a + " " + b + " " + rs.wasNull());
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>null 0 true</code></li>
+      <li><b>B</b> <code>NullPointerException</code>: a null Integer is unboxed into an int</li>
+      <li><b>C</b> <code>0 0 false</code></li>
+      <li><b>D</b> <code>SQLException</code>: NULL cannot be converted to int</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>4 of 9</span></div>
+  </section>
+
+
+  <!-- 33 MAPPING AND THE ONE-METHOD INTERFACE -->
+  <section class="rs">
+    <span class="eyebrow"><span class="dot"></span> mapping / guess first</span>
+    <h2>Where should "row to object" live?</h2>
+    <p style="margin:0; color:var(--muted);">Every query that touches <code>account</code> reads id, owner and balance_cents and builds an <code>Account</code>. Copy-pasted into every method? Inside an <code>Account(ResultSet)</code> constructor, so the domain object knows SQL? Or one small function per table, handed to a generic helper?</p>
+    <ul class="clean">
+      <li class="fragment">One function per table. And a function you can pass around is an instance of a one-method interface, which is all a lambda ever is.</li>
+      <li class="fragment">Yesterday's four shapes: <code>Function&lt;T,R&gt;</code>, <code>Predicate&lt;T&gt;</code>, <code>Consumer&lt;T&gt;</code>, <code>Supplier&lt;T&gt;</code>. A method reference is the same thing written shorter: <code>Demo::toAccount</code> is an instance of whatever one-method interface the target type demands.</li>
+      <li class="fragment"><b>And here is the rule that decides today's design:</b> a lambda may only throw the checked exceptions its interface's method declares.</li>
+    </ul>
+<pre class="fragment"><code class="language-java" data-trim>
+Function&lt;ResultSet, String&gt; f = rs -&gt; rs.getString("owner");
+// error: unreported exception SQLException; must be caught or declared to be thrown
+</code></pre>
+    <p class="fragment" style="color:var(--muted); margin:6px 0 0;"><code>Function.apply</code> declares nothing, so <code>java.util.function</code> is useless for anything that touches JDBC. That is why every JDBC library on earth declares its own row mapper interface. <span class="tag" style="margin:0 0 0 10px;">Effective Java, Item 71</span></p>
+    <div class="footer-line"><span>mapping</span><span>the interface</span></div>
+  </section>
+
+  <!-- 34 ROWMAPPER -->
+  <section class="rs">
+    <span class="eyebrow">the move</span>
+    <h2>RowMapper: one function per table, a record per row.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+record Account(long id, String owner, long balanceCents) { }
+@FunctionalInterface
+interface RowMapper&lt;T&gt; { T map(ResultSet rs) throws SQLException; }
+static Account toAccount(ResultSet rs) throws SQLException {
+    return new Account(rs.getLong("id"), rs.getString("owner"),
+                       rs.getLong("balance_cents"));
+}
+static &lt;T&gt; List&lt;T&gt; query(Connection c, String sql, RowMapper&lt;T&gt; m, Object... args)
+        throws SQLException {
+    try (PreparedStatement ps = c.prepareStatement(sql)) {
+        for (int i = 0; i &lt; args.length; i++) ps.setObject(i + 1, args[i]);
+        try (ResultSet rs = ps.executeQuery()) {
+            List&lt;T&gt; out = new ArrayList&lt;&gt;();
+            while (rs.next()) out.add(m.map(rs));
+            return out;
+        }
+    }
+}
+</code></pre>
+    <ul class="clean">
+      <li class="fragment">Calling it: <code>query(c, "SELECT ... WHERE balance_cents &gt; ?", Demo::toAccount, 5000L)</code>. <code>RowMapper&lt;T&gt;</code> is <code>Function&lt;ResultSet,T&gt;</code> with the one thing Function lacks: a <code>throws</code> clause.</li>
+      <li class="fragment">The mapper is the only place that knows column names, and it is <em>injected</em> into the query method, so the helper knows nothing about accounts. You have just written <code>JdbcTemplate.query(sql, rowMapper, args)</code> by hand.</li>
+    </ul>
+    <div class="footer-line"><span>mapping</span><span>how</span></div>
+  </section>
+
+  <!-- 35 RESOURCES AND TRY-WITH-RESOURCES -->
+  <section class="res">
+    <span class="eyebrow"><span class="dot"></span> resources / guess first</span>
+    <h2>This method leaks. Which line?</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">closed by hand</span>
+<pre class="sm"><code class="language-java" data-trim>
+1  Connection c = DriverManager.getConnection(URL);
+2  PreparedStatement ps = c.prepareStatement(SQL);
+3  ps.setLong(1, id);
+4  ResultSet rs = ps.executeQuery();
+5  List&lt;Account&gt; out = new ArrayList&lt;&gt;();
+6  while (rs.next()) out.add(toAccount(rs));
+7  rs.close();
+8  ps.close();
+9  c.close();
+10 return out;
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">try-with-resources</span>
+<pre class="sm"><code class="language-java" data-trim>
+try (Connection c = DriverManager.getConnection(URL);
+     PreparedStatement ps = c.prepareStatement(SQL)) {
+
+    ps.setLong(1, id);
+
+    try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) { ... }
+    }
+}
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">Not line 9. Any line between 2 and 8 that can throw, and a bad id or a timeout will supply one. Each leak pins a server session until <em>too many connections</em> takes the service down at three in the morning.</li>
+      <li class="fragment">Resources declared in the header close in <em>reverse</em> order, always: on exception, and on return. An exception thrown by <code>close()</code> is attached to the primary one as <em>suppressed</em> rather than replacing it, which is Item 9 and the subject of the next question.</li>
+      <li class="fragment">The ResultSet gets its own inner <code>try</code>, because it only exists after the setters have run. Anything <code>AutoCloseable</code> qualifies, which is why a repository that owns a Connection should implement it too.</li>
+    </ul>
+    <div class="footer-line"><span>resources</span><span>try-with-resources</span></div>
+  </section>
+
+  <!-- 36 QUIZ 5 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 5 of 9</span>
+    <h2>What does this print?</h2>
+<pre class="sm"><code class="language-java" data-trim>
+class R implements AutoCloseable {
+    final String n;  R(String n) { this.n = n; }
+    public void close() {
+        System.out.print(n);
+        if (n.equals("b")) throw new IllegalStateException("close-b");
+    }
+}
+
+try (R a = new R("a"); R b = new R("b")) {
+    throw new RuntimeException("boom");
+} catch (RuntimeException e) {
+    System.out.print(e.getMessage() + e.getSuppressed().length);
+}
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>baboom1</code></li>
+      <li><b>B</b> <code>bclose-b0</code></li>
+      <li><b>C</b> <code>bboom0</code>, and <code>a</code> is never closed because b's close threw</li>
+      <li><b>D</b> <code>abboom1</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>5 of 9</span></div>
+  </section>
+
+
+  <!-- 38 SQLEXCEPTION -->
+  <section class="res">
+    <span class="eyebrow">the fine print</span>
+    <h2>SQLException: checked, chained, and coded.</h2>
+    <table class="tbl">
+      <tr><th>SQLState</th><th>What it means</th><th>When you see it</th></tr>
+      <tr><td><code>23xxx</code></td><td>integrity constraint</td><td>23505 unique violation everywhere. A CHECK is 23514 on PostgreSQL and 23513 on H2, which is exactly why you match the class, or the leading 23, and not five digits.</td></tr>
+      <tr><td><code>42xxx</code></td><td>syntax, or a missing object</td><td>42S02, table not found, usually one line after you dropped it</td></tr>
+      <tr><td><code>08xxx</code></td><td>connection trouble</td><td>08001, no suitable driver, from the first quiz</td></tr>
+      <tr><td><code>40001</code></td><td>serialization failure</td><td>at SERIALIZABLE. Retry the transaction.</td></tr>
+    </table>
+    <ul class="clean">
+      <li class="fragment"><code>getSQLState()</code> is the portable-ish code, <code>getErrorCode()</code> is the vendor's own number. Since JDBC 4 you can also catch by meaning: <code>SQLIntegrityConstraintViolationException</code>, <code>SQLTimeoutException</code>, <code>SQLTransientException</code> (retry) against <code>SQLNonTransientException</code> (do not).</li>
+      <li class="fragment">Exceptions chain through <code>getNextException()</code>, and <code>SQLException</code> is <code>Iterable</code>, so <code>for (Throwable t : e)</code> walks the lot. It is also checked, so it infects every signature it touches, which Item 71 says is a cost worth noticing.</li>
+      <li class="fragment">At the boundary of your data layer, catch it and throw your own unchecked exception with the cause attached (Item 73) and the failing id in the message (Item 75). That is the one place translation belongs.</li>
+    </ul>
+    <div class="footer-line"><span>resources</span><span>exceptions</span></div>
+  </section>
+
+  <!-- ================= PART 2 ================= -->
+  <!-- 39 PART DIVIDER -->
+  <section class="part">
+    <span class="eyebrow part-tag">part 2 / from plumbing to correctness</span>
+    <h2 style="margin-top:14px;">From one statement to many: transactions, batches, procedures, pools, and the pattern that hides all of it.</h2>
+    <p class="lede fragment" style="margin-top:16px;">Part 1 was one statement at a time, on one connection. Real programs run several statements that must succeed or fail <em>together</em>, on many connections, at once, and then want the whole thing to disappear behind an interface.</p>
+    <p class="fragment" style="margin-top:14px; color:var(--muted);">Transactions and isolation first, with a lost update you can watch happen. Then batches and generated keys, then stored procedures, then javax.sql, pooling and the repository. And at the end, the honest reason Spring exists.</p>
+    <div class="footer-line"><span>part 2</span><span>the point</span></div>
+  </section>
+
+  <!-- 40 TRANSACTION Q -->
+  <section class="tx">
+    <span class="eyebrow"><span class="dot"></span> transactions / question</span>
+    <h2>Money leaves A. The credit to B throws. Where is the money?</h2>
+<pre><code class="language-java" data-trim>
+try (Connection c = DriverManager.getConnection(URL);
+     Statement s = c.createStatement()) {
+
+    s.executeUpdate("UPDATE account SET balance_cents = balance_cents - 5000 WHERE id = 1");
+    s.executeUpdate("UPDATE account SET balance_cents = balance_cents + 5000 WHERE id = 2 AND");
+
+} catch (SQLException e) { log(e); }   // the second statement has a typo
+</code></pre>
+    <ul class="clean">
+      <li class="fragment">Still in A: the failed statement undid the block.</li>
+      <li class="fragment">Gone. A is 50 lighter and B is unchanged.</li>
+      <li class="fragment">In B: the second statement half-ran.</li>
+      <li class="fragment">Nothing happened, because nobody called commit.</li>
+    </ul>
+    <div class="footer-line"><span>transactions</span><span>question</span></div>
+  </section>
+
+  <!-- 41 AUTOCOMMIT -->
+  <section class="tx">
+    <span class="eyebrow">the answer</span>
+    <h2>Autocommit is on by default: every statement is its own transaction.</h2>
+    <p class="fragment" style="margin:0;">The money is gone.</p>
+    <div class="dgrid" style="margin-top:10px;">
+      <ul class="clean">
+        <li class="fragment">With autocommit true, which is the JDBC default, each execute commits by itself the instant it finishes. The debit was durable before the credit was even parsed.</li>
+        <li class="fragment">You draw the boundary yourself: <code>setAutoCommit(false)</code> to open, <code>commit()</code> to end, <code>rollback()</code> to undo everything since the start.</li>
+        <li class="fragment">"Nobody called commit" is the wrong mental model, because nobody had to.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 300" width="100%">
+          <text x="14" y="26" fill="var(--bad)" font-size="12" class="mono">autocommit = true</text>
+          <line x1="14" y1="96" x2="426" y2="96" stroke="var(--line)" stroke-width="1.5"/>
+          <rect x="30" y="48" width="160" height="38" rx="7" fill="#16161a" stroke="var(--bad)"/>
+          <text x="110" y="72" text-anchor="middle" fill="var(--muted)" font-size="12">debit</text>
+          <line x1="190" y1="88" x2="190" y2="104" stroke="var(--bad)" stroke-width="3"/>
+          <text x="190" y="120" text-anchor="middle" fill="var(--bad)" font-size="11" class="mono">commit</text>
+          <rect x="240" y="48" width="160" height="38" rx="7" fill="#16161a" stroke="var(--bad)" stroke-dasharray="4 4"/>
+          <text x="320" y="72" text-anchor="middle" fill="var(--muted)" font-size="12">credit (threw)</text>
+          <text x="14" y="176" fill="var(--good)" font-size="12" class="mono">setAutoCommit(false)</text>
+          <line x1="14" y1="246" x2="426" y2="246" stroke="var(--line)" stroke-width="1.5"/>
+          <rect x="30" y="198" width="370" height="38" rx="7" fill="rgba(125,220,154,0.06)" stroke="var(--good)"/>
+          <text x="215" y="222" text-anchor="middle" fill="var(--muted)" font-size="12">debit &#160;&#160;+&#160;&#160; credit</text>
+          <line x1="400" y1="238" x2="400" y2="254" stroke="var(--good)" stroke-width="3"/>
+          <text x="400" y="270" text-anchor="middle" fill="var(--good)" font-size="11" class="mono">commit</text>
+          <path d="M392,190 C300,164 120,164 34,190" fill="none" stroke="var(--warn)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="215" y="166" text-anchor="middle" fill="var(--warn)" font-size="11" class="mono">rollback()</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>transactions</span><span>why</span></div>
+  </section>
+
+  <!-- 42 ACID -->
+  <section class="tx">
+    <span class="eyebrow">the fine print</span>
+    <h2>ACID in four lines, and three things that end a transaction behind your back.</h2>
+    <table class="tbl">
+      <tr><th></th><th>What it promises</th></tr>
+      <tr><td><b>Atomic</b></td><td>all the statements, or none of them</td></tr>
+      <tr><td><b>Consistent</b></td><td>your constraints hold at commit, and the database enforces them whatever your Java thinks</td></tr>
+      <tr><td><b>Isolated</b></td><td>it runs as if it were alone, to a degree you choose. That degree is the next topic.</td></tr>
+      <tr><td><b>Durable</b></td><td>once commit returns, a power cut cannot take it back</td></tr>
+    </table>
+    <ul class="clean">
+      <li class="fragment"><code>setAutoCommit(true)</code> on an open transaction <b>commits</b> it. That is in the Connection Javadoc, and it is the most expensive sentence on this slide.</li>
+      <li class="fragment">Closing the Connection is driver-defined. H2 and PostgreSQL roll back, some drivers commit, so never rely on it.</li>
+      <li class="fragment">DDL commits implicitly on MySQL, Oracle and H2, so a <code>CREATE TABLE</code> inside your transaction commits everything before it. PostgreSQL is the exception, with transactional DDL.</li>
+      <li class="fragment">Keep schema changes out of business transactions. It is one reason migration tools run at startup and not inside a request.</li>
+    </ul>
+    <div class="footer-line"><span>transactions</span><span>acid</span></div>
+  </section>
+
+  <!-- 43 TRANSFER DONE RIGHT -->
+  <section class="tx">
+    <span class="eyebrow">the move</span>
+    <h2>The transfer, done right.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+static void transfer(Connection c, long from, long to, long cents) throws SQLException {
+    c.setAutoCommit(false);
+    try (PreparedStatement debit = c.prepareStatement(
+             "UPDATE account SET balance_cents = balance_cents - ? WHERE id = ?");
+         PreparedStatement credit = c.prepareStatement(
+             "UPDATE account SET balance_cents = balance_cents + ? WHERE id = ?")) {
+        debit.setLong(1, cents);  debit.setLong(2, from);
+        if (debit.executeUpdate() != 1) throw new NoSuchAccountException(from);
+        credit.setLong(1, cents); credit.setLong(2, to);
+        if (credit.executeUpdate() != 1) throw new NoSuchAccountException(to);
+        c.commit();
+    } catch (Exception e) {
+        c.rollback();
+        throw e;
+    } finally {
+        c.setAutoCommit(true);
+    }
+}
+</code></pre>
+    <ul class="clean">
+      <li class="fragment">Catch <code>Exception</code>, not <code>SQLException</code>. That <code>finally</code> is a commit in disguise, so any unchecked exception escaping the catch leaves <code>setAutoCommit(true)</code> to make the half-done debit durable.</li>
+      <li class="fragment">The table carries <code>CHECK (balance_cents &gt;= 0)</code>, so an overdraft makes the debit throw and the catch rolls back. A constraint is the last line of defence, not an <code>if</code> in Java, because two processes can both pass the same <code>if</code>.</li>
+    </ul>
+    <div class="footer-line"><span>transactions</span><span>how</span></div>
+  </section>
+
+  <!-- 44 SAVEPOINTS AND THE SHAPE -->
+  <section class="tx">
+    <span class="eyebrow">the fine print</span>
+    <h2>The shape every transaction method shares.</h2>
+    <div>
+      <div>
+        <span class="tag good">written once, body injected</span>
+<pre class="sm"><code class="language-java" data-trim>
+@FunctionalInterface
+interface TxBody&lt;T&gt; { T run(Connection c) throws SQLException; }
+
+static &lt;T&gt; T inTransaction(Connection c, TxBody&lt;T&gt; body) throws SQLException {
+    c.setAutoCommit(false);
+    try {
+        T r = body.run(c);
+        c.commit();
+        return r;
+    } catch (Throwable t) {
+        try { c.rollback(); } catch (SQLException r) { t.addSuppressed(r); }
+        throw t;
+    } finally { c.setAutoCommit(true); }
+}
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">Begin, work, commit, else roll back, always reset. Write it once and inject the body: Day 1's template method, with a lambda instead of a subclass. <code>TxBody</code> is Supplier-shaped, with the checked exception Supplier cannot express.</li>
+      <li class="fragment">Catch <code>Throwable</code>: this helper is the one place that can guarantee the rollback. When <code>rollback()</code> itself fails, attach it as suppressed so the original failure is still the one in your log.</li>
+      <li class="fragment"><b>Warning:</b> not re-entrant. A wrapped method calling another commits the outer one's half-finished work. In Spring that hole is called propagation.</li>
+    </ul>
+    <div class="footer-line"><span>transactions</span><span>shape</span></div>
+  </section>
+
+  <!-- 45 QUIZ 6 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 6 of 9</span>
+    <h2>Both balances are 100. What are they after this returns?</h2>
+    <p style="color:var(--muted); margin:0;">There is no account 99.</p>
+<pre class="sm"><code class="language-java" data-trim>
+static void transfer(Connection c) throws SQLException {
+    c.setAutoCommit(false);
+    try (Statement s = c.createStatement()) {
+        s.executeUpdate("UPDATE acct SET bal = bal - 50 WHERE id = 1");
+        if (s.executeUpdate("UPDATE acct SET bal = bal + 50 WHERE id = 99") != 1)
+            throw new IllegalArgumentException("no account 99");
+        c.commit();
+    } catch (SQLException e) {
+        c.rollback(); throw e;
+    } finally {
+        c.setAutoCommit(true);
+    }
+}
+</code></pre>
+    <ol class="opts w1">
+      <li><b>A</b> <code>100</code> and <code>100</code>: nothing was committed, because <code>commit()</code> was never reached</li>
+      <li><b>B</b> <code>50</code> and <code>100</code>: <code>setAutoCommit(true)</code> in the finally committed the open transaction</li>
+      <li><b>C</b> <code>100</code> and <code>100</code>: closing the try-with-resources Statement rolled the transaction back</li>
+      <li><b>D</b> It does not compile: <code>IllegalArgumentException</code> is never caught</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>6 of 9</span></div>
+  </section>
+
+
+  <!-- 47 LOST UPDATE Q -->
+  <section class="tx">
+    <span class="eyebrow"><span class="dot"></span> isolation / question</span>
+    <h2>Two tellers read balance 100 at the same instant. Each adds 50. What is the balance afterwards?</h2>
+    <p style="color:var(--muted); margin:0;">Both threads are in transactions, autocommit off, default isolation, on their own connections.</p>
+<pre><code class="language-java" data-trim>
+long b = readBalance(c, 1);          // 100
+Thread.sleep(100);
+update(c, "UPDATE account SET balance_cents = ? WHERE id = 1", b + 50);
+c.commit();
+</code></pre>
+    <ul class="clean">
+      <li class="fragment">200. Transactions make it safe.</li>
+      <li class="fragment">150. One update is lost.</li>
+      <li class="fragment">150 or 200, depending on the timing.</li>
+      <li class="fragment">A <code>SQLException</code> on the second commit.</li>
+    </ul>
+    <div class="footer-line"><span>isolation</span><span>question</span></div>
+  </section>
+
+  <!-- 48 ISOLATION LEVELS -->
+  <section class="tx">
+    <span class="eyebrow">the answer, part 1</span>
+    <h2>Isolation levels: what one transaction may see of another.</h2>
+    <ul class="clean" style="margin-bottom:6px;">
+      <li>A <b>dirty read</b> sees another transaction's uncommitted work.</li>
+      <li>A <b>non-repeatable read</b> means the same SELECT gives a different value the second time.</li>
+      <li>A <b>phantom</b> means the same SELECT returns a new <em>row</em> the second time.</li>
+    </ul>
+    <table class="tbl">
+      <tr><th>Level</th><th>Dirty</th><th>Non-repeatable</th><th>Phantom</th><th>Cost, and who defaults to it</th></tr>
+      <tr><td><code>READ_UNCOMMITTED</code></td><td>allowed</td><td>allowed</td><td>allowed</td><td>lowest, and nobody's default</td></tr>
+      <tr><td><code>READ_COMMITTED</code></td><td>no</td><td>allowed</td><td>allowed</td><td>low. PostgreSQL, Oracle, SQL Server, H2.</td></tr>
+      <tr><td><code>REPEATABLE_READ</code></td><td>no</td><td>no</td><td>allowed, though InnoDB mostly prevents them</td><td>medium. MySQL InnoDB.</td></tr>
+      <tr><td><code>SERIALIZABLE</code></td><td>no</td><td>no</td><td>no</td><td>highest, and your commit can now fail with 40001 and need a retry</td></tr>
+    </table>
+    <ul class="clean">
+      <li class="fragment"><b>The line that matters:</b> a lost update is permitted at READ_COMMITTED, and READ_COMMITTED is almost certainly what you have. H2 confirmed it for me this morning: isolation level 2.</li>
+    </ul>
+    <div class="footer-line"><span>isolation</span><span>levels</span></div>
+  </section>
+
+  <!-- 49 LOST UPDATE DIAGRAM -->
+  <section class="tx">
+    <span class="eyebrow">the answer, part 2</span>
+    <h2>The lost update, frame by frame.</h2>
+    <div class="diagram" style="margin-top:8px;">
+      <svg viewBox="0 0 940 200" width="100%">
+        <line x1="20" y1="60" x2="880" y2="60" stroke="var(--line)"/>
+        <line x1="20" y1="140" x2="880" y2="140" stroke="var(--line)"/>
+        <text x="20" y="34" fill="var(--accent)" font-size="13" class="mono">T1</text>
+        <text x="20" y="184" fill="var(--accent-2)" font-size="13" class="mono">T2</text>
+        <rect x="110" y="38" width="130" height="44" rx="7" fill="#16161a" stroke="var(--dim)"/><text x="175" y="66" text-anchor="middle" fill="var(--muted)" font-size="13">read 100</text>
+        <rect x="180" y="118" width="130" height="44" rx="7" fill="#16161a" stroke="var(--dim)"/><text x="245" y="146" text-anchor="middle" fill="var(--muted)" font-size="13">read 100</text>
+        <rect x="400" y="38" width="180" height="44" rx="7" fill="rgba(125,220,154,0.08)" stroke="var(--good)"/><text x="490" y="66" text-anchor="middle" fill="var(--good)" font-size="13">write 150, commit</text>
+        <rect x="620" y="118" width="210" height="44" rx="7" fill="rgba(255,122,122,0.08)" stroke="var(--bad)"/><text x="725" y="146" text-anchor="middle" fill="var(--bad)" font-size="13">write 150, commit</text>
+        <line x1="310" y1="140" x2="618" y2="140" stroke="var(--dim)" stroke-dasharray="4 4"/>
+        <text x="464" y="132" text-anchor="middle" fill="var(--dim)" font-size="11">waiting on T1's row lock</text>
+        <rect x="846" y="78" width="88" height="44" rx="7" fill="#0a0a0c" stroke="var(--bad)" stroke-width="2"/>
+        <text x="890" y="100" text-anchor="middle" fill="var(--text)" font-size="14">150</text>
+        <text x="890" y="116" text-anchor="middle" fill="var(--bad)" font-size="11" class="mono">50 lost</text>
+      </svg>
+    </div>
+    <ul class="clean">
+      <li class="fragment">Read, compute in Java, write is not atomic even inside a transaction, because the database only serialised the two <em>writes</em>.</li>
+      <li class="fragment">At READ_COMMITTED a plain SELECT takes no lock, so the second transaction happily held a value that was already stale.</li>
+      <li class="fragment">This is not a database bug and not a Java bug. It is your SELECT making a promise it was never able to keep.</li>
+    </ul>
+    <div class="footer-line"><span>isolation</span><span>lost update</span></div>
+  </section>
+
+  <!-- 50 THREE FIXES -->
+  <section class="tx">
+    <span class="eyebrow">the fixes</span>
+    <h2>Three ways to stop losing it, and which one to reach for.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+// 1. atomic: the read and the write are one statement
+UPDATE account SET balance_cents = balance_cents + ? WHERE id = 1;
+
+// 2. pessimistic: the second read blocks until the first transaction commits
+SELECT balance_cents FROM account WHERE id = 1 FOR UPDATE;
+
+// 3. optimistic: write only if nobody moved, then retry when 0 rows matched
+UPDATE account SET balance_cents = ?, version = version + 1
+ WHERE id = 1 AND version = ?;
+</code></pre>
+    <div class="grid g3">
+      <div class="card fragment">
+        <h3>atomic SQL</h3>
+        <p><code>balance = balance + ?</code>. The best fix whenever the new value is a function of the old one, because there is no read to go stale. Counters, balances, stock levels.</p>
+      </div>
+      <div class="card fragment">
+        <h3>SELECT ... FOR UPDATE</h3>
+        <p>For when you must read, decide in Java, then write. It holds the row lock for the rest of the transaction, so keep that short, and lock rows in a consistent order.</p>
+      </div>
+      <div class="card fragment">
+        <h3>version column</h3>
+        <p>Read the version, write <code>WHERE version = ?</code>, retry when 0 rows come back. No lock is held while a human thinks. This is exactly JPA's <code>@Version</code>.</p>
+      </div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">Deadlock, concretely: <code>transfer(1,2)</code> at the same instant as <code>transfer(2,1)</code> leaves each side holding one row and waiting for the other. Touch the lower id first, whichever direction the money is going.</li>
+      <li class="fragment">SERIALIZABLE is the fourth option, correct by construction, but now you catch 40001 and retry. The capstone uses fix 1 plus a CHECK constraint.</li>
+    </ul>
+    <div class="footer-line"><span>isolation</span><span>fixes</span></div>
+  </section>
+
+  <!-- 51 HANDS-ON: TRANSACTIONS -->
+  <section class="handson tx">
+    <span class="eyebrow"><span class="dot"></span> hands-on / 10 minutes</span>
+    <div class="handson-head"><span class="handson-badge">Hands-on &middot; 10 min</span></div>
+    <h2>Run the demo, break it, fix it.</h2>
+    <div class="setup-steps">
+      <div class="fragment"><span class="oslabel">1 &middot; lose it</span><div class="cmd">cd day-3-capstone<br/>./demo/run.sh <span class="c">&nbsp;# 150, every time</span></div></div>
+      <div class="fragment"><span class="oslabel">2 &middot; fix it three ways</span><div class="cmd">./demo/run.sh atomic<br/>./demo/run.sh lock<br/>./demo/run.sh version <span class="c">&nbsp;# 200 three times, and one retry</span></div></div>
+      <div class="fragment"><span class="oslabel">3 &middot; a table to transfer between, in your jshell</span><div class="cmd">s.execute("CREATE TABLE account(id BIGINT PRIMARY KEY,<br/>&nbsp;&nbsp;owner VARCHAR(60),<br/>&nbsp;&nbsp;balance_cents BIGINT NOT NULL CHECK (balance_cents &gt;= 0))");<br/>s.execute("INSERT INTO account VALUES (1,'ana',10000), (2,'bo',5000)");</div></div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">Open <code>demo/LostUpdate.java</code> while it runs. Nothing in it is wrong Java: every line is correct on its own, and the bug lives between the lines. A <code>CountDownLatch</code> makes both tellers read before either writes, so it prints 150 ten times out of ten. Then set the isolation to <code>SERIALIZABLE</code> on the plain run and see what H2 does with it.</li>
+      <li class="fragment">In the jshell, run the transfer from the transfer slide word for word, with an overdraft, and watch the <code>CHECK</code> refuse the debit while both balances survive.</li>
+    </ul>
+    <div class="footer-line"><span>isolation</span><span>hands-on</span></div>
+  </section>
+
+  <!-- 52 BATCH -->
+  <section class="bat">
+    <span class="eyebrow"><span class="dot"></span> batch / guess first</span>
+    <h2>10,000 inserts. Ten thousand round trips, or one?</h2>
+<pre class="sm"><code class="language-java" data-trim>
+c.setAutoCommit(false);
+try (PreparedStatement ps = c.prepareStatement(
+        "INSERT INTO account(owner, balance_cents) VALUES (?, ?)")) {
+    for (Account a : accounts) {
+        ps.setString(1, a.owner());
+        ps.setLong(2, a.balanceCents());
+        ps.addBatch();                       // snapshots the parameters, now
+    }
+    int[] counts = ps.executeBatch();
+    c.commit();
+} catch (BatchUpdateException e) {
+    c.rollback();
+    int[] done = e.getUpdateCounts();        // one entry per command ATTEMPTED
+}
+</code></pre>
+    <ul class="clean">
+      <li class="fragment">A loop of <code>executeUpdate</code> with autocommit on is 10,000 transactions and 10,000 round trips: ten seconds for an import that should take a tenth of a second. Set the parameters, <code>addBatch()</code> snapshots them, <code>executeBatch()</code> sends the lot.</li>
+      <li class="fragment">A <code>setX</code> with no <code>addBatch</code> after it is not in the batch, and that is a question in a moment. Wrap the batch in one transaction or every row commits on its own and you have saved nothing.</li>
+      <li class="fragment"><code>Statement.addBatch</code> <em>takes</em> a SQL string; <code>PreparedStatement.addBatch()</code> takes nothing. One is for a few one-off statements, the other for N rows of one shape.</li>
+    </ul>
+    <div class="footer-line"><span>batch</span><span>how</span></div>
+  </section>
+
+  <!-- 53 GENERATED KEYS -->
+  <section class="bat">
+    <span class="eyebrow"><span class="dot"></span> keys / guess first</span>
+    <h2>The database chose the id. How do you find out what it is?</h2>
+<pre class="sm"><code class="language-java" data-trim>
+// id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+try (PreparedStatement ps = c.prepareStatement(
+        "INSERT INTO account(owner, balance_cents) VALUES (?, ?)",
+        new String[]{"id"})) {                    // name the key column
+    ps.setString(1, owner);
+    ps.setLong(2, cents);
+    ps.executeUpdate();
+    try (ResultSet keys = ps.getGeneratedKeys()) {
+        if (!keys.next()) throw new IllegalStateException("no key came back");
+        return new Account(keys.getLong(1), owner, cents);
+    }
+}
+</code></pre>
+    <ul class="clean">
+      <li class="fragment">Never <code>SELECT MAX(id) + 1</code>. Two inserts race and both win the same number. It is the oldest bug in this business.</li>
+      <li class="fragment">Name the key column in the <code>String[]</code> overload rather than passing <code>Statement.RETURN_GENERATED_KEYS</code>, because "generated" means whatever the driver thinks it means: PostgreSQL hands back the whole row, Oracle hands back a ROWID. Name it, and <code>keys.getLong(1)</code> is the id everywhere.</li>
+      <li class="fragment">The key ResultSet is an ordinary cursor, so <code>next()</code> first. With batches, whether keys come back at all is driver-specific: H2, PostgreSQL and MySQL yes, Oracle not by default. I checked H2 for the capstone, and they do.</li>
+    </ul>
+    <div class="footer-line"><span>keys</span><span>how</span></div>
+  </section>
+
+  <!-- 54 QUIZ 7 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 7 of 9</span>
+    <h2>Table <code>t</code> is empty and autocommit is off. What does this print?</h2>
+<pre><code class="language-java" data-trim>
+try (PreparedStatement ps = c.prepareStatement("INSERT INTO t(v) VALUES (?)")) {
+    for (int i = 1; i &lt;= 3; i++) { ps.setInt(1, i); ps.addBatch(); }
+    ps.setInt(1, 4);
+    int[] r = ps.executeBatch();
+    c.commit();
+    System.out.println(r.length + " " + countRows(c));
+}
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>4 4</code></li>
+      <li><b>B</b> <code>3 3</code></li>
+      <li><b>C</b> <code>4 3</code></li>
+      <li><b>D</b> <code>BatchUpdateException</code>: parameter 1 was set but never added</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>7 of 9</span></div>
+  </section>
+
+
+  <!-- 56 CALLABLESTATEMENT -->
+  <section class="call">
+    <span class="eyebrow"><span class="dot"></span> callable / guess first</span>
+    <h2>The logic already lives in the database. How do you call it?</h2>
+    <p style="margin:0; color:var(--muted);">Your DBA hands you a procedure, <code>transfer_funds(p_from, p_to, p_cents, OUT p_new_balance)</code>, and a function, <code>fee_for(p_cents)</code>, that returns a number. Neither is a SELECT and neither is an INSERT.</p>
+    <ul class="clean">
+      <li class="fragment">There is a third statement type for exactly this. <code>CallableStatement</code> extends <code>PreparedStatement</code>, so everything you know about <code>?</code> and binding still applies, and you create it with <code>c.prepareCall(...)</code>.</li>
+      <li class="fragment">Write the call in JDBC <em>escape syntax</em>, in curly braces: <code>{call transfer_funds(?, ?, ?, ?)}</code> for a procedure, <code>{? = call fee_for(?)}</code> for a function that returns a value.</li>
+      <li class="fragment">The braces are the portable part. Oracle would otherwise want <code>BEGIN transfer_funds(:1, :2); END;</code> and SQL Server would want <code>EXEC</code>, and you write neither.</li>
+      <li class="fragment">A <b>procedure</b> is called for its effect and returns values through OUT parameters. A <b>function</b> returns exactly one value and can also be used inside ordinary SQL, which is usually nicer, because then a plain PreparedStatement does the job.</li>
+      <li class="fragment">Parameter directions: <b>IN</b> is an input and behaves like any <code>?</code> you have bound today. <b>OUT</b> is an output, and you must declare its type in advance. <b>INOUT</b> is both, so you set it <em>and</em> declare it.</li>
+      <li class="fragment">If a procedure returns result sets as well as OUT parameters, drain the result sets first and read the OUT parameters last: on several drivers the values are only there once everything else has been read.</li>
+    </ul>
+    <div class="footer-line"><span>callable</span><span>the api</span></div>
+  </section>
+
+  <!-- 57 REGISTEROUTPARAMETER -->
+  <section class="call">
+    <span class="eyebrow">the move</span>
+    <h2>registerOutParameter, and reading a value back out.</h2>
+    <div class="cmd">public class Fees { public static long feeFor(long c) { return Math.max(100, c / 100); } }<br/>CREATE ALIAS fee_for FOR "com.example.Fees.feeFor"; <span class="c">&nbsp; # H2's stored function: a class on the classpath, one line of SQL</span></div>
+    <div class="codeflex">
+      <div>
+        <span class="tag">a procedure, with an OUT parameter</span>
+<pre class="sm"><code class="language-java" data-trim>
+try (CallableStatement cs =
+        c.prepareCall("{call transfer_funds(?, ?, ?, ?)}")) {
+    cs.setLong(1, from);
+    cs.setLong(2, to);
+    cs.setLong(3, cents);
+    cs.registerOutParameter(4, Types.BIGINT);
+    cs.execute();
+    long newBalance = cs.getLong(4);
+    if (cs.wasNull()) throw new IllegalStateException("NULL back");
+}
+</code></pre>
+      </div>
+      <div>
+        <span class="tag">a function, with a return value</span>
+<pre class="sm"><code class="language-java" data-trim>
+try (CallableStatement cs =
+        c.prepareCall("{? = call fee_for(?)}")) {
+    cs.registerOutParameter(1, Types.BIGINT);
+    cs.setLong(2, cents);
+    cs.execute();
+    long fee = cs.getLong(1);
+}
+// fee_for(25000) is 250, one per cent with a floor of 100
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean">
+      <li class="fragment"><code>registerOutParameter</code> must be called <em>before</em> execute, because the driver has to tell the database where to put the answer.</li>
+      <li class="fragment">The return value of a function is parameter <b>1</b>, which shifts every one of your inputs along by one. It is the most common off-by-one in this API, and you are about to make it yourself.</li>
+    </ul>
+    <div class="footer-line"><span>callable</span><span>how</span></div>
+  </section>
+
+  <!-- 58 HANDS-ON: CALL A FUNCTION -->
+  <section class="handson call">
+    <span class="eyebrow"><span class="dot"></span> hands-on / 5 minutes</span>
+    <div class="handson-head"><span class="handson-badge">Hands-on &middot; 5 min</span></div>
+    <h2>Call a function, then get it wrong twice.</h2>
+    <div class="setup-steps">
+      <div class="fragment"><span class="oslabel">1 &middot; make the function</span><div class="cmd">CREATE ALIAS fee_for AS $$ long feeFor(long cents) {<br/>&nbsp;&nbsp;return Math.max(100, cents / 100); } $$;</div></div>
+      <div class="fragment"><span class="oslabel">2 &middot; call it, and get 250</span><div class="cmd">var cs = c.prepareCall("{? = call fee_for(?)}");<br/>cs.registerOutParameter(1, Types.BIGINT);<br/>cs.setLong(2, 25000); cs.execute(); cs.getLong(1);</div></div>
+      <div class="fragment"><span class="oslabel">3 &middot; break it: delete the registerOutParameter</span><div class="cmd">cs.setLong(2, 25000); cs.execute();<br/><span class="c">// H2 says: Parameter "#1" is not set</span></div></div>
+      <div class="fragment"><span class="oslabel">4 &middot; break it the other way: swap the indexes</span><div class="cmd">cs.setLong(1, 25000);<br/>cs.registerOutParameter(2, Types.BIGINT);</div></div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">Step 1 uses H2's source form: a class you defined in jshell is invisible to H2's class loader, and the <code>FOR</code> form needs a real class on the real classpath. Step 4 is the off-by-one from the last slide, and it lands differently once your own fingers have typed it. Then try <code>SELECT fee_for(25000)</code> through a plain PreparedStatement and ask which of the two you would rather maintain.</li>
+    </ul>
+    <div class="footer-line"><span>callable</span><span>hands-on</span></div>
+  </section>
+
+  <!-- 59 JAVA.SQL AND JAVAX.SQL -->
+  <section class="pool">
+    <span class="eyebrow">the two packages</span>
+    <h2>java.sql and javax.sql: one API, two halves.</h2>
+    <table class="tbl">
+      <tr><th><code>java.sql</code>, the part you have been writing all day</th><th><code>javax.sql</code>, the part a container or a pool implements for you</th></tr>
+      <tr>
+        <td><code>DriverManager</code> and <code>Driver</code><br/><code>Connection</code>, <code>Statement</code>, <code>PreparedStatement</code>, <code>CallableStatement</code><br/><code>ResultSet</code>, <code>SQLException</code> and its subclasses<br/><code>Types</code>, <code>DatabaseMetaData</code>, <code>ResultSetMetaData</code>, <code>Savepoint</code></td>
+        <td><code>DataSource</code>: a factory with <code>getConnection()</code> and no static anything<br/><code>ConnectionPoolDataSource</code>, <code>PooledConnection</code>: the plumbing a pool implements<br/><code>XADataSource</code>: two-phase commit across two databases, which you will hopefully never need<br/><code>RowSet</code>, <code>CachedRowSet</code>: a disconnected ResultSet you can carry around, which almost nobody uses<br/><code>ConnectionEventListener</code>: how a pool learns a borrowed connection was closed or died</td>
+      </tr>
+    </table>
+    <ul class="clean">
+      <li class="fragment">Both packages ship inside the JDK, in the <code>java.sql</code> module. There is nothing to download for either.</li>
+      <li class="fragment">The <code>javax</code> here is <em>not</em> the Jakarta rename you will hear about tomorrow. That only touched Java EE packages, and <code>javax.sql</code> is Java SE and is not going anywhere.</li>
+      <li class="fragment">The split is really client API against container API, which is why your code imports <code>java.sql.*</code> and exactly one type from <code>javax.sql</code>: the <code>DataSource</code>.</li>
+    </ul>
+    <div class="footer-line"><span>pooling</span><span>the packages</span></div>
+  </section>
+
+  <!-- 60 DATASOURCE AND POOL -->
+  <section class="pool">
+    <span class="eyebrow"><span class="dot"></span> pooling / the javax.sql.DataSource</span>
+    <h2>500 requests a second. How many handshakes is that?</h2>
+    <p style="margin:0; color:var(--muted);">Each request opens a Connection, runs two queries and closes it. That is 500 handshakes a second at 20 ms each, plus the database creating and destroying 500 sessions a second.</p>
+    <div class="dgrid" style="margin-top:10px;">
+      <ul class="clean">
+        <li class="fragment">One static shared Connection is the wrong fix: it is not thread-safe, it has one transaction state for everybody, and it is one socket for 500 requests.</li>
+        <li class="fragment">A <code>DataSource</code> is an object with <code>getConnection()</code>, so you can inject it, configure it outside your code and swap it in a test. None of that is true of a static <code>DriverManager</code>.</li>
+        <li class="fragment">A pooling DataSource keeps N real connections open and hands out thin wrappers. <code>close()</code> on the wrapper does not close the socket, it returns the connection, and <code>getConnection()</code> costs microseconds instead of a handshake.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 300" width="100%">
+          <defs><marker id="s60a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker></defs>
+          <text x="46" y="20" text-anchor="middle" fill="var(--muted)" font-size="12">8 threads</text>
+          <line x1="20" y1="44" x2="150" y2="110" stroke="var(--dim)" stroke-width="1.2" marker-end="url(#s60a)"/>
+          <line x1="20" y1="76" x2="150" y2="122" stroke="var(--dim)" stroke-width="1.2" marker-end="url(#s60a)"/>
+          <line x1="20" y1="108" x2="150" y2="134" stroke="var(--dim)" stroke-width="1.2" marker-end="url(#s60a)"/>
+          <line x1="20" y1="140" x2="150" y2="146" stroke="var(--dim)" stroke-width="1.2" marker-end="url(#s60a)"/>
+          <line x1="20" y1="172" x2="150" y2="158" stroke="var(--dim)" stroke-width="1.2" marker-end="url(#s60a)"/>
+          <line x1="20" y1="204" x2="150" y2="170" stroke="var(--dim)" stroke-width="1.2" marker-end="url(#s60a)"/>
+          <line x1="20" y1="236" x2="150" y2="182" stroke="var(--dim)" stroke-width="1.2" marker-end="url(#s60a)"/>
+          <line x1="20" y1="268" x2="150" y2="194" stroke="var(--dim)" stroke-width="1.2" marker-end="url(#s60a)"/>
+          <rect x="156" y="88" width="126" height="120" rx="10" fill="#0a0a0c" stroke="var(--accent)" stroke-width="2"/>
+          <text x="219" y="112" text-anchor="middle" fill="var(--accent)" font-size="12" class="mono">pool</text>
+          <rect x="172" y="122" width="94" height="16" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <rect x="172" y="142" width="94" height="16" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <rect x="172" y="162" width="94" height="16" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <rect x="172" y="182" width="94" height="16" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <line x1="282" y1="130" x2="346" y2="130" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#s60a)"/>
+          <line x1="282" y1="150" x2="346" y2="150" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#s60a)"/>
+          <line x1="282" y1="170" x2="346" y2="170" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#s60a)"/>
+          <line x1="282" y1="190" x2="346" y2="190" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#s60a)"/>
+          <rect x="352" y="88" width="76" height="120" rx="10" fill="#16161a" stroke="var(--accent-2)"/>
+          <text x="390" y="154" text-anchor="middle" fill="var(--muted)" font-size="12">db</text>
+          <text x="219" y="240" text-anchor="middle" fill="var(--muted)" font-size="12">4 real sockets, kept open</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>pooling</span><span>datasource</span></div>
+  </section>
+
+  <!-- 61 STANDING ONE UP -->
+  <section class="pool">
+    <span class="eyebrow">the move</span>
+    <h2>Standing one up: four lines for the driver, six for the pool.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag">plain, no pool</span>
+<pre><code class="language-java" data-trim>
+org.h2.jdbcx.JdbcDataSource ds =
+        new org.h2.jdbcx.JdbcDataSource();
+ds.setURL("jdbc:h2:mem:bank;DB_CLOSE_DELAY=-1");
+ds.setUser("sa");
+ds.setPassword("");
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">pooled</span>
+<pre><code class="language-java" data-trim>
+HikariConfig cfg = new HikariConfig();
+cfg.setJdbcUrl(url);
+cfg.setUsername(user);
+cfg.setPassword(pw);
+cfg.setMaximumPoolSize(cores * 2);
+DataSource ds = new HikariDataSource(cfg);
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">The vendor class on the first line of the left block is the only place in your program that names a database product. MySQL's is <code>MysqlDataSource</code>, PostgreSQL's is <code>PGSimpleDataSource</code>, same three setters.</li>
+      <li class="fragment">Build it <em>once</em>, in your composition root, and pass the <code>DataSource</code> everywhere. Downstream classes declare <code>javax.sql.DataSource</code> and cannot tell which block they were handed, so swapping left for right is the whole of "we added pooling", and nothing recompiles.</li>
+      <li class="fragment">HikariCP is a jar, not part of the JDK, and we are not using it today. <code>maximumPoolSize</code> around cores times two beats the 100 somebody will suggest. A good pool resets <code>autoCommit</code> and isolation on the way home; reset what you changed anyway.</li>
+    </ul>
+    <div class="footer-line"><span>pooling</span><span>how</span></div>
+  </section>
+
+  <!-- 62 QUIZ 8 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 8 of 9</span>
+    <h2>The pool is HikariCP. What is in <code>audit</code> afterwards?</h2>
+    <p style="color:var(--muted); margin:0;"><code>ds</code> is a <code>HikariDataSource</code>. Nothing commits and nothing rolls back. A later borrower queries the table.</p>
+<pre><code class="language-java" data-trim>
+try (Connection c = ds.getConnection()) {
+    c.setAutoCommit(false);
+    try (PreparedStatement ps =
+             c.prepareStatement("INSERT INTO audit(msg) VALUES ('hello')")) {
+        ps.executeUpdate();
+    }
+}   // no commit, no rollback
+</code></pre>
+    <ol class="opts w1">
+      <li><b>A</b> The row is there: <code>close()</code> on a pooled connection flushes the work</li>
+      <li><b>B</b> The row is there: returning a connection to the pool commits whatever is open</li>
+      <li><b>C</b> No row: the pool rolls back a connection returned with an open transaction, and resets autoCommit</li>
+      <li><b>D</b> <code>SQLException</code> from <code>close()</code>: a connection with an open transaction cannot be returned</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>8 of 9</span></div>
+  </section>
+
+
+  <!-- 64 OPTIONAL -->
+  <section class="dao">
+    <span class="eyebrow"><span class="dot"></span> optional / guess first</span>
+    <h2><code>findById</code> finds nothing. What do you return?</h2>
+    <p style="margin:0; color:var(--muted);">Your query helper returns a List, the caller wants exactly one account by id, and there is no row with that id. The signature promises an <code>Account</code>. Null? An exception? An empty list?</p>
+    <ul class="clean">
+      <li class="fragment">Returning null is the exact bug Optional was invented to prevent: the type says <code>Account</code>, the value says nothing, and the NullPointerException arrives three stack frames away. <code>Optional&lt;Account&gt;</code> says maybe in the signature, so the compiler makes the caller decide.</li>
+      <li class="fragment">Chain without unwrapping: <code>repo.findById(id).map(Account::balanceCents).orElse(0L)</code>. <code>orElse</code> gives a default, <code>orElseGet</code> takes a Supplier, and <code>orElseThrow(() -&gt; new NotFoundException(id))</code> is what a web layer usually wants.</li>
+      <li class="fragment"><b>The trap worth memorising:</b> <code>orElse</code> evaluates its argument eagerly, every single time, even when the Optional is present. <code>orElse(expensiveDefault())</code> runs the expensive call on the happy path too. <code>orElseGet(() -&gt; expensiveDefault())</code> does not. That is Item 55.</li>
+      <li class="fragment">Never call <code>get()</code> without <code>isPresent()</code>, and preferably never call <code>get()</code> at all. Never make an Optional a field, a parameter or a collection element: it is a return type, and an <code>Optional&lt;List&gt;</code> is always a bug. Return an empty list.</li>
+      <li class="fragment">When you meet Spring Data, <code>findById</code> returns <code>Optional&lt;T&gt;</code>, and now you know why. The capstone's repository returns it too.</li>
+    </ul>
+    <span class="tag">Effective Java, Items 55 and 65</span>
+    <div class="footer-line"><span>repository</span><span>optional</span></div>
+  </section>
+
+  <!-- 65 REPOSITORY -->
+  <section class="dao">
+    <span class="eyebrow"><span class="dot"></span> repository / guess first</span>
+    <h2>Where does the SQL live in your application?</h2>
+<pre class="sm"><code class="language-java" data-trim>
+interface AccountRepository {
+    Optional&lt;Account&gt; findById(long id);   List&lt;Account&gt; findAll();
+    Account save(Account a);               long count();
+}
+final class JdbcAccountRepository implements AccountRepository {
+    private final DataSource ds;
+    JdbcAccountRepository(DataSource ds) { this.ds = ds; }
+    public Optional&lt;Account&gt; findById(long id) {
+        try (Connection c = ds.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                 "SELECT id, owner, balance_cents FROM account WHERE id = ?")) {
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? Optional.of(toAccount(rs)) : Optional.empty();
+            }
+        } catch (SQLException e) { throw new RepositoryException("findById " + id, e); }
+    }
+}
+</code></pre>
+    <ul class="clean">
+      <li class="fragment">Behind one interface per aggregate, with the SQL in exactly one class. The service depends on the interface, so it can be tested against a HashMap in microseconds. Day 1's dependency inversion, for the third time today.</li>
+      <li class="fragment">This class owns every SQL string and column name, no ResultSet leaves it, and <code>SQLException</code> is translated here and nowhere else (Item 73). The transaction belongs <em>above</em> it, in the service, because one use case may touch two repositories.</li>
+    </ul>
+    <div class="footer-line"><span>repository</span><span>how</span></div>
+  </section>
+
+  <!-- 66 PUSHDOWN -->
+  <section class="dao">
+    <span class="eyebrow"><span class="dot"></span> pushdown / guess first</span>
+    <h2>Your repository could take a <code>Predicate&lt;Account&gt;</code>. Why does it take SQL instead?</h2>
+    <p style="margin:0; color:var(--muted);">A <code>Predicate&lt;Account&gt;</code> is a perfectly good filter, so why not <code>findWhere(Predicate&lt;Account&gt; p)</code>? It would be typed, testable and rather beautiful.</p>
+    <div class="codeflex" style="margin-top:8px;">
+      <div><span class="tag bad">filtered in your JVM</span>
+<pre><code class="language-java" data-trim>
+List&lt;Account&gt; rich = repo.findAll().stream()
+    .filter(a -&gt; a.balanceCents() &gt; 500_000)
+    .toList();
+</code></pre>
+      </div>
+      <div><span class="tag good">filtered on the server</span>
+<pre><code class="language-java" data-trim>
+SELECT id, owner, balance_cents
+  FROM account
+ WHERE balance_cents &gt; ?
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean">
+      <li class="fragment">A Predicate is compiled Java bytecode living in your JVM. The database has no way to run it, so the filter can only happen after every row has crossed the socket. On a hundred thousand rows you have paid for a hundred thousand rows of network, memory and mapping to keep nine of them.</li>
+      <li class="fragment">The WHERE clause runs on the server, which can also use an index, and an index is the difference between reading nine rows and reading all of them.</li>
+    </ul>
+    <div class="footer-line"><span>repository</span><span>pushdown</span></div>
+  </section>
+
+  <!-- 67 QUIZ 9 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 9 of 9</span>
+    <h2><code>sort</code> comes straight from the HTTP request. Which statement is true?</h2>
+<pre><code class="language-java" data-trim>
+String sort = request.getParameter("sort");
+
+try (PreparedStatement ps = c.prepareStatement(
+        "SELECT * FROM account ORDER BY " + sort + " LIMIT ?")) {
+    ps.setInt(1, 10);
+    ...
+}
+</code></pre>
+    <ol class="opts w1">
+      <li><b>A</b> Safe: it is a <code>PreparedStatement</code>, so the whole statement is parameterised</li>
+      <li><b>B</b> Safe: the only value from the user reaches the database as a bound parameter</li>
+      <li><b>C</b> Unsafe only when <code>sort</code> names a column that does not exist, which throws</li>
+      <li><b>D</b> Unsafe: a <code>?</code> binds values, never identifiers, so <code>sort</code> is concatenated into the SQL raw</li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>9 of 9</span></div>
+  </section>
+
+
+  <!-- 69 N+1 -->
+  <section class="dao">
+    <span class="eyebrow"><span class="dot"></span> n+1 / guess first</span>
+    <h2>A thousand accounts, one innocent loop. How many round trips?</h2>
+<pre><code class="language-java" data-trim>
+for (Account a : repo.findAll()) {
+    List&lt;Txn&gt; t = txnRepo.findByAccount(a.id());
+    total += sum(t);
+}
+</code></pre>
+    <div class="dgrid" style="margin-top:6px;">
+      <ul class="clean">
+        <li class="fragment">A thousand and one, each one a millisecond. A page that should take 5 ms takes a second, and it looks like one innocent loop.</li>
+        <li class="fragment">The fix is one query with a JOIN, or one <code>SELECT ... WHERE account_id IN (?, ?, ...)</code> and then Day 2's <code>groupingBy</code> to assemble in Java.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 300" width="100%">
+          <defs><marker id="s69a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--bad)"/></marker>
+                <marker id="s69b" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--good)"/></marker></defs>
+          <text x="105" y="22" text-anchor="middle" fill="var(--bad)" font-size="12" class="mono">N + 1</text>
+          <circle cx="30" cy="150" r="14" fill="#16161a" stroke="var(--line)"/>
+          <line x1="44" y1="150" x2="174" y2="60" stroke="var(--bad)" stroke-width="1.2" marker-end="url(#s69a)"/>
+          <line x1="44" y1="150" x2="174" y2="90" stroke="var(--bad)" stroke-width="1.2" marker-end="url(#s69a)"/>
+          <line x1="44" y1="150" x2="174" y2="120" stroke="var(--bad)" stroke-width="1.2" marker-end="url(#s69a)"/>
+          <line x1="44" y1="150" x2="174" y2="150" stroke="var(--bad)" stroke-width="1.2" marker-end="url(#s69a)"/>
+          <line x1="44" y1="150" x2="174" y2="180" stroke="var(--bad)" stroke-width="1.2" marker-end="url(#s69a)"/>
+          <line x1="44" y1="150" x2="174" y2="210" stroke="var(--bad)" stroke-width="1.2" marker-end="url(#s69a)"/>
+          <line x1="44" y1="150" x2="174" y2="240" stroke="var(--bad)" stroke-width="1.2" marker-end="url(#s69a)"/>
+          <rect x="178" y="40" width="26" height="220" rx="6" fill="#16161a" stroke="var(--line)"/>
+          <text x="105" y="286" text-anchor="middle" fill="var(--muted)" font-size="12">one trip per row</text>
+          <text x="330" y="22" text-anchor="middle" fill="var(--good)" font-size="12" class="mono">one query</text>
+          <circle cx="262" cy="150" r="14" fill="#16161a" stroke="var(--line)"/>
+          <line x1="278" y1="150" x2="390" y2="150" stroke="var(--good)" stroke-width="9" marker-end="url(#s69b)"/>
+          <rect x="398" y="40" width="26" height="220" rx="6" fill="#16161a" stroke="var(--line)"/>
+          <text x="330" y="286" text-anchor="middle" fill="var(--muted)" font-size="12">a JOIN, or one IN list</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>repository</span><span>n+1</span></div>
+  </section>
+
+  <!-- 70 YOUR HELPERS, THEIR NAMES -->
+  <section class="dao">
+    <span class="eyebrow"><span class="dot"></span> the segue / guess first</span>
+    <h2>You wrote five helpers today. What is left for a framework to add?</h2>
+    <div class="grid g2">
+      <div>
+        <h3 style="color:var(--muted);">what you wrote today</h3>
+        <ul class="clean">
+          <li class="fragment"><code>query(sql, mapper, args)</code></li>
+          <li class="fragment">a <code>RowMapper</code> per table</li>
+          <li class="fragment"><code>inTransaction</code>: commit, rollback, reset</li>
+          <li class="fragment"><code>SQLException</code> translated to <code>RepositoryException</code></li>
+          <li class="fragment">a <code>DataSource</code> injected into a repository</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:var(--accent);">what it is called on Monday</h3>
+        <ul class="clean">
+          <li class="fragment"><code>JdbcTemplate.query(sql, rowMapper, args)</code></li>
+          <li class="fragment"><code>RowMapper&lt;T&gt;</code>, the same name, almost the same signature</li>
+          <li class="fragment"><code>@Transactional</code>: your helper attached by a proxy, with a propagation setting for the re-entrancy hole you saw</li>
+          <li class="fragment"><code>DataAccessException</code>: yours, with fifty subclasses</li>
+          <li class="fragment">a <code>DataSource</code> bean that is a Hikari pool, configured in a properties file</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fragment" style="margin-top:14px; color:var(--muted);">None of that is magic. It is your afternoon, with better error messages.</p>
+    <div class="footer-line"><span>repository</span><span>the names</span></div>
+  </section>
+
+  <!-- 71 ORMS -->
+  <section class="dao">
+    <span class="eyebrow">the honest segue</span>
+    <h2>And then there are ORMs, which are a bigger promise.</h2>
+    <ul class="clean">
+      <li class="fragment">JPA and Hibernate go further than JdbcTemplate: you annotate a class and they write the SQL and the mapping for you, in both directions.</li>
+      <li class="fragment">What you pay: N+1 by accident, because a field access can be a query.</li>
+      <li class="fragment">Lazy initialisation exceptions, because that field access happens after the session closed.</li>
+      <li class="fragment">A first-level cache you did not ask for and must reason about anyway.</li>
+      <li class="fragment">And SQL you did not write, appearing in your slow query log at two in the morning.</li>
+      <li class="fragment">JDBC is still underneath every one of them. The pooled Connection is still the resource, the transaction is still the boundary, and when the ORM misbehaves, everything you learned today is how you debug it.</li>
+      <li class="fragment">Use an ORM for CRUD on a well-shaped model, drop to JdbcTemplate or plain SQL for reports and bulk work, and never let a tool stop you reading the statement it sent.</li>
+    </ul>
+    <p class="fragment" style="margin-top:12px; color:var(--muted);">Tomorrow is servlets: the HTTP half of the same request. This repository gets a server in front of it, and a composition root that wires the DataSource, the repository and the service in one place.</p>
+    <div class="footer-line"><span>repository</span><span>segue</span></div>
+  </section>
+
+  <!-- ================= CAPSTONE ================= -->
+  <!-- 72 CAPSTONE SETUP -->
+  <section class="handson">
+    <span class="eyebrow"><span class="dot"></span> capstone / setup</span>
+    <div class="handson-head"><span class="handson-badge">Setup</span></div>
+    <h2>Run it, see red.</h2>
+    <p class="fragment" style="color:var(--muted); margin:0 0 4px;">You downloaded <code>lib/h2-2.3.232.jar</code> this morning for the follow-along, so there is nothing left to install.</p>
+    <div class="cmd fragment">cd day-3-capstone<br/>./run.sh <span class="c">&nbsp; # Windows: .\run.cmd</span></div>
+    <div class="dgrid" style="margin-top:6px;">
+      <ul class="clean">
+        <li class="fragment">Three parts run in order. Each prints [PASS] and [FAIL] lines, and right now they are all red. That is your list of things to do.</li>
+        <li class="fragment">Read <code>RunTests.java</code> top to bottom before you write anything. Every stub compiles and throws, so a red run is the correct starting state. The reference is in <code>solution/</code>: try first, peek last.</li>
+        <li class="fragment">Each part has its own <code>run.sh</code> and <code>run.cmd</code>, and every one of them uses <code>-cp "lib/*:."</code>. That is the entire build system.</li>
+      </ul>
+      <div class="cmd fragment" style="font-size:14px; line-height:1.55;">day-3-capstone/<br/>&nbsp;&nbsp;part1-connect/connect/*.java<br/>&nbsp;&nbsp;&nbsp;&nbsp;RunTests.java <span class="c">(do not edit)</span><br/>&nbsp;&nbsp;&nbsp;&nbsp;solution/<br/>&nbsp;&nbsp;part2-transfer/transfer/...<br/>&nbsp;&nbsp;part3-finale/finale/...<br/>&nbsp;&nbsp;demo/LostUpdate.java<br/>&nbsp;&nbsp;lib/h2-2.3.232.jar<br/>&nbsp;&nbsp;get-deps.sh &nbsp; get-deps.cmd<br/>&nbsp;&nbsp;run.sh &nbsp; run.cmd</div>
+    </div>
+    <div class="footer-line"><span>capstone</span><span>setup</span></div>
+  </section>
+
+  <!-- 73 CAPSTONE PART 1 -->
+  <section class="handson">
+    <span class="eyebrow"><span class="dot"></span> capstone / part 1</span>
+    <div class="handson-head"><span class="handson-badge">Part 1 · connect</span></div>
+    <h2>Connect, create, insert, query.</h2>
+    <ul class="clean">
+      <li class="fragment"><code>connect/Db.java</code>: <code>open()</code> returns a Connection to <code>jdbc:h2:mem:bank;DB_CLOSE_DELAY=-1</code>, with no <code>Class.forName</code> anywhere. <span style="color:var(--muted)">(driver loading)</span></li>
+      <li class="fragment"><code>connect/Schema.java</code>: <code>create(Connection)</code> runs the DDL with IF NOT EXISTS, <code>exists(Connection)</code> answers through <code>DatabaseMetaData.getTables</code>. <code>reset()</code> is given to you. <span style="color:var(--muted)">(DDL and metadata)</span></li>
+      <li class="fragment"><code>connect/AccountDao.java</code>: <code>insert</code> returning the generated id, <code>findById</code> returning <code>Optional&lt;Account&gt;</code>, <code>findAll</code> in id order, all three going through one private RowMapper. <span style="color:var(--muted)">(PreparedStatement, cursor, mapping, Optional)</span></li>
+      <li class="fragment"><code>connect/Account.java</code>: the record. Given.</li>
+    </ul>
+    <p class="fragment" style="margin-top:14px; color:var(--accent);">Three tests to watch:</p>
+    <ul class="clean">
+      <li class="fragment">O'Brien round-trips unchanged, because you bound him rather than quoting him.</li>
+      <li class="fragment">The CHECK constraint refuses a negative balance, and <code>findAll</code> is unchanged afterwards.</li>
+      <li class="fragment"><code>findById</code> of a missing id gives <code>Optional.empty</code>, not null and not an exception.</li>
+    </ul>
+    <div class="footer-line"><span>capstone</span><span>part 1</span></div>
+  </section>
+
+  <!-- 74 CAPSTONE PART 2 -->
+  <section class="handson">
+    <span class="eyebrow"><span class="dot"></span> capstone / part 2</span>
+    <div class="handson-head"><span class="handson-badge">Part 2 · transfer</span></div>
+    <h2>Transfer money atomically, and survive hostile input.</h2>
+    <ul class="clean">
+      <li class="fragment"><code>transfer/TransferService.java</code>: <code>transfer(from, to, cents)</code> with <code>setAutoCommit(false)</code>, two UPDATEs of the form <code>balance_cents = balance_cents - ?</code>, both counts checked, commit, rollback on <em>any</em> failure including unchecked ones, autocommit reset in the finally.</li>
+      <li class="fragment"><code>deposit(id, cents)</code> as a single atomic UPDATE. That one statement is the whole answer to the concurrency test.</li>
+      <li class="fragment"><code>InsufficientFundsException</code> is given and unchecked. You raise it when the CHECK constraint fires.</li>
+      <li class="fragment"><code>transfer/AccountSearch.java</code>: <code>findByOwner(String)</code> through a PreparedStatement, and <code>findByOwnerPrefix(String)</code> with <code>LIKE ? ESCAPE '!'</code>, so a user typing <code>%</code> gets no rows instead of the whole customer list.</li>
+      <li class="fragment"><code>transfer/Db.java</code> is given, with the schema and three seeded accounts.</li>
+    </ul>
+    <p class="fragment" style="margin-top:12px; color:var(--accent);">Four tests to watch:</p>
+    <ul class="clean">
+      <li class="fragment">An overdraft leaves both balances exactly as they were. A transfer to an unknown id rolls the debit back, which only works if your catch is wider than <code>SQLException</code>.</li>
+      <li class="fragment">After any failure <code>getAutoCommit()</code> is true again. And 20 threads depositing 10 each land on exactly plus 200.</li>
+    </ul>
+    <div class="footer-line"><span>capstone</span><span>part 2</span></div>
+  </section>
+
+  <!-- 75 GO BUILD -->
+  <section class="handson">
+    <span class="eyebrow"><span class="dot"></span> capstone / build</span>
+    <div class="handson-head"><span class="handson-badge">Go build</span></div>
+    <h2>Go build: parts 1 and 2.</h2>
+    <p class="lede" style="margin-top:20px;">Read <em>RunTests</em> first. Green is the goal. <span style="color:var(--muted);">solution/ is the last resort.</span></p>
+    <div class="cmd lg fragment" style="margin-top:28px;">cd day-3-capstone &amp;&amp; ./run.sh</div>
+    <div class="footer-line"><span>capstone</span><span>build</span></div>
+  </section>
+
+  <!-- 76 DEBRIEF 1 -->
+  <section class="handson">
+    <span class="eyebrow"><span class="dot"></span> capstone / debrief</span>
+    <div class="handson-head"><span class="handson-badge">Debrief</span></div>
+    <h2>Which idea did each test prove?</h2>
+    <div class="grid g2">
+      <div>
+        <h3 style="color:var(--accent);">part 1</h3>
+        <ul class="clean">
+          <li class="fragment">The driver was found without <code>Class.forName</code>. <span style="color:var(--muted)">(the ServiceLoader slide)</span></li>
+          <li class="fragment">The table shows up in <code>DatabaseMetaData</code>. <span style="color:var(--muted)">(the metadata slide)</span></li>
+          <li class="fragment">O'Brien round-trips, because you bound him. <span style="color:var(--muted)">(the PreparedStatement slide)</span></li>
+          <li class="fragment">The CHECK refused a negative balance. <span style="color:var(--muted)">(the transfer slide)</span></li>
+          <li class="fragment"><code>Optional.empty</code> rather than null for a missing row. <span style="color:var(--muted)">(the Optional slide)</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:var(--accent);">part 2</h3>
+        <ul class="clean">
+          <li class="fragment">The overdraft rolled both rows back. <span style="color:var(--muted)">(autocommit, and the transfer)</span></li>
+          <li class="fragment">The unknown recipient was caught by the update count, and your catch was wide enough to survive an unchecked exception reaching that finally. <span style="color:var(--muted)">(the setAutoCommit quiz)</span></li>
+          <li class="fragment">Autocommit was reset, so a pool would be safe. <span style="color:var(--muted)">(the pooling slide)</span></li>
+          <li class="fragment">The injection string matched nobody, and the <code>%</code> prefix returned nothing, because binding stops injection and only ESCAPE stops a wildcard. <span style="color:var(--muted)">(the fine print on ?)</span></li>
+          <li class="fragment">20 threads, exactly plus 200, because the UPDATE did the arithmetic. <span style="color:var(--muted)">(the lost update demo)</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-line"><span>capstone</span><span>debrief</span></div>
+  </section>
+
+  <!-- 77 FINALE GIVEN -->
+  <section class="handson">
+    <span class="eyebrow"><span class="dot"></span> capstone / finale</span>
+    <div class="handson-head"><span class="handson-badge">Finale</span></div>
+    <h2>Finale: what you are given.</h2>
+    <p style="color:var(--muted); margin:0 0 6px;">All of this is code you do not write.</p>
+    <ul class="clean">
+      <li class="fragment"><code>finale/Account.java</code>: <code>record Account(Long id, String owner, long balanceCents)</code> with <code>withId(long)</code> and a static <code>of(owner, cents)</code> for an unsaved row.</li>
+      <li class="fragment"><code>finale/AccountRepository.java</code>: the interface. <code>save</code>, <code>saveAll</code>, <code>findById</code>, <code>findAll</code>, <code>count</code>, <code>deleteAll</code>.</li>
+      <li class="fragment"><code>finale/RepositoryException.java</code>: unchecked, wraps a <code>SQLException</code> with a message.</li>
+      <li class="fragment"><code>finale/AccountService.java</code>: <code>totalBalance()</code> and <code>richest()</code>, written against the interface only. You never edit it.</li>
+      <li class="fragment"><code>finale/InMemoryAccountRepository.java</code>: complete, a HashMap and an AtomicLong, given to you as the worked example so the service tests pass the moment you start.</li>
+    </ul>
+    <p class="fragment" style="margin-top:14px; color:var(--muted);"><code>RunTests</code> runs the same contract against <em>both</em> repositories in one loop. That loop is Liskov and dependency inversion from Day 1, with a real database behind one of the two.</p>
+    <div class="footer-line"><span>capstone</span><span>finale given</span></div>
+  </section>
+
+  <!-- 78 FINALE WRITE -->
+  <section class="handson">
+    <span class="eyebrow"><span class="dot"></span> capstone / finale</span>
+    <div class="handson-head"><span class="handson-badge">Finale</span></div>
+    <h2>Finale: what you write, and what each test proves.</h2>
+    <p style="color:var(--muted); margin:0 0 6px;">One class, about ninety lines.</p>
+    <ul class="clean">
+      <li class="fragment"><code>finale/JdbcAccountRepository.java</code>, and a constructor that stores the injected <code>DataSource</code> and nothing else.</li>
+      <li class="fragment"><code>save</code> through a PreparedStatement, with the key column named in the <code>String[]</code> overload.</li>
+      <li class="fragment"><code>saveAll</code> as one transaction around one batch, with the keys read from <code>getGeneratedKeys()</code> after <code>executeBatch</code>.</li>
+      <li class="fragment"><code>findById</code>, <code>findAll</code> and <code>count</code> through one private RowMapper. Every <code>SQLException</code> translated to <code>RepositoryException</code>, cause kept.</li>
+    </ul>
+    <p class="fragment" style="margin-top:12px; color:var(--accent);">Four tests to watch:</p>
+    <ul class="clean">
+      <li class="fragment">1000 accounts through <code>saveAll</code> come back with 1000 distinct increasing ids, so it really was one batch with generated keys. A batch with one negative-balance row in the middle leaves <code>count()</code> unchanged, so your transaction wrapped the whole batch.</li>
+      <li class="fragment">The service computes the same total against the HashMap and against H2, and never knew which it had.</li>
+      <li class="fragment">A repository built on an unusable DataSource throws <code>RepositoryException</code> from <code>findAll</code>, not a raw <code>SQLException</code>.</li>
+    </ul>
+    <div class="footer-line"><span>capstone</span><span>finale tests</span></div>
+  </section>
+
+  <!-- 79 FINALE BUILD -->
+  <section class="handson">
+    <span class="eyebrow"><span class="dot"></span> capstone / build</span>
+    <div class="handson-head"><span class="handson-badge">Go build · the finale</span></div>
+    <h2>Build it, or take it home.</h2>
+    <ul class="clean" style="margin-top:14px;">
+      <li class="fragment"><b>InMemory is already written and green</b>, so every failure you see is yours.</li>
+      <li class="fragment">Start with <code>save</code> and <code>findById</code>, then <code>findAll</code> and <code>count</code>. Leave <code>saveAll</code> for last, because the batch is the fiddly part.</li>
+      <li class="fragment">H2 does return generated keys after <code>executeBatch</code>. I checked, so the test is passable.</li>
+    </ul>
+    <div class="cmd lg fragment" style="margin-top:24px;">cd part3-finale &amp;&amp; ./run.sh</div>
+    <p class="fragment setup-note">If we run out of time, this is a good take-home, and the reference is in <code>solution/</code>.</p>
+    <div class="footer-line"><span>capstone</span><span>finale build</span></div>
+  </section>
+
+  <!-- 80 FINALE DEBRIEF -->
+  <section class="handson">
+    <span class="eyebrow"><span class="dot"></span> capstone / debrief</span>
+    <div class="handson-head"><span class="handson-badge">Debrief</span></div>
+    <h2>What you just built is JdbcTemplate plus a repository.</h2>
+    <ul class="clean">
+      <li class="fragment">The loop that ran identical tests against a HashMap and against a real database is the whole argument for programming to an interface: the service never knew which one it had.</li>
+      <li class="fragment">Generated keys plus a batch inside one transaction is the shape of every bulk import you will ever write.</li>
+      <li class="fragment">The <code>RepositoryException</code> at the boundary is Spring's <code>DataAccessException</code> in miniature, and keeping the cause is what makes it debuggable.</li>
+      <li class="fragment">A <code>DataSource</code> in the constructor is why swapping in HikariCP is one line and no Java.</li>
+      <li class="fragment">Tomorrow this repository gets a servlet in front of it, and a composition root that wires the DataSource, the repository and the service in one place.</li>
+      <li class="fragment">And after that, somebody shows you Spring doing that wiring, and you will know exactly what it replaced.</li>
+    </ul>
+    <div class="footer-line"><span>capstone</span><span>finale debrief</span></div>
+  </section>
+
+  <!-- 81 RECAP -->
+  <section>
+    <span class="eyebrow">what to actually remember</span>
+    <h2>Twelve lines, the whole day.</h2>
+    <div class="grid g2">
+      <ul class="clean">
+        <li class="fragment">The driver is a Type 4 jar found by ServiceLoader, never named by you. H2 to MySQL is a URL and a jar.</li>
+        <li class="fragment">A Connection is a socket, a session and a transaction, and it is not thread-safe.</li>
+        <li class="fragment">SQL is code and values are data. A <code>?</code> keeps them apart, and it can never bind an identifier.</li>
+        <li class="fragment">A ResultSet is a cursor: <code>next()</code> first, <code>wasNull</code> or <code>getObject(Class)</code> for nulls, and read the label you selected.</li>
+        <li class="fragment">One Statement has one open cursor, and a nested query kills its sibling.</li>
+        <li class="fragment">Every handle is a resource: try-with-resources, reverse order, suppressed exceptions kept.</li>
+      </ul>
+      <ul class="clean">
+        <li class="fragment">Autocommit is on until you say otherwise, and <code>setAutoCommit(true)</code> commits an open transaction, so catch wider than <code>SQLException</code>.</li>
+        <li class="fragment">READ_COMMITTED permits the lost update. The fixes are atomic SQL, FOR UPDATE, or a version column.</li>
+        <li class="fragment">Batch plus one transaction plus named generated keys is every import you will write.</li>
+        <li class="fragment"><code>CallableStatement</code> with <code>{call ...}</code> and <code>registerOutParameter</code> is how you call the procedure somebody else wrote.</li>
+        <li class="fragment">A DataSource is injected, and a pool makes <code>close()</code> a return, which is why you reset what you changed.</li>
+        <li class="fragment">One repository per aggregate, SQL in one place, Optional for the missing row, exceptions translated at the door.</li>
+      </ul>
+    </div>
+    <div class="footer-line"><span>day 3</span><span>recap</span></div>
+  </section>
+
+  <!-- 82 CLOSE -->
+  <section class="title-wrap">
+    <span class="eyebrow">closing</span>
+    <h1 class="display" style="font-size:60px;">The database is <em>shared</em>,<br/>remote and slow.<br/>Treat it that way.</h1>
+    <p class="subtitle"><b>Shared</b>, so isolation and constraints are not optional, and your Java <code>if</code> is not a lock. <b>Remote</b>, so every round trip and every open socket is a cost somebody else pays for. <b>Slow</b>, so batch, pool, push the filter down, and ask for exactly what you need. Everything a framework adds is a wrapper around those three facts. Tomorrow: servlets, the HTTP half of the same request, and the composition root that wires today's repository into a running server.</p>
+    <div class="footer-line"><span>day 3</span><span>now go build</span></div>
+  </section>
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1600, height: 900, margin: 0.04, minScale: 0.2, maxScale: 1.4,
+    hash: true, slideNumber: 'c/t', controls: true, progress: true,
+    center: false, transition: 'fade', backgroundTransition: 'fade',
+    plugins: [ RevealHighlight, RevealNotes ]
+  });
+
+  // Driven by teacher.html in this same folder. Folder-scoped so it never collides with other days.
+  var SCOPE = location.pathname.replace(/[^/]*$/, '');
+  var CH = 'byts-deck' + SCOPE, K_GOTO = 'byts-deck-goto' + SCOPE, K_HELLO = 'byts-deck-hello' + SCOPE;
+  var deckChan = ('BroadcastChannel' in window) ? new BroadcastChannel(CH) : null;
+  function pIdx() { return Reveal.getSlides().indexOf(Reveal.getCurrentSlide()); }
+  function goTo(i) {
+    if (isNaN(i) || i === pIdx()) return;
+    Reveal.slide(i, 0);
+    var n = Reveal.getCurrentSlide().querySelectorAll('.fragment').length;
+    if (n > 0) Reveal.slide(i, 0, n - 1);
+  }
+  function hello() {
+    try { localStorage.setItem(K_HELLO, String(Date.now())); } catch (e) {}
+    if (deckChan) deckChan.postMessage({ type: 'hello' });
+  }
+  Reveal.on('ready', hello);
+  if (deckChan) deckChan.onmessage = function (e) {
+    if (e.data && e.data.type === 'goto' && typeof e.data.slide === 'number') goTo(e.data.slide);
+  };
+  window.addEventListener('storage', function (e) {
+    if (e.key === K_GOTO && e.newValue != null) goTo(parseInt(e.newValue, 10));
+  });
+</script>
+</body>
+</html>

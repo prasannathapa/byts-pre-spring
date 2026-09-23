@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Day 2: Collections / Build Your Technical Skills</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:wght@400;600&display=swap">
+
+<style>
+  :root{
+    --bg:#0e0e10; --bg-soft:#16161a; --line:#26262c; --text:#e8e8ea;
+    --muted:#8a8a93; --dim:#5a5a63; --accent:#d4ff3a; --accent-2:#6ea8ff;
+    --good:#7ddc9a; --bad:#ff7a7a; --warn:#f5b840;
+  }
+  html, body { background: var(--bg); }
+  .reveal-viewport { background: var(--bg) !important; }
+
+  .reveal { font-family:'Inter',system-ui,sans-serif; font-weight:400; color:var(--text);
+            font-size:22px; letter-spacing:-0.005em; }
+  .reveal .slides { text-align:left; }
+  .reveal .slides > section { padding:56px 80px; height:100%; box-sizing:border-box; }
+
+  /* per-pillar accent tint (part 1) */
+  .reveal section.enc  { --accent:#d4ff3a; }
+  .reveal section.abs  { --accent:#ff8a3d; }
+  .reveal section.inh  { --accent:#6ea8ff; }
+  .reveal section.poly { --accent:#c084fc; }
+  /* per-principle accent tint (part 2) */
+  .reveal section.srp { --accent:#ff5c8d; }
+  .reveal section.ocp { --accent:#14b8a6; }
+  .reveal section.lsp { --accent:#a78bfa; }
+  .reveal section.isp { --accent:#f59e0b; }
+  .reveal section.dip { --accent:#22d3ee; }
+
+  .reveal h1,.reveal h2,.reveal h3,.reveal h4 { font-family:'Inter',sans-serif; font-weight:600;
+    color:var(--text); text-transform:none; letter-spacing:-0.02em; margin:0 0 0.4em 0; line-height:1.12; }
+  .reveal h1 { font-size:66px; font-weight:700; letter-spacing:-0.04em; }
+  .reveal h2 { font-size:44px; font-weight:600; }
+  .reveal h3 { font-size:24px; font-weight:600; }
+  .reveal p,.reveal li { font-size:25px; line-height:1.55; color:#d4d4d8; }
+  .reveal ul,.reveal ol { margin:0.4em 0 0 1.2em; }
+  .reveal li { margin:0.4em 0; }
+  .reveal strong { color:var(--text); font-weight:600; }
+  .reveal em { font-style:italic; color:var(--accent); }
+
+  .eyebrow { font-family:'JetBrains Mono',monospace; font-size:15px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:1.1em; display:block; }
+  .eyebrow .dot { display:inline-block; width:8px; height:8px; border-radius:50%;
+    background:var(--accent); vertical-align:middle; margin-right:6px; }
+
+  .title-wrap { display:flex; flex-direction:column; justify-content:center; height:100%; }
+  .display { font-family:'Fraunces',serif; font-weight:400; font-size:104px; line-height:0.96;
+    letter-spacing:-0.04em; margin:0; }
+  .display em { font-style:italic; color:var(--accent); }
+  .subtitle { font-size:23px; color:var(--muted); margin-top:1.2em; max-width:62ch; }
+
+  .lede { font-size:30px; line-height:1.4; color:#e8e8ea; max-width:66ch; font-weight:400; }
+  .quote { font-family:'Fraunces',serif; font-style:italic; font-size:30px; line-height:1.35;
+    color:#e0e0e4; border-left:2px solid var(--accent); padding-left:22px; max-width:64ch; }
+  .quote-attr { font-family:'Inter',sans-serif; font-style:normal; font-size:14px; color:var(--muted);
+    margin-top:0.6em; letter-spacing:0.1em; text-transform:uppercase; }
+
+  .grid { display:grid; gap:24px; margin-top:20px; }
+  .g2 { grid-template-columns:1fr 1fr; } .g3 { grid-template-columns:1fr 1fr 1fr; }
+  .card { background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:18px 20px; }
+  .card h3 { margin-bottom:8px; font-size:18px; color:var(--accent); }
+  .card p { font-size:18px; color:var(--muted); margin:0; line-height:1.5; }
+
+  .tag { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; padding:4px 10px; border-radius:4px; background:rgba(212,255,58,0.08);
+    color:var(--accent); border:1px solid rgba(212,255,58,0.2); margin-bottom:12px; }
+  .tag.bad { background:rgba(255,122,122,0.06); color:var(--bad); border-color:rgba(255,122,122,0.25); }
+  .tag.good { background:rgba(125,220,154,0.06); color:var(--good); border-color:rgba(125,220,154,0.25); }
+
+  .reveal pre { background:#0a0a0c; border:1px solid var(--line); border-radius:10px; box-shadow:none;
+    margin:12px 0; width:100%; }
+  .reveal pre code { font-family:'JetBrains Mono',monospace; font-size:18px; line-height:1.5;
+    padding:18px 20px; border-radius:10px; background:transparent; }
+  .reveal pre.sm code { font-size:15px; line-height:1.45; padding:14px 16px; }
+  .reveal code:not(pre code) { font-family:'JetBrains Mono',monospace; font-size:0.86em;
+    background:var(--bg-soft); border:1px solid var(--line); padding:1px 6px; border-radius:4px; color:var(--accent); }
+
+  table.tbl { width:100%; border-collapse:collapse; font-size:20px; margin-top:14px; }
+  table.tbl th, table.tbl td { padding:11px 14px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+  table.tbl th { color:var(--muted); font-weight:500; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; }
+  table.tbl tr:last-child td { border-bottom:none; }
+  table.tbl td code { font-size:14px; }
+
+  .codeflex { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+  .diagram { background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .dgrid { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; margin-top:8px; }
+  .reveal svg text { font-family:'Inter',sans-serif; }
+  .reveal svg .mono { font-family:'JetBrains Mono',monospace; }
+  .footer-line { position:absolute; bottom:26px; left:80px; right:80px; display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--dim); letter-spacing:0.1em; text-transform:uppercase; }
+
+  .reveal ul.clean { list-style:none; margin-left:0; }
+  .reveal ul.clean li { padding-left:22px; position:relative; }
+  .reveal ul.clean li::before { content:''; position:absolute; left:0; top:13px; width:9px; height:1px; background:var(--accent); }
+
+  .reveal .slide-number { background:transparent; color:var(--dim); font-family:'JetBrains Mono',monospace; font-size:12px; }
+  .reveal .progress { color:var(--accent); height:2px; }
+  .reveal .controls { color:var(--dim); }
+
+  .brand { position:fixed; top:20px; right:26px; z-index:40; display:flex; align-items:center; gap:8px; opacity:0.9; }
+  .brand img { height:26px; width:auto; display:block; }
+
+  /* part divider treatment */
+  .reveal section.part { background:
+      radial-gradient(1200px 520px at 12% -10%, rgba(110,168,255,0.07), transparent 60%); }
+  .part-tag { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--accent-2); }
+
+  /* hands-on / capstone treatment */
+  .reveal section.handson { background:
+      radial-gradient(1200px 500px at 90% -10%, rgba(212,255,58,0.06), transparent 60%); }
+  .handson-head { display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+  .handson-badge { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em;
+    text-transform:uppercase; color:#0a0a0c; background:var(--accent); padding:5px 12px; border-radius:5px; font-weight:600; }
+  .cmd { background:#0a0a0c; border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px;
+    font-family:'JetBrains Mono',monospace; font-size:16px; color:#e0e0e4; padding:14px 18px; margin:12px 0; line-height:1.7; }
+  .cmd .c { color:var(--dim); }
+  .cmd.lg { font-size:24px; padding:16px 20px; margin:6px 0; line-height:1.5; word-break:break-all; }
+  .oslabel { font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--accent); margin:8px 0 2px; display:block; }
+  .setup-steps { display:grid; grid-template-columns:1fr 1fr; gap:10px 28px; margin-top:10px; }
+  .setup-note { font-size:19px; color:var(--muted); margin-top:12px; max-width:70ch; }
+  .setup-link { font-family:'JetBrains Mono',monospace; font-size:22px; color:var(--accent-2); word-break:break-all; }
+  /* per-topic accent tint (part 1) */
+  .reveal section.hier { --accent:#6ea8ff; }
+  .reveal section.list { --accent:#14b8a6; }
+  .reveal section.set  { --accent:#ff8a3d; }
+  .reveal section.hmap { --accent:#d4ff3a; }
+  .reveal section.lhm  { --accent:#c084fc; }
+  .reveal section.tree { --accent:#a78bfa; }
+  .reveal section.lam  { --accent:#fbbf24; }
+  .reveal section.enum { --accent:#f59e0b; }
+  /* per-topic accent tint (part 2) */
+  .reveal section.queue  { --accent:#22d3ee; }
+  .reveal section.box    { --accent:#94a3b8; }
+  .reveal section.iter   { --accent:#ff5c8d; }
+  .reveal section.fn     { --accent:#facc15; }
+  .reveal section.gen    { --accent:#fb7185; }
+  .reveal section.immut  { --accent:#34d399; }
+  .reveal section.conc   { --accent:#60a5fa; }
+  .reveal section.map    { --accent:#2dd4bf; }
+  .reveal section.stream { --accent:#38bdf8; }
+  .reveal section.opt    { --accent:#a3e635; }
+  .reveal section.choose { --accent:#e879f9; }
+
+  /* quiz + answer treatment */
+  .reveal section.quiz { --accent:#facc15; background:
+      radial-gradient(1200px 520px at 88% -10%, rgba(250,204,21,0.06), transparent 60%); }
+  .reveal section.answer { --accent:#7ddc9a; background:
+      radial-gradient(1200px 520px at 10% -10%, rgba(125,220,154,0.06), transparent 60%); }
+  .reveal ol.opts { list-style:none; margin:16px 0 0 0; display:grid;
+    grid-template-columns:1fr 1fr; gap:12px 24px; }
+  .reveal ol.opts.w1 { grid-template-columns:1fr; }
+  .reveal ol.opts li { background:var(--bg-soft); border:1px solid var(--line); border-radius:9px;
+    padding:12px 16px; margin:0; font-size:19px; line-height:1.4; }
+  .reveal ol.opts li b { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.12em;
+    color:var(--accent); font-weight:500; margin-right:12px; }
+  .reveal ol.opts li code { font-size:0.84em; }
+  .trap { border-left:2px solid var(--warn); padding-left:16px; margin-top:16px; max-width:88ch; }
+  .trap b { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--warn); font-weight:500; display:block; margin-bottom:3px; }
+</style>
+</head>
+<body>
+
+<div class="brand"><img src="https://byts.co.in/imgs/bytsLogo.png" alt="Byts" /></div>
+
+<div class="reveal"><div class="slides">
+
+  <!-- 01 TITLE -->
+  <section class="title-wrap">
+    <span class="eyebrow"><span class="dot"></span> day 2 / two parts, then you build</span>
+    <h1 class="display">Collections:<br/>the <em>containers</em>,<br/>and the <em>contracts</em> they trust.</h1>
+    <p class="subtitle">Part 1 is the containers themselves, all the way down into HashMap's table, and the lambda you have been handing them without ever being told what it is. Part 2 is the traffic around them: queues, boxing, iteration, the four interface shapes, generics, immutability, threads, the Map API, streams, Optional, and choosing. Then a capstone in two parts plus a finale, with tests as the spec.</p>
+    <div class="footer-line"><span>day 2</span><span>build your technical skills</span></div>
+  </section>
+
+  <!-- 02 FRAMING -->
+  <section>
+    <span class="eyebrow">how today runs, and the point of all of it</span>
+    <h2>Every collection is a contract you signed without reading.</h2>
+    <p class="fragment">Part 1 is the containers, all the way down into HashMap's table. Part 2 is the traffic around them: queues and deques, boxing, iteration, the four function shapes, generics, immutability, threads, the Map API, streams, Optional, and choosing. Then you build, and the tests are the specification. Every idea opens with a question, so guess first. Nine of those questions are marked as quiz questions, spread through the day.</p>
+    <p class="lede fragment" style="margin-top:14px;">A HashMap does not really store your objects. It stores its <em>trust</em> in your <code>hashCode</code> and your <code>equals</code>. A TreeMap trusts your <code>compareTo</code>. A for-each loop trusts you not to touch the list while it walks.</p>
+    <div class="diagram fragment" style="margin-top:14px;">
+      <svg viewBox="0 0 940 200" width="100%">
+        <defs><marker id="s03a" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+        <rect x="20" y="10" width="200" height="46" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="120" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">HashMap</text>
+        <rect x="250" y="10" width="200" height="46" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="350" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">TreeMap</text>
+        <rect x="480" y="10" width="200" height="46" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="580" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">for (T t : list)</text>
+        <rect x="710" y="10" width="200" height="46" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="810" y="39" text-anchor="middle" fill="var(--text)" font-size="15" class="mono">removeIf</text>
+        <line x1="120" y1="58" x2="120" y2="106" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#s03a)"/>
+        <line x1="350" y1="58" x2="350" y2="106" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#s03a)"/>
+        <line x1="580" y1="58" x2="580" y2="106" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#s03a)"/>
+        <line x1="810" y1="58" x2="810" y2="106" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#s03a)"/>
+        <text x="130" y="88" fill="var(--muted)" font-size="11" class="mono">trusts</text>
+        <text x="360" y="88" fill="var(--muted)" font-size="11" class="mono">trusts</text>
+        <text x="590" y="88" fill="var(--muted)" font-size="11" class="mono">trusts</text>
+        <text x="820" y="88" fill="var(--muted)" font-size="11" class="mono">trusts</text>
+        <rect x="20" y="112" width="200" height="52" rx="8" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="120" y="135" text-anchor="middle" fill="var(--muted)" font-size="13">your hashCode</text><text x="120" y="154" text-anchor="middle" fill="var(--muted)" font-size="13">and your equals</text>
+        <rect x="250" y="112" width="200" height="52" rx="8" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="350" y="144" text-anchor="middle" fill="var(--muted)" font-size="13">your compareTo</text>
+        <rect x="480" y="112" width="200" height="52" rx="8" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="580" y="144" text-anchor="middle" fill="var(--muted)" font-size="13">an int called modCount</text>
+        <rect x="710" y="112" width="200" height="52" rx="8" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="4 4"/><text x="810" y="144" text-anchor="middle" fill="var(--muted)" font-size="13">the Predicate you wrote</text>
+        <text x="470" y="190" text-anchor="middle" fill="var(--dim)" font-size="12">break any of these four and nothing throws. It just goes quietly wrong.</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>day 2</span><span>the point</span></div>
+  </section>
+
+  <!-- 03 HIER Q + the map -->
+  <section class="hier">
+    <span class="eyebrow"><span class="dot"></span> hierarchy / question, then the answer</span>
+    <h2>Where does <code>ArrayList</code> actually sit?</h2>
+    <p class="fragment" style="margin-top:-4px;">Draw it from memory first. What is above ArrayList, what is above HashMap, and is <code>Map</code> a <code>Collection</code>? Most people put it there. It is not, and here is why: two trees, not one.</p>
+    <div class="dgrid">
+      <div class="diagram">
+        <svg viewBox="0 0 440 300" width="100%">
+          <line x1="296" y1="4" x2="296" y2="292" stroke="var(--line)" stroke-dasharray="5 5"/>
+          <rect x="8" y="6" width="120" height="26" rx="6" fill="#16161a" stroke="var(--accent)"/><text x="68" y="24" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">Iterable</text>
+          <line x1="68" y1="32" x2="68" y2="48" stroke="var(--dim)" stroke-width="1.4"/>
+          <rect x="8" y="48" width="120" height="26" rx="6" fill="#16161a" stroke="var(--accent)"/><text x="68" y="66" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">Collection</text>
+          <line x1="68" y1="74" x2="68" y2="86" stroke="var(--dim)" stroke-width="1.4"/>
+          <line x1="47" y1="86" x2="239" y2="86" stroke="var(--dim)" stroke-width="1.4"/>
+          <line x1="47" y1="86" x2="47" y2="96" stroke="var(--dim)" stroke-width="1.4"/>
+          <line x1="143" y1="86" x2="143" y2="96" stroke="var(--dim)" stroke-width="1.4"/>
+          <line x1="239" y1="86" x2="239" y2="96" stroke="var(--dim)" stroke-width="1.4"/>
+          <rect x="4" y="96" width="86" height="24" rx="6" fill="#16161a" stroke="var(--line)"/><text x="47" y="112" text-anchor="middle" fill="var(--text)" font-size="11" class="mono">List</text>
+          <rect x="100" y="96" width="86" height="24" rx="6" fill="#16161a" stroke="var(--line)"/><text x="143" y="112" text-anchor="middle" fill="var(--text)" font-size="11" class="mono">Set</text>
+          <rect x="196" y="96" width="86" height="24" rx="6" fill="#16161a" stroke="var(--line)"/><text x="239" y="112" text-anchor="middle" fill="var(--text)" font-size="11" class="mono">Queue</text>
+          <line x1="143" y1="120" x2="143" y2="134" stroke="var(--dim)" stroke-width="1.4"/>
+          <rect x="100" y="134" width="86" height="22" rx="6" fill="#16161a" stroke="var(--line)"/><text x="143" y="149" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">SortedSet</text>
+          <line x1="143" y1="156" x2="143" y2="168" stroke="var(--dim)" stroke-width="1.4"/>
+          <rect x="100" y="168" width="86" height="22" rx="6" fill="#16161a" stroke="var(--line)"/><text x="143" y="183" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">NavigableSet</text>
+          <line x1="239" y1="120" x2="239" y2="134" stroke="var(--dim)" stroke-width="1.4"/>
+          <rect x="196" y="134" width="86" height="22" rx="6" fill="#16161a" stroke="var(--line)"/><text x="239" y="149" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">Deque</text>
+          <text x="47" y="140" text-anchor="middle" fill="var(--dim)" font-size="10">ArrayList</text>
+          <text x="47" y="154" text-anchor="middle" fill="var(--dim)" font-size="10">LinkedList</text>
+          <text x="143" y="204" text-anchor="middle" fill="var(--dim)" font-size="10">HashSet</text>
+          <text x="143" y="218" text-anchor="middle" fill="var(--dim)" font-size="10">LinkedHashSet</text>
+          <text x="143" y="232" text-anchor="middle" fill="var(--dim)" font-size="10">TreeSet</text>
+          <text x="239" y="172" text-anchor="middle" fill="var(--dim)" font-size="10">ArrayDeque</text>
+          <text x="239" y="186" text-anchor="middle" fill="var(--dim)" font-size="10">PriorityQueue</text>
+          <rect x="310" y="48" width="120" height="26" rx="6" fill="#16161a" stroke="var(--accent-2)"/><text x="370" y="66" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">Map</text>
+          <line x1="370" y1="74" x2="370" y2="96" stroke="var(--dim)" stroke-width="1.4"/>
+          <rect x="320" y="96" width="100" height="24" rx="6" fill="#16161a" stroke="var(--line)"/><text x="370" y="112" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">SortedMap</text>
+          <line x1="370" y1="120" x2="370" y2="134" stroke="var(--dim)" stroke-width="1.4"/>
+          <rect x="320" y="134" width="100" height="24" rx="6" fill="#16161a" stroke="var(--line)"/><text x="370" y="150" text-anchor="middle" fill="var(--muted)" font-size="10" class="mono">NavigableMap</text>
+          <text x="370" y="172" text-anchor="middle" fill="var(--dim)" font-size="10">HashMap</text>
+          <text x="370" y="186" text-anchor="middle" fill="var(--dim)" font-size="10">LinkedHashMap</text>
+          <text x="370" y="200" text-anchor="middle" fill="var(--dim)" font-size="10">TreeMap</text>
+          <text x="370" y="214" text-anchor="middle" fill="var(--dim)" font-size="10">EnumMap</text>
+          <text x="370" y="228" text-anchor="middle" fill="var(--dim)" font-size="10">ConcurrentHashMap</text>
+          <text x="370" y="30" text-anchor="middle" fill="var(--accent-2)" font-size="11" class="mono">a second root</text>
+          <text x="150" y="266" text-anchor="middle" fill="var(--dim)" font-size="10">boxes are interfaces. grey text is a class.</text>
+          <text x="150" y="282" text-anchor="middle" fill="var(--dim)" font-size="10">Collections and Arrays are neither.</text>
+        </svg>
+      </div>
+      <ul class="clean">
+        <li class="fragment"><b>Map is not a Collection.</b> A Collection holds elements; a Map holds pairs. Force Map under <code>Collection&lt;Entry&gt;</code> and <code>add</code> and <code>contains</code> stop meaning anything sensible: add what, an entry whose key is already there?</li>
+        <li class="fragment">The <b>Sorted</b> and <b>Navigable</b> interfaces are where the good methods live: <code>first</code>, <code>last</code>, <code>floor</code>, <code>ceiling</code>, <code>headMap</code>, <code>subMap</code>. If you never look there, you write a loop instead.</li>
+        <li class="fragment"><code>Collections</code> and <code>Arrays</code> are utility classes full of statics. They are not types in the tree, and nothing implements them.</li>
+      </ul>
+    </div>
+    <div class="footer-line"><span>hierarchy</span><span>the map</span></div>
+  </section>
+
+  <!-- 04 HIER item 64 -->
+  <section class="hier">
+    <span class="eyebrow">Effective Java, Item 64</span>
+    <h2>Declare the interface, construct the class.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">the class leaks into every signature</span>
+<pre><code class="language-java" data-trim>
+ArrayList&lt;String&gt; names = new ArrayList&lt;&gt;();
+
+void print(ArrayList&lt;String&gt; names) { ... }
+ArrayList&lt;String&gt; load() { ... }
+
+// switch to LinkedList, or return List.of(...),
+// and every caller has to change with you
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">the class is an implementation detail</span>
+<pre><code class="language-java" data-trim>
+List&lt;String&gt; names = new ArrayList&lt;&gt;();
+
+void print(Collection&lt;String&gt; names) { ... }
+List&lt;String&gt; load() { ... }
+
+// one line changes. Nothing else does.
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean" style="margin-top:6px;">
+      <li class="fragment">Refer to objects by their interfaces. Item 64 is one of the cheapest rules in the book, and almost nobody applies it to parameters.</li>
+      <li class="fragment">Accept the <em>widest</em> interface that does the job. If you only iterate, take a <code>Collection</code>, or even an <code>Iterable</code>.</li>
+      <li class="fragment">The exception is real: when you need a method only the class has, name the class. <code>ArrayDeque</code>, and <code>LinkedHashMap</code> when you are overriding <code>removeEldestEntry</code>.</li>
+    </ul>
+    <div class="footer-line"><span>hierarchy</span><span>item 64</span></div>
+  </section>
+
+  <!-- 05 LIST Q + why -->
+  <section class="list">
+    <span class="eyebrow"><span class="dot"></span> list / question, then the answer</span>
+    <h2>ArrayList or LinkedList: faster to insert at the front?</h2>
+    <p class="fragment" style="margin-top:-4px;">Hands up for LinkedList. It is O(1) and the textbook is right about the pointer. Now the question that decides it: how do you <em>reach</em> the front, holding a <code>List</code> and not a node? One contiguous array beats a chain of boxes.</p>
+    <div class="dgrid">
+      <div class="diagram">
+        <svg viewBox="0 0 440 300" width="100%">
+          <defs><marker id="s08a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+          <text x="10" y="16" fill="var(--accent)" font-size="12" class="mono">ArrayList: one Object[]</text>
+          <rect x="10" y="26" width="46" height="34" fill="#16161a" stroke="var(--accent)"/><text x="33" y="48" text-anchor="middle" fill="var(--text)" font-size="12">a</text>
+          <rect x="56" y="26" width="46" height="34" fill="#16161a" stroke="var(--accent)"/><text x="79" y="48" text-anchor="middle" fill="var(--text)" font-size="12">b</text>
+          <rect x="102" y="26" width="46" height="34" fill="#16161a" stroke="var(--accent)"/><text x="125" y="48" text-anchor="middle" fill="var(--text)" font-size="12">c</text>
+          <rect x="148" y="26" width="46" height="34" fill="#16161a" stroke="var(--accent)"/><text x="171" y="48" text-anchor="middle" fill="var(--text)" font-size="12">d</text>
+          <rect x="194" y="26" width="46" height="34" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="3 3"/>
+          <rect x="240" y="26" width="46" height="34" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="3 3"/>
+          <text x="300" y="40" fill="var(--muted)" font-size="11" class="mono">size = 4</text>
+          <text x="300" y="56" fill="var(--muted)" font-size="11" class="mono">capacity = 6</text>
+          <text x="10" y="80" fill="var(--muted)" font-size="11">get(i) is one multiply and one load.</text>
+          <line x1="10" y1="92" x2="150" y2="92" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#s08a)"/>
+          <text x="158" y="96" fill="var(--dim)" font-size="10" class="mono">full? Arrays.copyOf(old, old + (old &gt;&gt; 1))</text>
+          <line x1="8" y1="112" x2="432" y2="112" stroke="var(--line)"/>
+          <text x="10" y="132" fill="var(--accent)" font-size="12" class="mono">LinkedList: Node objects, anywhere</text>
+          <rect x="16" y="146" width="84" height="40" rx="6" fill="#16161a" stroke="var(--line)"/><text x="58" y="164" text-anchor="middle" fill="var(--text)" font-size="11">a</text><text x="58" y="179" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
+          <rect x="160" y="196" width="84" height="40" rx="6" fill="#16161a" stroke="var(--line)"/><text x="202" y="214" text-anchor="middle" fill="var(--text)" font-size="11">b</text><text x="202" y="229" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
+          <rect x="300" y="142" width="84" height="40" rx="6" fill="#16161a" stroke="var(--line)"/><text x="342" y="160" text-anchor="middle" fill="var(--text)" font-size="11">c</text><text x="342" y="175" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
+          <rect x="100" y="246" width="84" height="40" rx="6" fill="#16161a" stroke="var(--line)"/><text x="142" y="264" text-anchor="middle" fill="var(--text)" font-size="11">d</text><text x="142" y="279" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">prev next</text>
+          <line x1="100" y1="170" x2="158" y2="208" stroke="var(--bad)" stroke-width="1.4" marker-end="url(#s08a)"/>
+          <line x1="244" y1="210" x2="298" y2="168" stroke="var(--bad)" stroke-width="1.4" marker-end="url(#s08a)"/>
+          <line x1="300" y1="178" x2="186" y2="256" stroke="var(--bad)" stroke-width="1.4" marker-end="url(#s08a)"/>
+          <text x="236" y="272" fill="var(--bad)" font-size="10">every hop is a cache miss</text>
+          <text x="236" y="288" fill="var(--dim)" font-size="10">and about 24 bytes of node per element</text>
+        </svg>
+      </div>
+      <ul class="clean">
+        <li class="fragment"><code>get(i)</code> on an ArrayList is one multiply and one load. On a LinkedList it walks <em>i</em> nodes, and each node is somewhere else in memory.</li>
+        <li class="fragment">Adding at the end is amortised O(1) for both. Inserting in the middle is O(n) for both, because LinkedList has to walk there first, and walking is the expensive half.</li>
+        <li class="fragment">The one honest LinkedList win is a <code>ListIterator</code> you already hold in the middle. Want both ends? That is a <code>Deque</code>, and <code>ArrayDeque</code> wins there too. So: ArrayList, until you can name the reason.</li>
+      </ul>
+    </div>
+    <div class="footer-line"><span>list</span><span>question, then why</span></div>
+  </section>
+
+  <!-- 06 LIST traps -->
+  <section class="list">
+    <span class="eyebrow">the move</span>
+    <h2>Two List traps that pass review.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+// 1. subList is a VIEW, not a copy.
+List&lt;String&gt; page = names.subList(0, 2);
+page.clear();                      // those two are gone from names as well
+names.add("z");                    // structural change to the parent...
+page.size();                       // ...and now the view throws ConcurrentModificationException
+
+// 2. size it when you know it.
+List&lt;Row&gt; rows = new ArrayList&lt;&gt;(1000);
+// the default array holds 10 and grows by half: 10, 15, 22, 33, 49, 73, 109,
+// 163, 244, 366, 549, 823, 1234. That is a dozen array copies for a thousand rows.
+
+return Collections.emptyList();    // or List.of(). Never null for "nothing". (Item 54)
+</code></pre>
+    <ul class="clean" style="margin-top:10px;">
+      <li class="fragment">A view shares the parent's array, so a write on either side shows through, and any structural change to the parent kills the view. Take a copy the moment you hand it anywhere: <code>List.copyOf(page)</code>.</li>
+      <li class="fragment">And there is a third, which is the next slide's question: <code>remove(1)</code> and <code>remove(Integer.valueOf(1))</code> are two different methods.</li>
+    </ul>
+    <div class="footer-line"><span>list</span><span>traps</span></div>
+  </section>
+
+  <!-- 07 QUIZ 1 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 1 of 9</span>
+    <h2>What does this print?</h2>
+<pre><code class="language-java" data-trim>
+List&lt;Integer&gt; list = new ArrayList&lt;&gt;(List.of(1, 2, 3));
+list.remove(1);
+list.remove(Integer.valueOf(1));
+System.out.println(list);
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>[2, 3]</code></li>
+      <li><b>B</b> <code>[3]</code></li>
+      <li><b>C</b> <code>[1, 3]</code></li>
+      <li><b>D</b> <code>[2]</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>1 of 9</span></div>
+  </section>
+
+
+  <!-- 09 SET Q + equals -->
+  <section class="set">
+    <span class="eyebrow"><span class="dot"></span> set + equals / question, then the answer</span>
+    <h2>A HashSet of Points. Add (1,2) twice. How many?</h2>
+    <p class="lede fragment">Two. Add a correct <code>equals</code> and only equals, and it is still two, because a HashSet hashes before it ever asks equals.</p>
+    <div class="dgrid" style="margin-top:10px;">
+      <ul class="clean">
+        <li class="fragment"><b>Reflexive.</b> <code>x.equals(x)</code> is true.</li>
+        <li class="fragment"><b>Symmetric.</b> If <code>x.equals(y)</code> then <code>y.equals(x)</code>. Day 1 watched <code>java.sql.Timestamp</code> break this against <code>java.util.Date</code>, in the JDK, still shipping.</li>
+        <li class="fragment"><b>Transitive.</b> x to y to z, all the way through.</li>
+        <li class="fragment"><b>Consistent.</b> Same answer every call, as long as nothing changed.</li>
+        <li class="fragment"><b>And</b> <code>x.equals(null)</code> is false, never a NullPointerException.</li>
+        <li class="fragment">Records generate all of this from their components, correctly, for free.</li>
+      </ul>
+      <div>
+<pre class="sm fragment"><code class="language-java" data-trim>
+@Override                       // Object, not Point:
+public boolean equals(Object o) {
+    // a Point parameter would be an
+    // overload, not an override
+    if (this == o) return true;
+    if (!(o instanceof Point p)) return false;
+    return x == p.x &amp;&amp; y == p.y;
+    // and for a double field:
+    // Double.compare(d, p.d) == 0
+}
+</code></pre>
+      </div>
+    </div>
+    <div class="footer-line"><span>set</span><span>equals, Item 10</span></div>
+  </section>
+
+  <!-- 10 SET item 10 the part people skip -->
+  <section class="set">
+    <span class="eyebrow">Effective Java, Item 10, the part people skip</span>
+    <h2>You cannot add a field to an instantiable class and keep equals.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+class Point { final int x, y; /* equals on x and y */ }
+class ColorPoint extends Point { final Color c; ... }
+
+// attempt one: instanceof, and also compare the colour
+return o instanceof ColorPoint cp &amp;&amp; super.equals(o) &amp;&amp; cp.c == c;
+//  p.equals(cp) is TRUE   (Point's equals ignores colour)
+//  cp.equals(p) is FALSE  -&gt; symmetry is gone, and a List answers
+//  contains() differently depending on which object you ask it about
+
+// attempt two: demand the exact same class
+if (o == null || getClass() != o.getClass()) return false;
+//  symmetric again, and now a ColorPoint is not usable as a Point:
+//  onUnitCircle(new ColorPoint(1, 0, RED)) is false against a Set&lt;Point&gt;
+//  That is the Liskov substitution principle from Day 1, broken.
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">There is no attempt three. The contract has no room for one, and that is the point of the item.</li>
+      <li class="fragment">The fix is composition: <code>ColorPoint</code> <em>has</em> a Point and exposes <code>asPoint()</code>. Same answer Item 18 gives us later this morning for InstrumentedSet.</li>
+      <li class="fragment"><code>java.sql.Timestamp</code> extends <code>java.util.Date</code> and adds nanos. That is the JDK shipping exactly this bug. Records are <code>final</code>, which is the language removing the temptation.</li>
+      <li class="fragment">A subclass that adds no value component is fine, and so is an abstract superclass. <code>getClass</code> against <code>instanceof</code> only bites for instantiable ones.</li>
+    </ul>
+    <div class="footer-line"><span>set</span><span>item 10</span></div>
+  </section>
+
+  <!-- 11 SET hashCode -->
+  <section class="set">
+    <span class="eyebrow">Effective Java, Item 11</span>
+    <h2>hashCode: equal objects, equal hashes. Always.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment">The contract is one line: if <code>a.equals(b)</code> then <code>a.hashCode() == b.hashCode()</code>. The reverse is not required. Collisions are legal, just slow.</li>
+        <li class="fragment">Use the same fields as equals. Never more, never fewer.</li>
+        <li class="fragment"><code>31 * result + c</code> for each significant field. 31 is an odd prime, and <code>31 * i</code> compiles to <code>(i &lt;&lt; 5) - i</code>.</li>
+        <li class="fragment"><code>Objects.hash(x, y)</code> is right for almost everything and wrong in a hot-path hashCode: it boxes every argument and allocates an <code>Object[]</code> on every call. Item 11 says so in those words.</li>
+        <li class="fragment">For an array field, <code>Arrays.hashCode(a)</code> with <code>Arrays.equals(a, b)</code>. An array's own hashCode is identity-based, which is the concrete reason never to use an array as a key.</li>
+      </ul>
+      <div>
+<pre class="sm fragment"><code class="language-java" data-trim>
+// fine almost everywhere
+return Objects.hash(x, y);
+
+// no boxing, no array: for hot paths
+int h = Integer.hashCode(x);
+h = 31 * h + Integer.hashCode(y);
+return h;
+</code></pre>
+        <p class="fragment" style="font-size:18px; color:var(--muted); margin-top:10px;">Verified on 25: <code>Double.NaN != Double.NaN</code>, yet <code>Double.valueOf(NaN).equals(NaN)</code> is true. And <code>-0.0 == 0.0</code>, yet the two are not <code>equals</code>. So a <code>HashSet&lt;Double&gt;</code> holds both -0.0 and 0.0, and <code>List.of(NaN).contains(NaN)</code> is true while <code>==</code> says false. That is the honest reason for <code>Double.compare</code>.</p>
+      </div>
+    </div>
+    <div class="footer-line"><span>set</span><span>hashCode</span></div>
+  </section>
+
+  <!-- 12 QUIZ 2 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 2 of 9</span>
+    <h2>hashCode is on name, and equals takes a K. What does this print?</h2>
+<pre class="sm"><code class="language-java" data-trim>
+final class K {
+    final int id; final String name;
+    K(int id, String name) { this.id = id; this.name = name; }
+    public boolean equals(K o) { return o != null &amp;&amp; name.equals(o.name); }
+    @Override public int hashCode() { return Objects.hash(name); }
+}
+// ...
+Set&lt;K&gt; s = new HashSet&lt;&gt;();
+s.add(new K(1, "a"));
+s.add(new K(2, "a"));
+List&lt;K&gt; l = new ArrayList&lt;&gt;(List.of(new K(1, "a")));
+System.out.println(s.size() + " " + l.contains(new K(2, "a")));
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>1 true</code></li>
+      <li><b>B</b> <code>2 false</code></li>
+      <li><b>C</b> <code>2 true</code></li>
+      <li><b>D</b> <code>1 false</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>2 of 9</span></div>
+  </section>
+
+
+  <!-- 14 HMAP Q + anatomy -->
+  <section class="hmap">
+    <span class="eyebrow"><span class="dot"></span> hashmap internals / question, then the answer</span>
+    <h2>Where in the table does the key "Ravi" go?</h2>
+    <p class="fragment" style="margin-top:-4px;">How many buckets does a brand-new map have? Hands for 16, for 32, for zero. And <code>"Ravi".hashCode()</code> is 2539842, so which slot? It is one array of buckets, each a chain of nodes.</p>
+    <div class="diagram">
+      <svg viewBox="0 0 940 200" width="100%">
+        <text x="10" y="16" fill="var(--muted)" font-size="12" class="mono">Node&lt;K,V&gt;[] table</text>
+        <rect x="10" y="24" width="52" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="36" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
+        <rect x="62" y="24" width="52" height="36" fill="#16161a" stroke="var(--accent)"/><text x="88" y="47" text-anchor="middle" fill="var(--accent)" font-size="11">1</text>
+        <rect x="114" y="24" width="52" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="140" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">2</text>
+        <rect x="166" y="24" width="52" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="192" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
+        <rect x="218" y="24" width="52" height="36" fill="#16161a" stroke="var(--accent)"/><text x="244" y="47" text-anchor="middle" fill="var(--accent)" font-size="11">4</text>
+        <rect x="270" y="24" width="52" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="296" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">5</text>
+        <rect x="322" y="24" width="52" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="348" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">6</text>
+        <rect x="374" y="24" width="52" height="36" fill="#16161a" stroke="var(--warn)"/><text x="400" y="47" text-anchor="middle" fill="var(--warn)" font-size="11">7</text>
+        <rect x="426" y="24" width="364" height="36" fill="#0a0a0c" stroke="var(--line)"/><text x="608" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">8 .. 15, empty</text>
+        <text x="812" y="38" fill="var(--muted)" font-size="11" class="mono">table.length = 16</text>
+        <text x="812" y="54" fill="var(--muted)" font-size="11" class="mono">loadFactor = 0.75</text>
+        <text x="812" y="70" fill="var(--muted)" font-size="11" class="mono">threshold = 12</text>
+        <line x1="88" y1="60" x2="88" y2="80" stroke="var(--dim)"/>
+        <rect x="46" y="80" width="86" height="30" rx="5" fill="#16161a" stroke="var(--line)"/><text x="89" y="99" text-anchor="middle" fill="var(--text)" font-size="10" class="mono">hash key val</text>
+        <line x1="244" y1="60" x2="244" y2="80" stroke="var(--dim)"/>
+        <rect x="202" y="80" width="86" height="30" rx="5" fill="#16161a" stroke="var(--line)"/><text x="245" y="99" text-anchor="middle" fill="var(--text)" font-size="10" class="mono">hash key val</text>
+        <line x1="245" y1="110" x2="245" y2="126" stroke="var(--dim)"/>
+        <rect x="202" y="126" width="86" height="30" rx="5" fill="#16161a" stroke="var(--line)"/><text x="245" y="145" text-anchor="middle" fill="var(--text)" font-size="10" class="mono">hash key val</text>
+        <text x="298" y="146" fill="var(--muted)" font-size="11">a collision: same bucket, different key</text>
+        <line x1="400" y1="60" x2="400" y2="80" stroke="var(--dim)"/>
+        <rect x="358" y="80" width="86" height="26" rx="5" fill="#16161a" stroke="var(--warn)"/><text x="401" y="97" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">node</text>
+        <line x1="401" y1="106" x2="401" y2="114" stroke="var(--dim)"/>
+        <rect x="358" y="114" width="86" height="26" rx="5" fill="#16161a" stroke="var(--warn)"/><text x="401" y="131" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">node</text>
+        <line x1="401" y1="140" x2="401" y2="148" stroke="var(--dim)"/>
+        <text x="401" y="164" text-anchor="middle" fill="var(--warn)" font-size="11" class="mono">... a ninth here? treeify.</text>
+        <text x="10" y="192" fill="var(--dim)" font-size="12">index = (n - 1) &amp; hash, and that trick only works because n is a power of two.</text>
+      </svg>
+    </div>
+    <ul class="clean" style="margin-top:10px;">
+      <li class="fragment">Every node caches its own hash, so a resize never calls your <code>hashCode</code> again.</li>
+      <li class="fragment">The chain is where <code>equals</code> gets called, and nowhere else.</li>
+    </ul>
+    <div class="footer-line"><span>hashmap</span><span>anatomy</span></div>
+  </section>
+
+  <!-- 15 HMAP put -->
+  <section class="hmap">
+    <span class="eyebrow">the path of one put</span>
+    <h2>put, line by line.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+// 1. spread the high bits down, so a small table still uses them
+static int hash(Object key) {
+    int h; return key == null ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);
+}
+// 2. empty bucket? just put a node there and go
+if ((p = tab[i = (n - 1) &amp; hash]) == null)
+    tab[i] = newNode(hash, key, value, null);
+else {
+    // 3. walk the chain. int compare first, then identity, then equals
+    if (p.hash == hash &amp;&amp; ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))
+        e = p;                                  // found it
+    else { /* append to the tail; treeify if the bin got long */ }
+    // KEY ALREADY THERE: overwrite and leave. Not structural, so no modCount, no size.
+    if (e != null) { V old = e.value; e.value = value; return old; }
+}
+++modCount;                                     // NEW NODE only
+if (++size &gt; threshold) resize();
+// "Ravi": 2539842 ^ (2539842 &gt;&gt;&gt; 16) = 2539876, &amp; 15 = bucket 4
+</code></pre>
+    <div class="footer-line"><span>hashmap</span><span>put</span></div>
+  </section>
+
+  <!-- 16 HMAP get, 0.75, resize -->
+  <section class="hmap">
+    <span class="eyebrow">get, the load factor, and when size &gt; threshold</span>
+    <h2>Resize: double the table, split every bucket in two.</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 940 200" width="100%">
+        <defs><marker id="s23a" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+        <text x="20" y="18" fill="var(--muted)" font-size="12" class="mono">oldCap = 4</text>
+        <rect x="20" y="26" width="64" height="32" fill="#0a0a0c" stroke="var(--line)"/><text x="52" y="47" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
+        <rect x="20" y="58" width="64" height="32" fill="#16161a" stroke="var(--accent)"/><text x="52" y="79" text-anchor="middle" fill="var(--accent)" font-size="11">1</text>
+        <rect x="20" y="90" width="64" height="32" fill="#0a0a0c" stroke="var(--line)"/><text x="52" y="111" text-anchor="middle" fill="var(--dim)" font-size="11">2</text>
+        <rect x="20" y="122" width="64" height="32" fill="#0a0a0c" stroke="var(--line)"/><text x="52" y="143" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
+        <rect x="100" y="60" width="54" height="28" rx="5" fill="#16161a" stroke="var(--good)"/><text x="127" y="79" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
+        <rect x="164" y="60" width="54" height="28" rx="5" fill="#16161a" stroke="var(--warn)"/><text x="191" y="79" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">hi</text>
+        <rect x="228" y="60" width="54" height="28" rx="5" fill="#16161a" stroke="var(--good)"/><text x="255" y="79" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
+        <line x1="84" y1="74" x2="98" y2="74" stroke="var(--dim)"/><line x1="154" y1="74" x2="163" y2="74" stroke="var(--dim)"/><line x1="218" y1="74" x2="227" y2="74" stroke="var(--dim)"/>
+        <line x1="330" y1="92" x2="420" y2="92" stroke="var(--accent)" stroke-width="2" marker-end="url(#s23a)"/>
+        <text x="375" y="80" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">(hash &amp; oldCap) == 0 ?</text>
+        <text x="375" y="112" text-anchor="middle" fill="var(--muted)" font-size="11">lo stays, hi moves by oldCap</text>
+        <text x="470" y="18" fill="var(--muted)" font-size="12" class="mono">newCap = 8</text>
+        <rect x="470" y="26" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="40" text-anchor="middle" fill="var(--dim)" font-size="10">0</text>
+        <rect x="470" y="46" width="64" height="20" fill="#16161a" stroke="var(--good)"/><text x="502" y="60" text-anchor="middle" fill="var(--good)" font-size="10">1</text>
+        <rect x="470" y="66" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="80" text-anchor="middle" fill="var(--dim)" font-size="10">2</text>
+        <rect x="470" y="86" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="100" text-anchor="middle" fill="var(--dim)" font-size="10">3</text>
+        <rect x="470" y="106" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="120" text-anchor="middle" fill="var(--dim)" font-size="10">4</text>
+        <rect x="470" y="126" width="64" height="20" fill="#16161a" stroke="var(--warn)"/><text x="502" y="140" text-anchor="middle" fill="var(--warn)" font-size="10">5</text>
+        <rect x="470" y="146" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="160" text-anchor="middle" fill="var(--dim)" font-size="10">6</text>
+        <rect x="470" y="166" width="64" height="20" fill="#0a0a0c" stroke="var(--line)"/><text x="502" y="180" text-anchor="middle" fill="var(--dim)" font-size="10">7</text>
+        <rect x="550" y="46" width="54" height="20" rx="4" fill="#16161a" stroke="var(--good)"/><text x="577" y="60" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
+        <rect x="610" y="46" width="54" height="20" rx="4" fill="#16161a" stroke="var(--good)"/><text x="637" y="60" text-anchor="middle" fill="var(--good)" font-size="10" class="mono">lo</text>
+        <rect x="550" y="126" width="54" height="20" rx="4" fill="#16161a" stroke="var(--warn)"/><text x="577" y="140" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">hi</text>
+        <text x="700" y="60" fill="var(--good)" font-size="11">index 1, unchanged</text>
+        <text x="700" y="140" fill="var(--warn)" font-size="11">index 1 + oldCap = 5</text>
+        <text x="688" y="186" fill="var(--dim)" font-size="11">no hashCode is called. The hash is in the node.</text>
+      </svg>
+    </div>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment"><code>get</code> spreads the same hash, masks to the same bucket and walks the same chain, which is exactly why a key whose hashCode changed can never be found again. Load factor 0.75 keeps the average chain under one node, and that is what "O(1) expected" means.</li>
+      <li class="fragment">Capacity and threshold both double, and not one <code>hashCode</code> runs, because each node cached its hash on the way in. Resize is O(n), which is why put is amortised O(1) but a single put can be slow.</li>
+      <li class="fragment">So pre-size a large map, and know what the argument means: it is table capacity, not an entry count. For n entries pass <code>(int)(n / 0.75f) + 1</code>, or call <code>HashMap.newHashMap(n)</code> on Java 19 and later.</li>
+    </ul>
+    <div class="footer-line"><span>hashmap</span><span>get, 0.75, resize</span></div>
+  </section>
+
+  <!-- 17 HMAP treeify -->
+  <section class="hmap">
+    <span class="eyebrow">the Java 8 change</span>
+    <h2>Treeify: when a chain gets long, it becomes a red-black tree.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment">A bin is treeified when a <b>ninth</b> node is appended to a bin that already holds eight. <code>TREEIFY_THRESHOLD</code> is 8 and putVal tests <code>binCount &gt;= 7</code>. Verified on JDK 25: eight all-colliding keys is still a plain <code>Node</code> chain, and the ninth put makes it a <code>TreeNode</code>.</li>
+        <li class="fragment">And only if the table has at least 64 slots (<code>MIN_TREEIFY_CAPACITY</code>). Below that the map resizes instead, because a small table collides for a boring reason. A tree bin turns back into a chain at 6 during a resize.</li>
+        <li class="fragment">Worst case drops from O(n) to O(log n) <em>when the colliding keys are Comparable or their hashes differ</em>. Keys with identical hashes that are not Comparable still get a linear search inside the tree bin: the class-name tie-break only decides where a node is placed, not how <code>find</code> navigates. That is why String keys tree well.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 300" width="100%">
+          <defs><marker id="s24a" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+          <text x="10" y="16" fill="var(--bad)" font-size="11" class="mono">9 nodes, one bin</text>
+          <rect x="16" y="26" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <rect x="16" y="52" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <rect x="16" y="78" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <rect x="16" y="104" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <rect x="16" y="130" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <rect x="16" y="156" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <rect x="16" y="182" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <rect x="16" y="208" width="58" height="20" rx="4" fill="#16161a" stroke="var(--line)"/>
+          <rect x="16" y="234" width="58" height="20" rx="4" fill="#16161a" stroke="var(--bad)"/>
+          <text x="45" y="272" text-anchor="middle" fill="var(--bad)" font-size="11">O(n) walk</text>
+          <line x1="96" y1="140" x2="160" y2="140" stroke="var(--accent)" stroke-width="2" marker-end="url(#s24a)"/>
+          <text x="128" y="128" text-anchor="middle" fill="var(--accent)" font-size="10" class="mono">treeify</text>
+          <circle cx="330" cy="50" r="17" fill="#16161a" stroke="var(--text)"/>
+          <circle cx="270" cy="120" r="17" fill="#16161a" stroke="var(--bad)"/>
+          <circle cx="390" cy="120" r="17" fill="#16161a" stroke="var(--bad)"/>
+          <circle cx="234" cy="190" r="17" fill="#16161a" stroke="var(--text)"/>
+          <circle cx="306" cy="190" r="17" fill="#16161a" stroke="var(--text)"/>
+          <circle cx="360" cy="190" r="17" fill="#16161a" stroke="var(--text)"/>
+          <circle cx="420" cy="190" r="17" fill="#16161a" stroke="var(--text)"/>
+          <circle cx="210" cy="248" r="14" fill="#16161a" stroke="var(--bad)"/>
+          <circle cx="258" cy="248" r="14" fill="#16161a" stroke="var(--bad)"/>
+          <line x1="318" y1="64" x2="282" y2="106" stroke="var(--dim)"/><line x1="342" y1="64" x2="378" y2="106" stroke="var(--dim)"/>
+          <line x1="258" y1="134" x2="242" y2="174" stroke="var(--dim)"/><line x1="282" y1="134" x2="298" y2="174" stroke="var(--dim)"/>
+          <line x1="378" y1="134" x2="366" y2="174" stroke="var(--dim)"/><line x1="402" y1="134" x2="414" y2="174" stroke="var(--dim)"/>
+          <line x1="226" y1="204" x2="214" y2="235" stroke="var(--dim)"/><line x1="242" y1="204" x2="254" y2="235" stroke="var(--dim)"/>
+          <text x="330" y="288" text-anchor="middle" fill="var(--good)" font-size="11">O(log n) search</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>hashmap</span><span>treeify</span></div>
+  </section>
+
+  <!-- 18 HMAP mutated key -->
+  <section class="hmap">
+    <span class="eyebrow">the mutated-key trap</span>
+    <h2>The key you mutated is still in the map. You just cannot reach it.</h2>
+<pre><code class="language-java" data-trim>
+class Point { int x, y; /* correct equals and hashCode on x and y */ }
+
+Set&lt;Point&gt; s = new HashSet&lt;&gt;();
+Point p = new Point(1, 2);
+s.add(p);
+p.x = 5;                                      // one field. That is all it took.
+
+s.contains(p);                                // false
+s.remove(p);                                  // false
+s.size();                                     // 1
+for (Point q : s) System.out.println(q);      // (5,2)
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">The node's cached hash is stale. <code>contains</code> and <code>remove</code> hash the <em>new</em> state, so they look in a different bucket, and the <code>p.hash == hash</code> test would fail even if they landed in the right one.</li>
+      <li class="fragment">It is not unreachable, though. The iterator walks the table and never hashes anything, so <code>iterator.remove</code>, <code>removeIf</code>, <code>retainAll</code> and <code>clear</code> all see it. Set <code>p.x</code> back to 1 and the key is findable again.</li>
+      <li class="fragment">Item 17, minimise mutability. And the <code>Map</code> Javadoc simply says behaviour is unspecified if a key changes in a way that affects <code>equals</code>. Unspecified means nobody is going to help you.</li>
+    </ul>
+    <div class="footer-line"><span>hashmap</span><span>mutated key</span></div>
+  </section>
+
+  <!-- 19 QUIZ 3 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 3 of 9</span>
+    <h2>What does this print?</h2>
+<pre class="sm"><code class="language-java" data-trim>
+class Point {
+    int x, y;
+    Point(int x, int y) { this.x = x; this.y = y; }
+    @Override public boolean equals(Object o) { return o instanceof Point p &amp;&amp; p.x == x &amp;&amp; p.y == y; }
+    @Override public int hashCode() { return Objects.hash(x, y); }
+    @Override public String toString() { return "(" + x + "," + y + ")"; }
+}
+// ...
+Set&lt;Point&gt; s = new HashSet&lt;&gt;();
+Point p = new Point(1, 2);
+s.add(p);
+p.x = 5;
+s.add(p);
+System.out.println(s.size() + " " + s);
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>1 [(5,2)]</code></li>
+      <li><b>B</b> <code>2 [(5,2), (5,2)]</code></li>
+      <li><b>C</b> <code>1 [(1,2)]</code></li>
+      <li><b>D</b> <code>2 [(1,2), (5,2)]</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>3 of 9</span></div>
+  </section>
+
+
+  <!-- 21 SET Q + self-use -->
+  <section class="set">
+    <span class="eyebrow"><span class="dot"></span> composition / question, then the answer</span>
+    <h2>InstrumentedHashSet: how many after addAll of three?</h2>
+    <div class="codeflex">
+      <div>
+<pre class="sm"><code class="language-java" data-trim>
+class InstrumentedHashSet&lt;E&gt; extends HashSet&lt;E&gt; {
+    private int addCount = 0;
+
+    @Override public boolean add(E e) {
+        addCount++;
+        return super.add(e);
+    }
+    @Override public boolean addAll(Collection&lt;? extends E&gt; c) {
+        addCount += c.size();
+        return super.addAll(c);
+    }
+}
+s.addAll(List.of("Snap", "Crackle", "Pop"));
+s.getAddCount();   // ?
+</code></pre>
+      </div>
+      <div>
+        <p class="lede fragment">Six. <code>HashSet.addAll</code> calls <code>add</code>, and nobody told you.</p>
+        <ul class="clean">
+          <li class="fragment"><code>HashSet</code> inherits <code>AbstractCollection.addAll</code>, which loops and calls <code>this.add(e)</code>. <code>this</code> is your object, so that is your override. Three from addAll, three from add.</li>
+          <li class="fragment">That self-use is an implementation detail. It is not in the Javadoc, and it can change in the next release without anyone calling it a break.</li>
+          <li class="fragment">Delete your override and you are correct only while that detail holds. Reimplement without <code>super</code> and you redo it every release, and a new superclass method walks past your counter.</li>
+        </ul>
+      </div>
+    </div>
+    <ul class="clean" style="margin-top:6px;">
+      <li class="fragment">Inheritance across a package boundary breaks encapsulation: the subclass depends on the superclass's <em>implementation</em>, not its contract. That is Item 18 in one sentence.</li>
+    </ul>
+    <div class="footer-line"><span>set</span><span>self-use, Item 18</span></div>
+  </section>
+
+
+  <!-- 22 SET forwarding -->
+  <section class="set">
+    <span class="eyebrow">Effective Java, Item 18: the forwarding class</span>
+    <h2>Write the boring wrapper once.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+class ForwardingSet&lt;E&gt; implements Set&lt;E&gt; {
+    private final Set&lt;E&gt; s;
+    ForwardingSet(Set&lt;E&gt; s) { this.s = s; }
+
+    public boolean add(E e)           { return s.add(e); }
+    public boolean remove(Object o)   { return s.remove(o); }
+    public boolean contains(Object o) { return s.contains(o); }
+    public int size()                 { return s.size(); }
+    public boolean isEmpty()          { return s.isEmpty(); }
+    public Iterator&lt;E&gt; iterator()     { return s.iterator(); }
+    public void clear()               { s.clear(); }
+    // ... and every remaining Set method forwards exactly like that
+}
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">It implements the <em>interface</em> and holds an instance. So it depends on the <code>Set</code> contract and on nothing else. No detail can leak, because there is no superclass to leak from.</li>
+      <li class="fragment">Yes, it is tedious. It is also written once, and capstone part 2 makes you finish five of these methods so the tedium is not theoretical.</li>
+      <li class="fragment"><code>Collections.unmodifiableSet</code> and <code>synchronizedSet</code> are this class with one behaviour changed.</li>
+    </ul>
+    <div class="footer-line"><span>set</span><span>forwarding</span></div>
+  </section>
+
+  <!-- 23 SET composition -->
+  <section class="set">
+    <span class="eyebrow">Effective Java, Item 18: composition</span>
+    <h2>Wrap it, do not extend it.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+class InstrumentedSet&lt;E&gt; extends ForwardingSet&lt;E&gt; {
+    private int addCount;
+    public InstrumentedSet(Set&lt;E&gt; s) { super(s); }
+
+    @Override public boolean add(E e) { addCount++; return super.add(e); }
+    @Override public boolean addAll(Collection&lt;? extends E&gt; c) {
+        addCount += c.size(); return super.addAll(c);
+    }
+    public int getAddCount() { return addCount; }
+}
+
+new InstrumentedSet&lt;&gt;(new HashSet&lt;&gt;()).addAll(List.of("a","b","c"));   // count: 3
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment"><code>super.addAll</code> forwards to the <em>wrapped</em> set. Its internal <code>add</code> calls go to that object and never come back to us. Three.</li>
+      <li class="fragment">One InstrumentedSet wraps any Set: a HashSet, a TreeSet, a synchronizedSet, something you have not written yet. A subclass of HashSet could never do that.</li>
+      <li class="fragment">This is the Decorator pattern from Day 1, and the one real cost is worth naming: a wrapper is not suited to callback frameworks, because the wrapped object passes <em>itself</em> to the callback, not the wrapper. That is the SELF problem.</li>
+    </ul>
+    <div class="footer-line"><span>set</span><span>composition</span></div>
+  </section>
+
+  <!-- 24 QUIZ 4 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 4 of 9</span>
+    <h2>What does this print?</h2>
+<pre class="sm"><code class="language-java" data-trim>
+public class InstrumentedHashSet&lt;E&gt; extends HashSet&lt;E&gt; {
+    private int addCount = 0;
+    @Override public boolean add(E e) { addCount++; return super.add(e); }
+    @Override public boolean addAll(Collection&lt;? extends E&gt; c) {
+        addCount += c.size(); return super.addAll(c);
+    }
+    public int getAddCount() { return addCount; }
+}
+// ...
+InstrumentedHashSet&lt;String&gt; s = new InstrumentedHashSet&lt;&gt;();
+s.addAll(List.of("a", "b", "a"));
+System.out.println(s.getAddCount() + " " + s.size());
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>3 2</code></li>
+      <li><b>B</b> <code>3 3</code></li>
+      <li><b>C</b> <code>6 2</code></li>
+      <li><b>D</b> <code>5 2</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>4 of 9</span></div>
+  </section>
+
+
+  <!-- 26 LHM Q + anatomy -->
+  <section class="lhm">
+    <span class="eyebrow"><span class="dot"></span> linkedhashmap / question, then the answer</span>
+    <h2>In what order does a HashMap iterate?</h2>
+    <div class="codeflex">
+      <div>
+<pre><code class="language-java" data-trim>
+Map&lt;String,Integer&gt; m = new HashMap&lt;&gt;();
+m.put("banana", 1);
+m.put("apple", 2);
+m.put("cherry", 3);
+System.out.println(m.keySet());
+</code></pre>
+      </div>
+      <ul class="clean">
+        <li class="fragment">Guess before I run it. On JDK 25 it prints <code>[banana, apple, cherry]</code>, which looks exactly like insertion order. It looked ordered, and it was luck.</li>
+        <li class="fragment"><code>LinkedHashMap.Entry</code> adds <code>before</code> and <code>after</code> to HashMap's node, so iteration costs O(size), not O(capacity). Pass <code>accessOrder = true</code> and every <code>get</code> moves that entry to the tail, so the head is the least recently used.</li>
+      </ul>
+    </div>
+    <div class="diagram fragment" style="margin-top:0;">
+      <svg viewBox="0 0 940 200" width="100%">
+        <defs><marker id="s36a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+        <text x="20" y="16" fill="var(--muted)" font-size="12" class="mono">the same table, the same buckets</text>
+        <rect x="20" y="24" width="60" height="30" fill="#0a0a0c" stroke="var(--line)"/><text x="50" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
+        <rect x="80" y="24" width="60" height="30" fill="#16161a" stroke="var(--line)"/><text x="110" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">1</text>
+        <rect x="140" y="24" width="60" height="30" fill="#0a0a0c" stroke="var(--line)"/><text x="170" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">2</text>
+        <rect x="200" y="24" width="60" height="30" fill="#16161a" stroke="var(--line)"/><text x="230" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
+        <rect x="260" y="24" width="60" height="30" fill="#0a0a0c" stroke="var(--line)"/><text x="290" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">4</text>
+        <rect x="320" y="24" width="60" height="30" fill="#16161a" stroke="var(--line)"/><text x="350" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">5</text>
+        <rect x="380" y="24" width="480" height="30" fill="#0a0a0c" stroke="var(--line)"/><text x="620" y="44" text-anchor="middle" fill="var(--dim)" font-size="11">6 .. 15</text>
+        <rect x="140" y="96" width="140" height="44" rx="7" fill="#16161a" stroke="var(--accent)"/><text x="210" y="116" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">banana</text><text x="210" y="132" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">before after</text>
+        <rect x="400" y="96" width="140" height="44" rx="7" fill="#16161a" stroke="var(--accent)"/><text x="470" y="116" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">apple</text><text x="470" y="132" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">before after</text>
+        <rect x="660" y="96" width="140" height="44" rx="7" fill="#16161a" stroke="var(--accent)"/><text x="730" y="116" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">cherry</text><text x="730" y="132" text-anchor="middle" fill="var(--dim)" font-size="10" class="mono">before after</text>
+        <line x1="110" y1="54" x2="180" y2="94" stroke="var(--dim)"/>
+        <line x1="230" y1="54" x2="450" y2="94" stroke="var(--dim)"/>
+        <line x1="350" y1="54" x2="700" y2="94" stroke="var(--dim)"/>
+        <line x1="280" y1="118" x2="396" y2="118" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#s36a)"/>
+        <line x1="540" y1="118" x2="656" y2="118" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#s36a)"/>
+        <text x="60" y="122" fill="var(--accent)" font-size="12" class="mono">head</text>
+        <line x1="100" y1="118" x2="136" y2="118" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#s36a)"/>
+        <text x="812" y="122" fill="var(--accent)" font-size="12" class="mono">tail</text>
+        <line x1="800" y1="118" x2="806" y2="118" stroke="var(--accent)" stroke-width="2"/>
+        <text x="20" y="176" fill="var(--dim)" font-size="12">the dashed line is the only thing LinkedHashMap adds: a doubly linked list through the entries.</text>
+        <text x="20" y="194" fill="var(--dim)" font-size="12">iteration follows it, so iteration is O(size), not O(capacity).</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>linkedhashmap</span><span>anatomy</span></div>
+  </section>
+
+  <!-- 27 LHM lru -->
+  <section class="lhm">
+    <span class="eyebrow">the move: accessOrder + removeEldestEntry</span>
+    <h2>An LRU cache in six lines.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+class LruCache&lt;K,V&gt; extends LinkedHashMap&lt;K,V&gt; {
+    private final int capacity;
+    LruCache(int capacity) { super(16, 0.75f, true); this.capacity = capacity; }
+
+    @Override protected boolean removeEldestEntry(Map.Entry&lt;K,V&gt; eldest) {
+        return size() &gt; capacity;
+    }
+}
+
+LruCache&lt;String,Integer&gt; cache = new LruCache&lt;&gt;(2);
+cache.put("a", 1); cache.put("b", 2);
+cache.get("a");                 // "a" is now the most recent
+cache.put("c", 3);              // over capacity: the eldest goes
+cache.keySet();                 // [a, c]
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">Note what changed since the InstrumentedHashSet slide: <code>removeEldestEntry</code> is a <em>protected hook</em> whose Javadoc describes this exact use. Here extension is the contract, not a leak. That distinction is the whole of Item 19.</li>
+      <li class="fragment"><code>get</code> counts as an access. <code>containsKey</code> does not, which surprises people once and only once.</li>
+      <li class="fragment">For a thread-safe one, wrap it in <code>Collections.synchronizedMap</code> or reach for Caffeine. Capstone part 2 has you build this.</li>
+    </ul>
+    <div class="footer-line"><span>linkedhashmap</span><span>lru</span></div>
+  </section>
+
+  <!-- 28 TREE Q + compareTo -->
+  <section class="tree">
+    <span class="eyebrow"><span class="dot"></span> treemap + comparable / question, then the answer</span>
+    <h2>A TreeSet of BigDecimal: add 1.0 and 1.00. Size?</h2>
+    <p class="lede fragment">TreeSet says <b>1</b>, HashSet says <b>2</b>, same two objects. TreeMap believes <code>compareTo</code>, and only <code>compareTo</code>.</p>
+    <div class="dgrid" style="margin-top:10px;">
+      <ul class="clean">
+        <li class="fragment">TreeMap and TreeSet never call <code>equals</code> or <code>hashCode</code>. They call <code>compareTo</code>, or your Comparator, and a 0 means "the same key". That is the entire rule.</li>
+        <li class="fragment">The navigation methods are the real reason to pick it: <code>firstKey</code>, <code>lastKey</code>, <code>floorKey</code>, <code>ceilingKey</code>, <code>headMap</code>, <code>tailMap</code>, <code>subMap</code>, <code>pollFirstEntry</code>, <code>descendingMap</code>. Every one of those is a loop you did not write.</li>
+        <li class="fragment">Item 14: keep <code>compareTo</code> consistent with <code>equals</code>. When you genuinely cannot, as with BigDecimal or a case-insensitive string order, document it and remember that your sorted and hashed collections will now disagree about the same objects.</li>
+      </ul>
+      <div>
+        <table class="tbl">
+          <tr><th></th><th>HashMap</th><th>TreeMap</th></tr>
+          <tr><td>calls</td><td><code>hashCode</code>, then <code>equals</code></td><td><code>compareTo</code> only</td></tr>
+          <tr><td>same key means</td><td>equal hash and equals</td><td>compare returns 0</td></tr>
+          <tr><td>cost</td><td>O(1) expected</td><td>O(log n)</td></tr>
+          <tr><td>order</td><td>none you may rely on</td><td>sorted, always</td></tr>
+          <tr><td>null key</td><td>one allowed</td><td>none</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="footer-line"><span>treemap</span><span>compareTo</span></div>
+  </section>
+
+  <!-- 29 LAM what it is + method refs -->
+  <section class="lam">
+    <span class="eyebrow">the lambda Comparator has been asking for</span>
+    <h2>A lambda is an instance of a one-method interface.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+// 1. the anonymous class
+Collections.sort(people, new Comparator&lt;Person&gt;() {
+    @Override public int compare(Person a, Person b) { return a.name().compareTo(b.name()); }
+});
+
+// 2. List has its own sort, so the Collections call goes
+people.sort(new Comparator&lt;Person&gt;() {
+    public int compare(Person a, Person b) { return a.name().compareTo(b.name()); }
+});
+
+// 3. the target type is Comparator&lt;Person&gt;, so the compiler knows all of that
+people.sort((a, b) -&gt; a.name().compareTo(b.name()));
+
+// 4. and there is a combinator for exactly this shape
+people.sort(Comparator.comparing(Person::name));
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">The lambda <em>is</em> a Comparator. No new runtime concept, just a shorter way to write an instance of a one-method interface. <code>a</code> and <code>b</code> carry no types because the target type supplies them, and the target must be an interface, never an abstract class.</li>
+      <li class="fragment">Four kinds of method reference, and step 4 uses one: <code>Integer::parseInt</code> is static, <code>String::length</code> is unbound so the argument becomes the receiver, <code>""::equals</code> is bound so the receiver is fixed right now, and <code>ArrayList::new</code> is a constructor.</li>
+    </ul>
+    <div class="footer-line"><span>lambdas</span><span>what it is</span></div>
+  </section>
+
+  <!-- 30 TREE item 14 -->
+  <section class="tree">
+    <span class="eyebrow">Effective Java, Item 14</span>
+    <h2>Comparable for the natural order, Comparator for every other order.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">subtraction, and a lossy key</span>
+<pre class="sm"><code class="language-java" data-trim>
+public int compareTo(Person o) {
+    return age - o.age;   // overflows for
+}                         // extreme ints
+
+Set&lt;Person&gt; s = new TreeSet&lt;&gt;(
+    Comparator.comparing(Person::name));
+// two people called Asha?
+// the second one is silently dropped
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">compare, and combinators</span>
+<pre class="sm"><code class="language-java" data-trim>
+public int compareTo(Person o) {
+    return Integer.compare(age, o.age);
+}
+
+Comparator.comparing(Person::lastName)
+          .thenComparing(Person::firstName)
+          .thenComparingInt(Person::age)
+          .reversed();
+
+Comparator.nullsFirst(byName);
+String.CASE_INSENSITIVE_ORDER;
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean" style="margin-top:6px;">
+      <li class="fragment">Implement <code>Comparable</code> on value types you own, over the same fields as <code>equals</code>. Build every <em>other</em> ordering out of the static combinators, never out of subtraction.</li>
+      <li class="fragment">Each combinator takes a function, which is the interface from the last slide doing a day's work in a place you already used it.</li>
+      <li class="fragment">Capstone part 1 wants <code>equals</code>, <code>hashCode</code> and <code>compareTo</code> to agree. The finale composes one, and gets it backwards on purpose.</li>
+    </ul>
+    <div class="footer-line"><span>treemap</span><span>comparator</span></div>
+  </section>
+
+  <!-- 31 TREE comparator traps -->
+  <section class="tree">
+    <span class="eyebrow">four traps in the combinators</span>
+    <h2>Comparator: four ways to get this wrong, all of them quiet.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+// 1. BOXING: comparing() needs a Comparable key, so the int is boxed on every extraction.
+comparing(Person::age)        // boxes
+comparingInt(Person::age)     // takes a ToIntFunction, allocates nothing
+
+// 2. INFERENCE: this does not compile. javac infers Object for that first lambda:
+//    "cannot find symbol: method name(), location: variable p of type Object"
+list.sort(comparing(p -&gt; p.name()).thenComparing(p -&gt; p.age()));
+list.sort(comparing(Person::name).thenComparing(Person::age));   // a method ref fixes it
+
+// 3. reversed() REVERSES THE WHOLE CHAIN, not the last key:
+comparing(P::name).thenComparingInt(P::age).reversed();            // name desc, THEN age desc
+comparing(P::name).thenComparing(comparingInt(P::age).reversed()); // name asc, age desc
+
+// 4. nullsFirst guards a null ELEMENT, not a null KEY:
+nullsFirst(comparing(P::name));                  // still NPEs on a P with a null name
+comparing(P::name, nullsFirst(naturalOrder()));  // the two-argument form is the fix
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">And the one that ships: <code>(a, b) -&gt; a.priority() &gt;= b.priority() ? 1 : -1</code> never returns 0, so it is not antisymmetric, and <code>list.sort</code> throws <code>IllegalArgumentException: Comparison method violates its general contract!</code> out of TimSort.</li>
+      <li class="fragment">Verified here: 16 elements sorted quietly in 5000 runs out of 5000, and 1000 elements threw in 4999 of those 5000. It passes your five-element test and fires on the customer's data. The causes are always subtraction overflow, a field that changes during the sort, or forgetting that equal must mean 0.</li>
+    </ul>
+    <div class="footer-line"><span>treemap</span><span>comparator traps</span></div>
+  </section>
+
+  <!-- 32 QUIZ 5 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 5 of 9</span>
+    <h2>What does this print?</h2>
+<pre><code class="language-java" data-trim>
+record P(String name, int age) { }
+// ...
+Set&lt;P&gt; s = new TreeSet&lt;&gt;(Comparator.comparing(P::name));
+s.add(new P("Asha", 30));
+s.add(new P("Asha", 31));
+s.add(new P("Ravi", 40));
+System.out.println(s.size() + " " + s.contains(new P("Asha", 99)));
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>3 false</code></li>
+      <li><b>B</b> <code>2 true</code></li>
+      <li><b>C</b> <code>3 true</code></li>
+      <li><b>D</b> <code>2 false</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>5 of 9</span></div>
+  </section>
+
+
+  <!-- 34 ENUM Q + answer -->
+  <section class="enum">
+    <span class="eyebrow"><span class="dot"></span> enum collections / question, then the answer</span>
+    <h2>A rota keyed by Day: HashMap, or something faster?</h2>
+    <p class="fragment" style="margin-top:-4px;">Faster, and it already ships: an array indexed by <code>ordinal()</code>, and a single <code>long</code> used as a bit vector.</p>
+<pre><code class="language-java" data-trim>
+Map&lt;Day, List&lt;Shift&gt;&gt; rota = new EnumMap&lt;&gt;(Day.class);   // needs the class: no other way
+                                                        // to know the constants at runtime
+Set&lt;Day&gt; weekend  = EnumSet.of(SAT, SUN);
+EnumSet&lt;Day&gt; weekdays = EnumSet.range(MON, FRI);   // EnumSet, not Set: complementOf needs it
+Set&lt;Day&gt; rest     = EnumSet.complementOf(weekdays);
+Set&lt;Day&gt; none     = EnumSet.noneOf(Day.class);
+</code></pre>
+    <ul class="clean" style="margin-top:10px;">
+      <li class="fragment"><code>EnumMap</code> is an array indexed by <code>ordinal()</code>. No hashing, no boxing, no Node objects, and iteration comes out in declaration order because that is the array order.</li>
+      <li class="fragment"><code>EnumSet</code> is a <code>long</code> used as a bit vector: <code>RegularEnumSet</code> up to 64 constants, <code>JumboEnumSet</code> beyond. <code>contains</code> is one bit test and a union is one OR.</li>
+      <li class="fragment">Item 37: never index an array by <code>ordinal()</code> yourself, the numbers shift the day somebody reorders the enum. Item 36: never use int bit fields for flags, <code>EnumSet</code> is as fast and it prints and debugs like a Set.</li>
+      <li class="fragment">Look at the type on <code>weekdays</code>. <code>complementOf</code> takes an <code>EnumSet</code>, not a <code>Set</code>: one of Item 64's real exceptions. Declare <code>Set</code> there and it does not compile.</li>
+    </ul>
+    <div class="footer-line"><span>enum</span><span>items 36, 37</span></div>
+  </section>
+
+  <!-- 35 PART 2 DIVIDER -->
+  <section class="part">
+    <span class="part-tag">from containers to traffic</span>
+    <h2 style="margin-top:14px;">You know the containers. Now, the traffic around them.</h2>
+    <p class="lede fragment" style="margin-top:16px;">Part 2 opens with queues and deques, and then covers everything that happens to a collection <em>after</em> you build it: putting numbers in it, walking it, the interfaces you hand to it, passing it through generics, freezing it, sharing it across threads, the Map API you should be using, streaming it, and picking the right one in the first place.</p>
+    <p class="fragment" style="margin-top:14px; color:var(--muted);">Part 1 was about what a collection trusts. Part 2 is mostly about what the language does to your data on the way in and out, and most of the surprises live there.</p>
+    <div class="footer-line"><span>part 2</span><span>the point</span></div>
+  </section>
+
+  <!-- 36 QUEUE Q + deque -->
+  <section class="queue">
+    <span class="eyebrow"><span class="dot"></span> queue + deque / question, then the answer</span>
+    <h2>ArrayDeque: push 1, push 2, offer 3. What prints?</h2>
+    <div class="codeflex">
+      <div>
+<pre><code class="language-java" data-trim>
+Deque&lt;Integer&gt; d = new ArrayDeque&lt;&gt;();
+d.push(1);
+d.push(2);
+d.offer(3);
+System.out.println(d);
+</code></pre>
+      </div>
+      <ul class="clean">
+        <li class="fragment">Write the three numbers down first. It is <code>[2, 1, 3]</code>: <code>push</code> is <code>addFirst</code> and <code>offer</code> is <code>addLast</code>, so 2 went on the front and 3 on the back.</li>
+        <li class="fragment"><code>ArrayDeque</code> is a resizable circular array. It beats <code>LinkedList</code> as a queue and beats <code>Stack</code> as a stack, which is the Day 1 callback, and it rejects <code>null</code> so that <code>poll()</code> returning null means "empty" and nothing else.</li>
+      </ul>
+    </div>
+    <div class="diagram fragment" style="margin-top:10px;">
+      <svg viewBox="0 0 940 200" width="100%">
+        <defs><marker id="s51a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+        <text x="330" y="18" fill="var(--muted)" font-size="12" class="mono">Object[] elements, used as a ring</text>
+        <rect x="330" y="30" width="72" height="44" fill="#0a0a0c" stroke="var(--line)"/><text x="366" y="58" text-anchor="middle" fill="var(--dim)" font-size="12">empty</text>
+        <rect x="402" y="30" width="72" height="44" fill="#16161a" stroke="var(--accent)"/><text x="438" y="58" text-anchor="middle" fill="var(--text)" font-size="14">2</text>
+        <rect x="474" y="30" width="72" height="44" fill="#16161a" stroke="var(--accent)"/><text x="510" y="58" text-anchor="middle" fill="var(--text)" font-size="14">1</text>
+        <rect x="546" y="30" width="72" height="44" fill="#16161a" stroke="var(--accent)"/><text x="582" y="58" text-anchor="middle" fill="var(--text)" font-size="14">3</text>
+        <rect x="618" y="30" width="72" height="44" fill="#0a0a0c" stroke="var(--line)"/><text x="654" y="58" text-anchor="middle" fill="var(--dim)" font-size="12">empty</text>
+        <text x="438" y="92" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">head</text>
+        <text x="582" y="92" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">tail</text>
+        <line x1="300" y1="44" x2="326" y2="44" stroke="var(--accent)" stroke-width="2" marker-end="url(#s51a)"/>
+        <text x="296" y="48" text-anchor="end" fill="var(--accent)" font-size="12" class="mono">addFirst / push</text>
+        <line x1="326" y1="66" x2="300" y2="66" stroke="var(--accent)" stroke-width="2" marker-end="url(#s51a)"/>
+        <text x="296" y="70" text-anchor="end" fill="var(--accent)" font-size="12" class="mono">pollFirst / pop</text>
+        <line x1="694" y1="44" x2="720" y2="44" stroke="var(--accent)" stroke-width="2" marker-end="url(#s51a)"/>
+        <text x="726" y="48" fill="var(--accent)" font-size="12" class="mono">addLast / offer</text>
+        <line x1="720" y1="66" x2="694" y2="66" stroke="var(--accent)" stroke-width="2" marker-end="url(#s51a)"/>
+        <text x="726" y="70" fill="var(--accent)" font-size="12" class="mono">pollLast</text>
+        <path d="M330,120 C420,168 630,168 690,120" fill="none" stroke="var(--dim)" stroke-dasharray="5 4" marker-end="url(#s51a)"/>
+        <text x="510" y="166" text-anchor="middle" fill="var(--dim)" font-size="12">the indices wrap. One slot is always kept empty so full and empty never look the same.</text>
+        <text x="510" y="192" text-anchor="middle" fill="var(--dim)" font-size="12">no Node objects, no pointers, no cache misses.</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>queue</span><span>deque</span></div>
+  </section>
+
+  <!-- 37 QUEUE vocabularies -->
+  <section class="queue">
+    <span class="eyebrow">the two vocabularies</span>
+    <h2>Throw, or return a special value. Pick one and stay in it.</h2>
+    <table class="tbl">
+      <tr><th></th><th>throws</th><th>returns a special value</th><th>Deque, first end</th><th>Deque, last end</th></tr>
+      <tr><td>insert</td><td><code>add(e)</code></td><td><code>offer(e)</code></td><td><code>addFirst</code> / <code>offerFirst</code></td><td><code>addLast</code> / <code>offerLast</code></td></tr>
+      <tr><td>remove</td><td><code>remove()</code></td><td><code>poll()</code></td><td><code>removeFirst</code> / <code>pollFirst</code></td><td><code>removeLast</code> / <code>pollLast</code></td></tr>
+      <tr><td>examine</td><td><code>element()</code></td><td><code>peek()</code></td><td><code>getFirst</code> / <code>peekFirst</code></td><td><code>getLast</code> / <code>peekLast</code></td></tr>
+    </table>
+    <ul class="clean" style="margin-top:14px;">
+      <li class="fragment">The throwing set is right when an empty queue is a bug. The special-value set is right when empty is expected. Mixing them inside one loop is how you get an unexplained <code>NoSuchElementException</code> at 2am.</li>
+      <li class="fragment">On a Deque, <code>push</code> is <code>addFirst</code> and <code>pop</code> is <code>removeFirst</code>. That is the whole of Stack, in two methods, on a faster class.</li>
+      <li class="fragment"><code>java.util.Stack</code> extends <code>Vector</code>, so anyone holding your stack can call <code>insertElementAt(x, 0)</code> and reach into the middle of it, and every method is synchronized whether you asked or not. That is the inheritance mistake Day 1 named, shipped in the JDK since 1.0. Use a <code>Deque</code>.</li>
+    </ul>
+    <div class="footer-line"><span>queue</span><span>vocabularies</span></div>
+  </section>
+
+  <!-- 38 QUEUE priorityqueue -->
+  <section class="queue">
+    <span class="eyebrow">the heap</span>
+    <h2>PriorityQueue: the smallest is at the head, and nothing else is in order.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+PriorityQueue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;(List.of(4, 5, 1, 2, 3));
+System.out.println(pq);                             // [1, 2, 4, 5, 3]  not sorted
+while (!pq.isEmpty()) System.out.print(pq.poll());   // 12345            sorted on the way out
+
+// top-k in O(n log k): a min-heap of size k, so the WORST entry is the one you drop
+Comparator&lt;Entry&gt; worstFirst =
+    Comparator.comparingInt(Entry::count).thenComparing(Entry::word, Comparator.reverseOrder());
+
+PriorityQueue&lt;Entry&gt; heap = new PriorityQueue&lt;&gt;(worstFirst);
+for (Entry e : entries) {
+    heap.offer(e);
+    if (heap.size() &gt; k) heap.poll();   // evicts the head, which is the least wanted
+}
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment"><code>offer</code> and <code>poll</code> are O(log n), <code>peek</code> is O(1), and <code>contains</code> and <code>remove(Object)</code> are O(n) because a heap has no index.</li>
+      <li class="fragment"><code>toString</code> and iteration walk the backing array, so they are never sorted. Only the head means anything. People lose an afternoon to this.</li>
+      <li class="fragment">The size-k heap discards from the head, so its comparator must put the <em>least</em> wanted entry first. That means the tie-break runs backwards: if you want ties alphabetical in the result, the heap must order ties reverse-alphabetically, and then you drain and reverse. The finale uses exactly this, and the tie direction is the part people get wrong.</li>
+      <li class="fragment">Not thread-safe. <code>PriorityBlockingQueue</code> is.</li>
+    </ul>
+    <div class="footer-line"><span>queue</span><span>priorityqueue</span></div>
+  </section>
+
+  <!-- 39 BOX integer cache -->
+  <section class="box">
+    <span class="eyebrow">the Integer cache</span>
+    <h2>Integer == Integer is true from -128 to 127. Then it is a coin you did not flip.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+Integer a = 100, b = 100;   a == b;        // true   both came from the valueOf cache
+Integer c = 1000, d = 1000; c == d;        // false  two separate objects
+                            c.equals(d);   // true   equals compares the value
+Short   e = 100;            a.equals(e);   // false  equals compares the TYPE first
+                            a == e;        // does not compile: incomparable types
+Integer f = 1000;           f == 1000;     // true, and this one is arithmetic, not identity
+                                           // (the cache has nothing to do with it)
+</code></pre>
+    <ul class="clean" style="margin-top:10px;">
+      <li class="fragment">Autoboxing goes through <code>Integer.valueOf</code>, which caches -128 to 127. JLS 5.1.7 requires at least that range and the upper bound is tunable, so the exact cliff is not even a language guarantee.</li>
+      <li class="fragment"><code>==</code> on two wrappers compares references. <code>equals</code> compares value <em>and</em> type, which is why an Integer is never equal to a Long however equal the numbers look.</li>
+      <li class="fragment">Mix a wrapper and a primitive in one <code>==</code> and the wrapper is unboxed, so it becomes a numeric comparison. One primitive operand changes the meaning of the operator.</li>
+      <li class="fragment">Inside a <code>Map&lt;Integer,...&gt;</code> none of this matters, because HashMap calls <code>equals</code>. In your own <code>==</code> it decides everything. Item 61: prefer primitives to boxed primitives, and remember <code>remove(int)</code> against <code>remove(Object)</code> from part 1.</li>
+    </ul>
+    <div class="footer-line"><span>boxing</span><span>integer cache</span></div>
+  </section>
+
+  <!-- 40 QUIZ 6 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 6 of 9</span>
+    <h2>What does this print?</h2>
+<pre><code class="language-java" data-trim>
+Integer a = 128, b = 128;
+Long c = 128L;
+System.out.println((a == b) + " " + a.equals(c) + " " + (Integer.valueOf(127) == 127));
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>true false true</code></li>
+      <li><b>B</b> <code>false false true</code></li>
+      <li><b>C</b> <code>false true true</code></li>
+      <li><b>D</b> <code>false false false</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>6 of 9</span></div>
+  </section>
+
+
+  <!-- 42 ITER Q + modCount -->
+  <section class="iter">
+    <span class="eyebrow"><span class="dot"></span> iteration / question, then the answer</span>
+    <h2>Remove "b" inside a for-each. Which line throws?</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment">ArrayList keeps a <code>modCount</code> that every structural change bumps. The iterator copies it once into <code>expectedModCount</code> and compares the two <em>inside <code>next()</code></em>. That is the only place the exception can come from.</li>
+        <li class="fragment"><code>hasNext()</code> is just <code>cursor != size</code>. Remove the second-to-last element and size drops to meet the cursor, so hasNext answers false, <code>next()</code> never runs, and the loop ends quietly with <code>[a, c]</code>: no exception, and "c" was silently never visited.</li>
+        <li class="fragment">The Javadoc calls fail-fast best-effort and says never to depend on it for correctness. It is a debugging aid that happens to be an exception, and one more element changes the answer.</li>
+      </ul>
+      <div>
+<pre><code class="language-java" data-trim>
+List&lt;String&gt; l = new ArrayList&lt;&gt;(List.of("a", "b", "c"));
+for (String s : l) {
+    if (s.equals("b")) l.remove(s);
+}
+System.out.println(l);
+</code></pre>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 300" width="100%">
+          <defs><marker id="s59a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker></defs>
+          <text x="10" y="18" fill="var(--muted)" font-size="12" class="mono">before: cursor 2, size 3</text>
+          <rect x="20" y="30" width="80" height="38" fill="#16161a" stroke="var(--line)"/><text x="60" y="54" text-anchor="middle" fill="var(--text)" font-size="13">a</text>
+          <rect x="100" y="30" width="80" height="38" fill="#16161a" stroke="var(--line)"/><text x="140" y="54" text-anchor="middle" fill="var(--text)" font-size="13">b</text>
+          <rect x="180" y="30" width="80" height="38" fill="#16161a" stroke="var(--line)"/><text x="220" y="54" text-anchor="middle" fill="var(--text)" font-size="13">c</text>
+          <line x1="180" y1="92" x2="180" y2="72" stroke="var(--accent)" stroke-width="2" marker-end="url(#s59a)"/>
+          <text x="180" y="108" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">cursor = 2</text>
+          <line x1="260" y1="92" x2="260" y2="72" stroke="var(--good)" stroke-width="2" marker-end="url(#s59a)"/>
+          <text x="284" y="108" text-anchor="middle" fill="var(--good)" font-size="11" class="mono">size = 3</text>
+          <text x="10" y="150" fill="var(--muted)" font-size="12" class="mono">after l.remove("b")</text>
+          <rect x="20" y="162" width="80" height="38" fill="#16161a" stroke="var(--line)"/><text x="60" y="186" text-anchor="middle" fill="var(--text)" font-size="13">a</text>
+          <rect x="100" y="162" width="80" height="38" fill="#16161a" stroke="var(--line)"/><text x="140" y="186" text-anchor="middle" fill="var(--text)" font-size="13">c</text>
+          <rect x="180" y="162" width="80" height="38" fill="#0a0a0c" stroke="var(--dim)" stroke-dasharray="3 3"/>
+          <line x1="180" y1="224" x2="180" y2="204" stroke="var(--accent)" stroke-width="2" marker-end="url(#s59a)"/>
+          <text x="180" y="240" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">cursor = 2</text>
+          <line x1="180" y1="256" x2="180" y2="250" stroke="var(--good)" stroke-width="2"/>
+          <text x="264" y="240" fill="var(--good)" font-size="11" class="mono">size = 2</text>
+          <text x="20" y="276" fill="var(--warn)" font-size="12">cursor == size, so hasNext() is false</text>
+          <text x="20" y="292" fill="var(--warn)" font-size="12">and the check inside next() never happens</text>
+        </svg>
+      </div>
+      </div>
+    </div>
+    <div class="footer-line"><span>iteration</span><span>fail-fast</span></div>
+  </section>
+
+  <!-- 43 FN four shapes -->
+  <section class="fn">
+    <span class="eyebrow"><span class="dot"></span> functions / guess first</span>
+    <h2>Four interfaces, and every collection method you already met.</h2>
+    <p class="fragment"><code>removeIf</code>, <code>computeIfAbsent</code>, <code>forEach</code>, <code>orElseGet</code>. You have used all four today. How many different shapes are on that list? Say a number out loud before you read the table.</p>
+    <div class="dgrid">
+      <table class="tbl" style="font-size:18px;">
+        <tr><th>interface</th><th>method</th><th>shape</th><th>where you met it</th></tr>
+        <tr><td><code>Predicate&lt;T&gt;</code></td><td><code>test</code></td><td>T to boolean</td><td><code>removeIf</code></td></tr>
+        <tr><td><code>Function&lt;T,R&gt;</code></td><td><code>apply</code></td><td>T to R</td><td><code>computeIfAbsent</code></td></tr>
+        <tr><td><code>Consumer&lt;T&gt;</code></td><td><code>accept</code></td><td>T to nothing</td><td><code>forEach</code></td></tr>
+        <tr><td><code>Supplier&lt;T&gt;</code></td><td><code>get</code></td><td>nothing to T</td><td><code>orElseGet</code></td></tr>
+        <tr><td><code>BiFunction&lt;T,U,R&gt;</code></td><td><code>apply</code></td><td>T, U to R</td><td><code>merge</code></td></tr>
+        <tr><td><code>UnaryOperator&lt;T&gt;</code></td><td><code>apply</code></td><td>T to T</td><td><code>replaceAll</code></td></tr>
+        <tr><td><code>Comparator&lt;T&gt;</code></td><td><code>compare</code></td><td>T, T to int</td><td><code>sort</code></td></tr>
+      </table>
+      <ul class="clean">
+        <li class="fragment">They are ordinary interfaces in <code>java.util.function</code>. You can write your own, and often should when the name carries meaning: Day 3 does exactly that with <code>RowMapper</code>.</li>
+        <li class="fragment">The default methods are the payoff: <code>p.negate()</code>, <code>p.and(q)</code>, <code>p.or(q)</code>, <code>Predicate.not(String::isBlank)</code>, <code>f.andThen(g)</code>, <code>f.compose(g)</code>.</li>
+        <li class="fragment"><code>and</code> and <code>or</code> short-circuit like <code>&amp;&amp;</code> and <code>||</code>, so put the cheap test first. The names are the only hard part; every shape is one line.</li>
+      </ul>
+    </div>
+<pre><code class="language-java" data-trim>
+names.removeIf(String::isBlank);  names.replaceAll(String::strip);  names.forEach(System.out::println);
+</code></pre>
+    <div class="footer-line"><span>functions</span><span>four shapes</span></div>
+  </section>
+
+  <!-- 44 ITER safe edits -->
+  <section class="iter">
+    <span class="eyebrow">the move</span>
+    <h2>Five safe ways to change what you are walking.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+Iterator&lt;String&gt; it = l.iterator();               // 1. the iterator's own remove
+while (it.hasNext()) if (it.next().equals("b")) it.remove();
+
+l.removeIf(s -&gt; s.equals("b"));                   // 2. a Predicate, one pass
+l.replaceAll(String::toUpperCase);                // 3. a UnaryOperator, in place
+
+m.entrySet().removeIf(e -&gt; e.getValue() == 0);    // 4. maps: prune through the view
+for (var e : m.entrySet()) e.setValue(0);         //    setValue is not structural: no CME
+
+for (int i = l.size() - 1; i &gt;= 0; i--) { ... }   // 5. backwards by index, or collect
+                                                  //    the victims and removeAll after
+</code></pre>
+    <ul class="clean" style="margin-top:6px;">
+      <li class="fragment"><code>removeIf</code> on an ArrayList is one pass that marks its victims in a bit mask and compacts the array once, not n separate removes each shifting the tail. <code>ListIterator.add</code> and <code>set</code> edit in place. A <code>CopyOnWriteArrayList</code> never throws here at all, because its iterator holds a snapshot.</li>
+      <li class="fragment">The safe edits have their own three ways to throw, all verified on 25. <code>it.remove()</code> before the first <code>next()</code>, or twice for one <code>next()</code>, is <code>IllegalStateException</code>: there is no current element to remove.</li>
+      <li class="fragment"><code>Arrays.asList(1,2,3).removeIf(i -&gt; i == 99)</code> returns false quietly, while <code>removeIf(i -&gt; i == 2)</code> throws <code>UnsupportedOperationException</code>, because the inherited implementation only reaches the fixed-size list's iterator when something matches. <code>List.of(1,2,3).removeIf(i -&gt; i == 99)</code> throws even though nothing matched. Do not rely on either: copy into an <code>ArrayList</code> first.</li>
+    </ul>
+    <div class="footer-line"><span>iteration</span><span>safe edits</span></div>
+  </section>
+
+  <!-- 45 QUIZ 7 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 7 of 9</span>
+    <h2>What does this print?</h2>
+<pre><code class="language-java" data-trim>
+List&lt;String&gt; l = new ArrayList&lt;&gt;(List.of("a", "b", "c", "d"));
+for (String s : l) {
+    if (s.equals("b")) l.remove(s);
+}
+System.out.println(l);
+</code></pre>
+    <ol class="opts w1">
+      <li><b>A</b> <code>[a, c, d]</code></li>
+      <li><b>B</b> throws <code>ConcurrentModificationException</code></li>
+      <li><b>C</b> <code>[a, b, c, d]</code></li>
+      <li><b>D</b> throws <code>IllegalStateException</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>7 of 9</span></div>
+  </section>
+
+
+  <!-- 47 GEN Q + invariance -->
+  <section class="gen">
+    <span class="eyebrow"><span class="dot"></span> generics / question, then the answer</span>
+    <h2>Is a <code>List&lt;Integer&gt;</code> a <code>List&lt;Number&gt;</code>?</h2>
+    <p class="fragment" style="margin-top:-4px;">No. An array says yes and blows up at run time. Arrays are covariant and reified; generics are invariant and erased.</p>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment"><code>Number[] arr = new Integer[1]</code> compiles, and <code>arr[0] = 3.14</code> throws <code>ArrayStoreException</code> at run time, because an array carries its element type with it and checks every store.</li>
+        <li class="fragment"><code>List&lt;Number&gt; nums = ints</code> does not compile. If it did, <code>nums.add(3.14)</code> would drop a Double into a list of Integer and the erased List could not stop it. The compile error <em>is</em> the protection.</li>
+        <li class="fragment">Erasure means <code>List&lt;Integer&gt;</code> and <code>List&lt;String&gt;</code> are one class at run time: no <code>new T[]</code>, no <code>instanceof List&lt;String&gt;</code>.</li>
+        <li class="fragment">Item 28, prefer lists to arrays, especially in an API. Item 26, never use raw types: a raw <code>List</code> has opted out of type checking. It is <em>not</em> <code>List&lt;Object&gt;</code>, which a <code>List&lt;String&gt;</code> cannot be assigned to either.</li>
+      </ul>
+      <div class="diagram fragment">
+        <svg viewBox="0 0 440 300" width="100%">
+          <rect x="16" y="24" width="184" height="240" rx="12" fill="#16161a" stroke="var(--bad)"/>
+          <text x="108" y="50" text-anchor="middle" fill="var(--bad)" font-size="14">arrays</text>
+          <text x="108" y="86" text-anchor="middle" fill="var(--muted)" font-size="12">covariant</text>
+          <text x="108" y="108" text-anchor="middle" fill="var(--muted)" font-size="12">reified</text>
+          <text x="108" y="150" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">compiles</text>
+          <line x1="52" y1="168" x2="164" y2="168" stroke="var(--line)"/>
+          <text x="108" y="198" text-anchor="middle" fill="var(--bad)" font-size="12" class="mono">ArrayStore-</text>
+          <text x="108" y="216" text-anchor="middle" fill="var(--bad)" font-size="12" class="mono">Exception</text>
+          <text x="108" y="240" text-anchor="middle" fill="var(--muted)" font-size="11">at run time, in production</text>
+          <rect x="240" y="24" width="184" height="240" rx="12" fill="#16161a" stroke="var(--good)"/>
+          <text x="332" y="50" text-anchor="middle" fill="var(--good)" font-size="14">generics</text>
+          <text x="332" y="86" text-anchor="middle" fill="var(--muted)" font-size="12">invariant</text>
+          <text x="332" y="108" text-anchor="middle" fill="var(--muted)" font-size="12">erased</text>
+          <text x="332" y="150" text-anchor="middle" fill="var(--good)" font-size="12" class="mono">does not compile</text>
+          <line x1="276" y1="168" x2="388" y2="168" stroke="var(--line)"/>
+          <text x="332" y="198" text-anchor="middle" fill="var(--good)" font-size="12">nothing to catch</text>
+          <text x="332" y="240" text-anchor="middle" fill="var(--muted)" font-size="11">at your desk, in two seconds</text>
+          <text x="220" y="288" text-anchor="middle" fill="var(--dim)" font-size="12">same bug, two eras of Java</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-line"><span>generics</span><span>invariance</span></div>
+  </section>
+
+  <!-- 48 GEN pecs -->
+  <section class="gen">
+    <span class="eyebrow">Effective Java, Item 31</span>
+    <h2>PECS: producer extends, consumer super.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+List&lt;? extends Number&gt; src = new ArrayList&lt;Integer&gt;();
+Number n = src.get(0);     // fine: whatever is in there IS a Number
+src.add(1);                // does not compile: src could be a List&lt;Double&gt;
+
+List&lt;? super Integer&gt; dst = new ArrayList&lt;Number&gt;();
+dst.add(1);                // fine: an Integer fits in any supertype list
+Object o = dst.get(0);     // only Object comes out: we do not know the element type
+
+static &lt;T&gt; void copy(List&lt;? super T&gt; dst, List&lt;? extends T&gt; src)   // both, in one signature
+double sum(Collection&lt;? extends Number&gt; c)
+Comparator&lt;? super T&gt;
+static &lt;T&gt; T max(Collection&lt;? extends T&gt; c, Comparator&lt;? super T&gt; comp)
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment"><code>extends</code> means you read from it, <code>super</code> means you write to it, and if you do both then no wildcard at all. That is the whole mnemonic and it is worth memorising.</li>
+      <li class="fragment">This is why every combinator you met takes <code>Function&lt;? super T, ? extends R&gt;</code>: it lets a <code>Comparator&lt;Object&gt;</code> sort your Persons without you casting anything.</li>
+      <li class="fragment">Do not put wildcards in return types. All it does is push the problem onto every caller.</li>
+      <li class="fragment">A <code>List&lt;?&gt;</code> takes any list and lets you add exactly one thing: <code>null</code>.</li>
+    </ul>
+    <div class="footer-line"><span>generics</span><span>pecs</span></div>
+  </section>
+
+  <!-- 49 IMMUT Q + of -->
+  <section class="immut">
+    <span class="eyebrow"><span class="dot"></span> immutability / question, then the answer</span>
+    <h2>List.of(1, null). Set.of(1, 1). What happens?</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag">works, throws, or depends? vote on all five</span>
+<pre><code class="language-java" data-trim>
+List.of(1, null);
+Set.of(1, 1);
+Map.of("a", 1, "a", 2);
+List.of(1, 2).add(3);
+List.of(1, 2).contains(null);
+</code></pre>
+      </div>
+      <div>
+        <span class="tag good">the answers</span>
+<pre><code class="language-java" data-trim>
+NullPointerException, at creation
+IllegalArgumentException: duplicate element: 1
+IllegalArgumentException: duplicate key
+UnsupportedOperationException
+NullPointerException, even on a read
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">These are <code>ImmutableCollections.ListN</code>, <code>SetN</code> and <code>MapN</code>: immutable, null-hostile and duplicate-hostile. They are value-based, so identity operations on them mean nothing and you should never lock on one.</li>
+      <li class="fragment"><code>Set.of</code> and <code>Map.of</code> iteration order is randomised per JVM run by a SALT. Verified here: two runs of the same program printed two different orders. That is deliberate, so code that accidentally depends on the order fails on your machine instead of in production.</li>
+      <li class="fragment"><code>List.of(array)</code> copies, so later edits to the array do not show through. Use these for constants and for the snapshots you hand out.</li>
+    </ul>
+    <div class="footer-line"><span>immutability</span><span>of</span></div>
+  </section>
+
+  <!-- 50 IMMUT view vs copy -->
+  <section class="immut">
+    <span class="eyebrow">the answer, part two</span>
+    <h2>unmodifiableList is a window. copyOf is a photograph.</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag">the difference, in five lines</span>
+<pre class="sm"><code class="language-java" data-trim>
+List&lt;String&gt; src  = new ArrayList&lt;&gt;(List.of("a"));
+List&lt;String&gt; view = Collections.unmodifiableList(src);
+List&lt;String&gt; copy = List.copyOf(src);
+
+src.add("b");
+
+view.size();     // 2   it watches src
+copy.size();     // 1   it was taken at the time
+view.add("c");   // UnsupportedOperationException
+</code></pre>
+      </div>
+      <div>
+        <span class="tag bad">and the leak it fixes</span>
+<pre class="sm"><code class="language-java" data-trim>
+public List&lt;Item&gt; items() { return items; }
+// the caller can now clear your field
+
+public List&lt;Item&gt; items() {
+    return Collections.unmodifiableList(items);
+}   // live, and the caller cannot write
+
+public List&lt;Item&gt; items() {
+    return List.copyOf(items);
+}   // a snapshot, and it rejects nulls
+</code></pre>
+      </div>
+    </div>
+    <ul class="clean" style="margin-top:6px;">
+      <li class="fragment">A <em>view</em> is the right return when the caller should see live state and a copy would be wasteful. A <em>copy</em> is right when you are handing out a value that should not change under them.</li>
+      <li class="fragment">Item 15 on accessibility and Item 50 on defensive copies. And note the <code>Collections.unmodifiableX</code> wrappers do allow null elements, because all they do is forward.</li>
+    </ul>
+    <div class="footer-line"><span>immutability</span><span>view vs copy</span></div>
+  </section>
+
+  <!-- 51 IMMUT asList -->
+  <section class="immut">
+    <span class="eyebrow">the trap</span>
+    <h2>Arrays.asList: fixed size, write-through, and it boxes nothing.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+List&lt;Integer&gt; l = Arrays.asList(1, 2, 3);
+l.set(0, 9);                       // fine, and the original array now holds 9 as well
+l.add(4);                          // UnsupportedOperationException: the size is fixed
+
+int[] a = {1, 2, 3};
+Arrays.asList(a).size();           // 1  a List&lt;int[]&gt; holding ONE element
+Stream.of(a).count();              // 1  the same mistake with a different API
+Arrays.stream(a).sum();            // 6  the primitive entry point sees the elements
+Arrays.stream(a).boxed().toList(); // [1, 2, 3] when you actually want objects
+
+new ArrayList&lt;&gt;(Arrays.asList(1, 2, 3)).add(4);   // fine: a real list, copied
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">It returns <code>java.util.Arrays$ArrayList</code>, a fixed-size view over the array you handed it. <code>set</code> writes through in both directions; <code>add</code> and <code>remove</code> throw.</li>
+      <li class="fragment">Generics cannot hold an <code>int</code>, so any API with a <code>T</code> or <code>T...</code> parameter swallows a primitive array whole, as one object. The two places you meet that are <code>Arrays.asList</code> and <code>Stream.of</code>. All verified on 25.</li>
+      <li class="fragment">Want a real list? <code>new ArrayList&lt;&gt;(...)</code>. Want an immutable one? <code>List.of</code>. <code>Arrays.asList</code> is neither, and its name suggests both.</li>
+    </ul>
+    <div class="footer-line"><span>immutability</span><span>asList</span></div>
+  </section>
+
+  <!-- 52 QUIZ 8 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 8 of 9</span>
+    <h2>What does this do?</h2>
+<pre><code class="language-java" data-trim>
+List&lt;Integer&gt; a = Arrays.asList(1, 2, 3);
+List&lt;Integer&gt; u = Collections.unmodifiableList(a);
+a.set(0, 9);
+System.out.println(u.get(0));
+u.add(4);
+</code></pre>
+    <ol class="opts w1">
+      <li><b>A</b> prints <code>1</code>, then throws <code>UnsupportedOperationException</code></li>
+      <li><b>B</b> prints <code>9</code>, then throws <code>UnsupportedOperationException</code></li>
+      <li><b>C</b> prints <code>9</code>, and <code>u</code> becomes <code>[9, 2, 3, 4]</code></li>
+      <li><b>D</b> throws <code>UnsupportedOperationException</code> at <code>a.set(0, 9)</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>8 of 9</span></div>
+  </section>
+
+
+  <!-- 54 CONC Q + chm -->
+  <section class="conc">
+    <span class="eyebrow"><span class="dot"></span> concurrency / question, then the answer</span>
+    <h2>Two threads put into one HashMap. What is the worst that happens?</h2>
+    <ul class="clean">
+      <li class="fragment">All four. Two unsynchronised writers can resize at once, lose entries and publish a half-built table. On Java 7 they could also build a cyclic chain, and a later <code>get()</code> would spin forever on one core.</li>
+      <li class="fragment"><code>Collections.synchronizedMap</code> locks the whole map on every call: correct, slow, and no help at all for <code>containsKey</code> then <code>put</code>, because the lock is released between the two and the gap is where the race lives.</li>
+      <li class="fragment">Since Java 8, <code>ConcurrentHashMap</code> installs a node in an empty bin with one CAS and synchronizes on the head node of a full one, so writers to different buckets never wait. The fix for check-then-put is one call: <code>putIfAbsent</code>, <code>computeIfAbsent</code>, <code>compute</code> and <code>merge</code> are atomic per key.</li>
+    </ul>
+    <div class="diagram fragment" style="margin-top:10px;">
+      <svg viewBox="0 0 940 200" width="100%">
+        <defs><marker id="s77a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--accent)"/></marker>
+          <marker id="s77b" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--warn)"/></marker></defs>
+        <text x="10" y="16" fill="var(--muted)" font-size="12" class="mono">Node&lt;K,V&gt;[] table</text>
+        <rect x="10" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="40" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">0</text>
+        <rect x="70" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="100" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">1</text>
+        <rect x="130" y="24" width="60" height="34" fill="#16161a" stroke="var(--accent)"/><text x="160" y="46" text-anchor="middle" fill="var(--accent)" font-size="11">2</text>
+        <rect x="190" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="220" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">3</text>
+        <rect x="250" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="280" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">4</text>
+        <rect x="310" y="24" width="60" height="34" fill="#16161a" stroke="var(--warn)"/><text x="340" y="46" text-anchor="middle" fill="var(--warn)" font-size="11">5</text>
+        <rect x="370" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="400" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">6</text>
+        <rect x="430" y="24" width="60" height="34" fill="#0a0a0c" stroke="var(--line)"/><text x="460" y="46" text-anchor="middle" fill="var(--dim)" font-size="11">7</text>
+        <text x="160" y="76" text-anchor="middle" fill="var(--accent)" font-size="11" class="mono">empty</text>
+        <rect x="297" y="82" width="86" height="30" rx="5" fill="#16161a" stroke="var(--warn)"/><text x="340" y="101" text-anchor="middle" fill="var(--warn)" font-size="10" class="mono">head node</text>
+        <line x1="340" y1="58" x2="340" y2="80" stroke="var(--dim)"/>
+        <rect x="40" y="136" width="230" height="44" rx="7" fill="#16161a" stroke="var(--accent)"/>
+        <text x="155" y="154" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">thread A: put into bin 2</text>
+        <text x="155" y="171" text-anchor="middle" fill="var(--accent)" font-size="11">one CAS, no lock taken</text>
+        <rect x="300" y="136" width="230" height="44" rx="7" fill="#16161a" stroke="var(--warn)"/>
+        <text x="415" y="154" text-anchor="middle" fill="var(--text)" font-size="12" class="mono">thread B: put into bin 5</text>
+        <text x="415" y="171" text-anchor="middle" fill="var(--warn)" font-size="11">synchronized on that node</text>
+        <line x1="155" y1="134" x2="158" y2="84" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#s77a)"/>
+        <line x1="415" y1="134" x2="360" y2="116" stroke="var(--warn)" stroke-width="1.8" marker-end="url(#s77b)"/>
+        <text x="580" y="44" fill="var(--muted)" font-size="12">Different bins, so neither thread waits for the other.</text>
+        <text x="580" y="70" fill="var(--muted)" font-size="12">Same bin, and only then does the second one block.</text>
+        <text x="580" y="96" fill="var(--muted)" font-size="12">A reader takes no lock at all, in either bin.</text>
+        <text x="580" y="130" fill="var(--dim)" font-size="12">Java 7 locked one of 16 segments. This is per bin,</text>
+        <text x="580" y="148" fill="var(--dim)" font-size="12">which on a 16-core box is the whole difference.</text>
+      </svg>
+    </div>
+    <div class="footer-line"><span>concurrency</span><span>chm, atomics</span></div>
+  </section>
+
+  <!-- 55 MAP api -->
+  <section class="map">
+    <span class="eyebrow"><span class="dot"></span> map api / guess first</span>
+    <h2>The Map methods you should be using in 2026.</h2>
+    <p class="fragment">Count words into a <code>Map&lt;String,Integer&gt;</code>. Most people write <code>get</code>, then a null check, then <code>put</code>: five lines and two hash lookups. I want it in one call, and I want the name from the room before I show you the list.</p>
+<pre class="sm"><code class="language-java" data-trim>
+counts.merge(word, 1, Integer::sum);          // instead of get, null check, put
+                                              //   BiFunction
+
+index.computeIfAbsent(letter, k -&gt; new ArrayList&lt;&gt;()).add(word);
+                                              // create on demand and RETURN it, so you
+                                              //   can chain. Function
+
+m.getOrDefault(k, 0);                         // no null check at the call site
+m.putIfAbsent(k, v);                          // only if nothing is there
+m.computeIfPresent(k, (key, old) -&gt; old + 1); // only if something is
+m.compute(k, (key, old) -&gt; old == null ? 1 : old + 1);
+m.forEach((k, v) -&gt; log(k, v));               // BiConsumer
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">Every one takes a shape from earlier in this part, so read the signature and you already know what to hand it: a BiFunction to <code>merge</code>, a Function to <code>computeIfAbsent</code>.</li>
+      <li class="fragment"><code>merge</code> with <code>Integer::sum</code> is <em>the</em> counting idiom, and <code>computeIfAbsent</code> replaces the five-line containsKey dance and hands back the list so you can chain <code>.add(...)</code> onto it.</li>
+      <li class="fragment">Iterate <code>entrySet()</code>, never <code>keySet()</code> plus <code>get</code>, which hashes every key twice for no reason. <code>Map.Entry.comparingByValue()</code> when you need entries sorted. The finale is built out of <code>merge</code> and <code>computeIfAbsent</code>, and they each have a trap, which is the next slide.</li>
+    </ul>
+    <div class="footer-line"><span>map api</span><span>the move</span></div>
+  </section>
+
+  <!-- 56 MAP traps -->
+  <section class="map">
+    <span class="eyebrow">the two traps</span>
+    <h2>merge has a delete branch you did not ask for.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+Map&lt;String,Integer&gt; cart = new HashMap&lt;&gt;(Map.of("apple", 3, "pear", 7));
+
+cart.merge("apple", 3, (old, taken) -&gt; old - taken == 0 ? null : old - taken);
+//   present, function returns null -&gt; the MAPPING IS REMOVED. apple is gone.
+cart.merge("pear",  2, (old, taken) -&gt; old - taken);            // present  -&gt; pear = 5
+cart.merge("plum",  4, (old, taken) -&gt; old - taken);            // ABSENT   -&gt; plum = 4,
+//   the function never ran. It would have computed -4.
+cart.merge("pear", null, (a, b) -&gt; a);                          // NullPointerException
+
+Map&lt;String,Integer&gt; m = new HashMap&lt;&gt;();
+m.computeIfAbsent("a", k -&gt; { m.put("b", 1); return 1; });  // ConcurrentModificationException
+m.computeIfAbsent("a", k -&gt; null);                          // returns null, STORES NOTHING
+</code></pre>
+    <ul class="clean" style="margin-top:6px;">
+      <li class="fragment">For an absent or null-mapped key, <code>merge</code> stores the value argument as it is and never calls the function. So a remapping function with a side effect only runs for keys that already exist, and that asymmetry is the bug.</li>
+      <li class="fragment">For a present key the function runs with <code>(oldValue, value)</code> and its result is stored, <em>except</em> that null means remove. And the value argument itself must be non-null, so you cannot delete by merging a null either.</li>
+      <li class="fragment"><code>compute</code> and <code>computeIfPresent</code> follow the same null-means-remove rule, so a counting map built on merge can shrink while you believe you are only decrementing.</li>
+      <li class="fragment"><code>computeIfAbsent</code>'s function must not modify the same map. Since Java 9 a HashMap throws a fast CME instead of Java 8's silently corrupted table, and the usual way in is a memoised Fibonacci. On a ConcurrentHashMap it can deadlock: the bin is locked while your function runs. All verified on 25.</li>
+    </ul>
+    <div class="footer-line"><span>map api</span><span>traps</span></div>
+  </section>
+
+  <!-- 57 MAP views -->
+  <section class="map">
+    <span class="eyebrow">the three views</span>
+    <h2>keySet, values and entrySet are the map, not copies of it.</h2>
+<pre class="sm"><code class="language-java" data-trim>
+Map&lt;String,Integer&gt; m = new HashMap&lt;&gt;(Map.of("a", 1, "b", 2));
+
+m.keySet().remove("a");        // the MAPPING is gone. m is {b=2}
+m.keySet().add("c");           // UnsupportedOperationException, always: no value to store
+m.values().remove(2);          // removes ONE mapping with that value, whichever comes first
+
+m.entrySet().removeIf(e -&gt; e.getValue() == 0);            // the idiom for pruning a map
+for (var e : m.entrySet()) e.setValue(e.getValue() + 1);  // write-through, not structural
+
+Map.entry("a", 1).setValue(2);                            // UnsupportedOperationException
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">All three are backed by the map. A removal writes through, and an addition is impossible, because a key with no value has no meaning.</li>
+      <li class="fragment">That is why <code>entrySet().removeIf</code> is the safe way to prune, and why the fail-fast rules from earlier apply to the views exactly as they apply to the map.</li>
+      <li class="fragment">An <code>Entry</code> from <code>entrySet()</code> is a handle on the map, not a value you own: <code>setValue</code> writes into the map, and it is the only mutation it supports.</li>
+      <li class="fragment">The entries of <code>Map.of</code>, and anything from <code>Map.entry</code>, are immutable, so <code>setValue</code> throws. If you need to keep entries around, copy them with <code>Map.entry(e.getKey(), e.getValue())</code>. Verified on 25.</li>
+    </ul>
+    <div class="footer-line"><span>map api</span><span>views</span></div>
+  </section>
+
+  <!-- 58 QUIZ 9 -->
+  <section class="quiz">
+    <span class="eyebrow"><span class="dot"></span> quiz · 9 of 9</span>
+    <h2>What does this print?</h2>
+<pre class="sm"><code class="language-java" data-trim>
+Map&lt;String,Integer&gt; stock = new HashMap&lt;&gt;();
+stock.put("bolt", 2);
+stock.put("nut", 5);
+
+stock.merge("bolt",   2, (old, taken) -&gt; old - taken == 0 ? null : old - taken);
+stock.merge("nut",    1, (old, taken) -&gt; old - taken == 0 ? null : old - taken);
+stock.merge("washer", 3, (old, taken) -&gt; old - taken);
+
+System.out.println(stock.size() + " " + stock.get("bolt") + " " + stock.get("washer"));
+</code></pre>
+    <ol class="opts">
+      <li><b>A</b> <code>3 0 3</code></li>
+      <li><b>B</b> <code>2 null 3</code></li>
+      <li><b>C</b> <code>3 null 3</code></li>
+      <li><b>D</b> <code>2 null null</code></li>
+    </ol>
+    <div class="footer-line"><span>quiz</span><span>9 of 9</span></div>
+  </section>
+
+
+  <!-- 60 STREAM the useful part -->
+  <section class="stream">
+    <span class="eyebrow">streams, without the sales pitch</span>
+    <h2>filter, map, toList: the useful 10 percent.</h2>
+    <div class="dgrid">
+<pre class="sm"><code class="language-java" data-trim>
+List&lt;String&gt; longNames = people.stream()
+        .filter(p -&gt; p.age() &gt; 30)     // Predicate
+        .map(Person::name)             // Function
+        .sorted()
+        .toList();
+
+Map&lt;String,List&lt;Person&gt;&gt; byCity = people.stream()
+    .collect(groupingBy(Person::city));
+
+Map&lt;String,Long&gt; counts = people.stream()
+    .collect(groupingBy(Person::city, counting()));
+</code></pre>
+      <ul class="clean">
+        <li class="fragment">Nothing runs until a terminal operation: <code>collect</code>, <code>toList</code>, <code>count</code>, <code>forEach</code>. The intermediate calls only build the plan.</li>
+        <li class="fragment"><b>Single use.</b> Operate on the same <code>Stream</code> variable twice and the second call throws <code>IllegalStateException</code>. A Collection is re-streamable. A Stream is not, so never hold one in a field.</li>
+        <li class="fragment"><code>stream.toList()</code> is Java 16 and <em>unmodifiable</em>. <code>collect(Collectors.toList())</code> is a plain mutable ArrayList. Swapping one for the other changes whether your caller can add to what you returned, and the capstone tests exactly that.</li>
+        <li class="fragment"><code>groupingBy</code> is the stream answer to <code>computeIfAbsent</code>, and with <code>counting()</code> to <code>merge</code>. It hands back a <code>HashMap</code> of <code>Long</code>, so <code>counts.get("Pune").equals(2)</code> is false.</li>
+      </ul>
+    </div>
+    <div class="footer-line"><span>streams</span><span>the useful part</span></div>
+  </section>
+
+  <!-- 61 OPT orElse -->
+  <section class="opt">
+    <span class="eyebrow"><span class="dot"></span> optional / guess first</span>
+    <h2>Optional: orElse is a value, orElseGet is a promise.</h2>
+    <p class="fragment">The Optional below is present. Call the last two lines in a loop ten times: how many times does <code>expensive()</code> run? Hands for zero, hands for ten. Then count what Java has to evaluate before it enters the method.</p>
+<pre class="sm"><code class="language-java" data-trim>
+Optional&lt;Version&gt; v = registry.latest();
+
+v.map(Version::toString).orElse("none");
+v.filter(x -&gt; x.major() &gt;= 2).ifPresent(this::publish);
+v.orElseThrow(() -&gt; new IllegalStateException("empty registry"));
+
+String s = v.orElse(expensive());         // expensive() ALWAYS runs, present or not
+String t = v.orElseGet(this::expensive);  // only when empty
+</code></pre>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">Ten. <code>orElse</code> takes a <em>value</em>, and Java evaluates arguments before it enters the method, so "otherwise" is a lie about the argument and only a lambda defers it. Harmless for <code>orElse("")</code>. A database hit on every lookup for <code>orElse(repo.loadDefault())</code>. Item 55.</li>
+      <li class="fragment">Never a field, never a parameter, never a map value or a collection element. It is a return type for "there may be no answer" and nothing else. <code>Optional&lt;List&lt;T&gt;&gt;</code> is wrong twice: return an empty list, never null (Item 54).</li>
+      <li class="fragment"><code>Optional.of(null)</code> throws; <code>ofNullable</code> takes a maybe-null. And <code>get()</code> without <code>isPresent</code> is the exact bug Optional was invented to delete, so write <code>orElseThrow()</code>. Day 3 opens with <code>Optional&lt;T&gt; findById</code>, which is where this pays for itself.</li>
+    </ul>
+    <div class="footer-line"><span>optional</span><span>orElse</span></div>
+  </section>
+
+  <!-- 62 CHOOSE big-o -->
+  <section class="choose">
+    <span class="eyebrow">one screen to remember</span>
+    <h2>The honest Big-O table.</h2>
+    <table class="tbl" style="font-size:16px;">
+      <tr><th></th><th>get / contains</th><th>add</th><th>remove</th><th>iterate</th><th>notes</th></tr>
+      <tr><td><code>ArrayList</code></td><td>O(1) by index, O(n) by value</td><td>O(1) amortised at the end, O(n) in the middle</td><td>O(n)</td><td>O(n), cache friendly</td><td>the default</td></tr>
+      <tr><td><code>LinkedList</code></td><td>O(n)</td><td>O(1) at either end</td><td>O(1) once you are there</td><td>O(n), a cache miss per hop</td><td>almost never</td></tr>
+      <tr><td><code>ArrayDeque</code></td><td>no indexing</td><td>O(1) both ends</td><td>O(1) both ends</td><td>O(n)</td><td>stack and queue</td></tr>
+      <tr><td><code>HashMap</code> / <code>HashSet</code></td><td>O(1) expected, O(log n) in a tree bin</td><td>O(1) expected</td><td>O(1) expected</td><td>O(capacity)</td><td>no order</td></tr>
+      <tr><td><code>LinkedHashMap</code></td><td>O(1) expected</td><td>O(1) expected</td><td>O(1) expected</td><td>O(size), ordered</td><td>order, or an LRU</td></tr>
+      <tr><td><code>TreeMap</code> / <code>TreeSet</code></td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td><td>O(n), sorted</td><td>ranges, navigation</td></tr>
+      <tr><td><code>PriorityQueue</code></td><td>peek O(1), contains O(n)</td><td>O(log n)</td><td>poll O(log n)</td><td>O(n), unordered</td><td>top-k, scheduling</td></tr>
+      <tr><td><code>EnumMap</code> / <code>EnumSet</code></td><td>O(1)</td><td>O(1)</td><td>O(1)</td><td>O(n), declaration order</td><td>an array, and tiny</td></tr>
+      <tr><td><code>ConcurrentHashMap</code></td><td>O(1) expected</td><td>O(1) expected</td><td>O(1) expected</td><td>weakly consistent</td><td>shared writers</td></tr>
+    </table>
+    <p class="fragment" style="margin-top:12px; color:var(--muted);">"Expected" is not "always". A bad <code>hashCode</code> turns every O(1) on this table into O(log n), and a hashCode that returns a constant turns it into O(n). You write that method.</p>
+    <div class="footer-line"><span>choose</span><span>big-o</span></div>
+  </section>
+
+  <!-- 63 CHOOSE Q + tree -->
+  <section class="choose">
+    <span class="eyebrow"><span class="dot"></span> choose / question, then the answer</span>
+    <h2>Which collection, when?</h2>
+    <p class="fragment" style="margin-top:-4px;">A class name for each, and one sentence of argument. The last 100 searches, most recent first, oldest drops off. The unique visitor ids seen today, tens of millions. Tasks to run next, earliest deadline first.</p>
+    <div class="diagram">
+      <svg viewBox="0 0 940 300" width="100%">
+        <defs><marker id="s93a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--dim)"/></marker></defs>
+        <rect x="380" y="8" width="180" height="34" rx="8" fill="#16161a" stroke="var(--accent)"/><text x="470" y="31" text-anchor="middle" fill="var(--accent)" font-size="14">are they pairs?</text>
+        <line x1="420" y1="42" x2="230" y2="66" stroke="var(--dim)" marker-end="url(#s93a)"/><text x="300" y="50" fill="var(--good)" font-size="12" class="mono">yes</text>
+        <line x1="520" y1="42" x2="700" y2="66" stroke="var(--dim)" marker-end="url(#s93a)"/><text x="620" y="50" fill="var(--bad)" font-size="12" class="mono">no</text>
+        <rect x="150" y="68" width="160" height="30" rx="7" fill="#16161a" stroke="var(--line)"/><text x="230" y="88" text-anchor="middle" fill="var(--text)" font-size="13">Map</text>
+        <text x="30" y="126" fill="var(--muted)" font-size="12">no order needed</text><text x="200" y="126" fill="var(--text)" font-size="12" class="mono">HashMap</text>
+        <text x="30" y="150" fill="var(--muted)" font-size="12">insertion order, or an LRU</text><text x="200" y="150" fill="var(--text)" font-size="12" class="mono">LinkedHashMap</text>
+        <text x="30" y="174" fill="var(--muted)" font-size="12">sorted, or range queries</text><text x="200" y="174" fill="var(--text)" font-size="12" class="mono">TreeMap</text>
+        <text x="30" y="198" fill="var(--muted)" font-size="12">enum keys</text><text x="200" y="198" fill="var(--text)" font-size="12" class="mono">EnumMap</text>
+        <text x="30" y="222" fill="var(--muted)" font-size="12">shared writers</text><text x="200" y="222" fill="var(--text)" font-size="12" class="mono">ConcurrentHashMap</text>
+        <rect x="620" y="68" width="200" height="30" rx="7" fill="#16161a" stroke="var(--line)"/><text x="720" y="88" text-anchor="middle" fill="var(--text)" font-size="13">duplicates allowed?</text>
+        <text x="480" y="126" fill="var(--good)" font-size="12" class="mono">yes, a List</text><text x="610" y="126" fill="var(--text)" font-size="12" class="mono">ArrayList</text><text x="700" y="126" fill="var(--dim)" font-size="11">(LinkedList only with a ListIterator in hand)</text>
+        <text x="480" y="156" fill="var(--bad)" font-size="12" class="mono">no, a Set</text><text x="610" y="156" fill="var(--text)" font-size="12" class="mono">HashSet / LinkedHashSet / TreeSet / EnumSet</text>
+        <text x="480" y="186" fill="var(--muted)" font-size="12">ends only</text><text x="610" y="186" fill="var(--text)" font-size="12" class="mono">ArrayDeque</text>
+        <text x="480" y="216" fill="var(--muted)" font-size="12">by priority</text><text x="610" y="216" fill="var(--text)" font-size="12" class="mono">PriorityQueue</text>
+        <line x1="20" y1="244" x2="920" y2="244" stroke="var(--line)"/>
+        <text x="20" y="266" fill="var(--accent)" font-size="13">the three cards:</text>
+        <text x="150" y="266" fill="var(--muted)" font-size="13">last 100 searches, most recent first, oldest drops off</text><text x="620" y="266" fill="var(--text)" font-size="13" class="mono">LinkedHashMap, accessOrder</text>
+        <text x="150" y="286" fill="var(--muted)" font-size="13">tens of millions of unique ids</text><text x="620" y="286" fill="var(--text)" font-size="13" class="mono">HashSet, pre-sized</text>
+      </svg>
+    </div>
+    <ul class="clean" style="margin-top:8px;">
+      <li class="fragment">Third card: a <code>PriorityQueue</code> on deadline, not a sorted list you re-sort on every insert. Defaults are <code>ArrayList</code>, <code>HashMap</code>, <code>HashSet</code>, <code>ArrayDeque</code>; a specialist needs a reason you can say out loud.</li>
+    </ul>
+    <div class="footer-line"><span>choose</span><span>the tree</span></div>
+  </section>
+
+  <!-- 64 CAPSTONE PART 1 -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge">Part 1 · keys</span></div>
+    <h2>Part 1: a Version that can be a key.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment"><code>Version.parse("1.10.0")</code> into major, minor and patch. Anything else is an <code>IllegalArgumentException</code>, thrown at the parse, not later.</li>
+        <li class="fragment"><code>equals</code> and <code>hashCode</code> over all three fields (Items 10 and 11), and <code>compareTo</code> numeric, so <code>1.9.0 &lt; 1.10.0</code>, consistent with equals (Item 14). Written by hand, because that is the point of this part.</li>
+        <li class="fragment"><code>Registry</code> holds versions in a <code>TreeSet</code>: <code>latest()</code> returns an <code>Optional</code>, <code>all()</code> an unmodifiable sorted view, <code>matching(Predicate&lt;Version&gt;)</code> an unmodifiable sorted list, and <code>latestOrElse(Supplier&lt;Version&gt;)</code> written as <code>latest().orElseGet(fallback)</code>.</li>
+      </ul>
+      <div>
+        <p style="font-size:19px; color:var(--muted); margin-bottom:8px;">What the tests prove</p>
+        <ul class="clean">
+          <li class="fragment">HashSet dedupes: your <code>hashCode</code> is right.</li>
+          <li class="fragment">TreeSet sorts numerically and not lexically: your <code>compareTo</code> is right.</li>
+          <li class="fragment">A <code>Predicate</code> parameter works, and a no-match returns an empty list rather than null (Item 54).</li>
+          <li class="fragment">A counting supplier is never called when the registry already has an answer: <code>orElseGet</code> is lazy, and <code>orElse</code> would not have been.</li>
+        </ul>
+        <p class="fragment" style="font-size:17px; color:var(--dim); margin-top:10px;">keys/Version.java &nbsp; keys/Registry.java &nbsp; keys/RunTests.java</p>
+      </div>
+    </div>
+    <div class="footer-line"><span>capstone</span><span>part 1</span></div>
+  </section>
+
+  <!-- 65 CAPSTONE PART 2 -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge">Part 2 · wrappers</span></div>
+    <h2>Part 2: wrap a Set, and build an LRU.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment"><code>ForwardingSet&lt;E&gt;</code> arrives half written: <code>size</code>, <code>iterator</code>, <code>contains</code> and <code>add</code> already forward, and five are left to you (<code>addAll</code>, <code>removeAll</code>, <code>retainAll</code>, <code>containsAll</code>, and <code>equals</code> with <code>hashCode</code>). You feel the boilerplate Bloch is talking about before you get the payoff.</li>
+        <li class="fragment">Then <code>InstrumentedSet&lt;E&gt; extends ForwardingSet&lt;E&gt;</code> and counts <code>add</code> and <code>addAll</code> attempts. The tests prove that addAll of three counts <b>three</b>, while the broken <code>InstrumentedHashSet</code> sitting next to it still reports <b>six</b>.</li>
+        <li class="fragment">Then <code>LruCache&lt;K,V&gt;</code> on <code>LinkedHashMap(16, 0.75f, true)</code> with <code>removeEldestEntry</code> returning <code>size() &gt; capacity</code>.</li>
+      </ul>
+      <div>
+        <p style="font-size:19px; color:var(--muted); margin-bottom:8px;">What the tests prove</p>
+        <ul class="clean">
+          <li class="fragment">Composition counts correctly where inheritance could not.</li>
+          <li class="fragment">The same wrapper works over a <code>TreeSet</code>, which no subclass of HashSet could ever manage.</li>
+          <li class="fragment">Eviction follows access order after a <code>get</code>, capacity is never exceeded, and a re-put refreshes recency.</li>
+        </ul>
+        <p class="fragment" style="font-size:17px; color:var(--dim); margin-top:10px;">wrappers/ForwardingSet.java &nbsp; wrappers/InstrumentedHashSet.java (given, broken on purpose) &nbsp; wrappers/InstrumentedSet.java &nbsp; wrappers/LruCache.java &nbsp; wrappers/RunTests.java</p>
+      </div>
+    </div>
+    <div class="footer-line"><span>capstone</span><span>part 2</span></div>
+  </section>
+
+  <!-- 66 CAPSTONE FINALE -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge good">Finale · maps</span></div>
+    <h2>Finale: WordStats.</h2>
+    <div class="dgrid">
+      <ul class="clean">
+        <li class="fragment"><code>add(String text)</code> lower-cases, splits on whitespace, strips punctuation and counts with <code>counts.merge(word, 1, Integer::sum)</code>. <code>count(word)</code> goes through <code>getOrDefault</code>.</li>
+        <li class="fragment"><code>remove(word, n)</code> with <code>merge</code>, so taking a count to zero <em>deletes</em> the entry instead of leaving a zero behind.</li>
+        <li class="fragment"><code>mostFrequent()</code> returns an <code>Optional&lt;String&gt;</code>: empty for an empty WordStats, and the alphabetically first word on a tie.</li>
+        <li class="fragment"><code>topK(k)</code> with a size-k min-heap. Its comparator is <code>comparingInt(count).thenComparing(word, reverseOrder())</code>, drained and reversed, so the <em>result</em> is count descending with ties alphabetical. The heap's tie-break runs the opposite way to the result's, and that is the bit to get right.</li>
+      </ul>
+      <div>
+        <p style="font-size:19px; color:var(--muted); margin-bottom:8px;">And the four returns, each a different promise</p>
+        <ul class="clean">
+          <li class="fragment"><code>byFirstLetter()</code>: <code>computeIfAbsent</code> into a <code>TreeMap&lt;Character, List&lt;String&gt;&gt;</code>.</li>
+          <li class="fragment"><code>words()</code>: <code>stream().sorted().toList()</code>, which is unmodifiable. <code>Collectors.toList()</code> would not have been.</li>
+          <li class="fragment"><code>frequencies()</code>: <code>Map.copyOf</code>, a snapshot that never changes.</li>
+          <li class="fragment"><code>index()</code>: <code>Collections.unmodifiableMap</code>, a live view. There is a test that tells those two apart.</li>
+        </ul>
+        <p class="fragment" style="font-size:17px; color:var(--dim); margin-top:10px;">finale/WordStats.java &nbsp; finale/RunTests.java</p>
+      </div>
+    </div>
+    <div class="footer-line"><span>capstone</span><span>finale</span></div>
+  </section>
+
+  <!-- 67 GO BUILD -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge">Build</span></div>
+    <h2>Go build. Green is the goal.</h2>
+    <div class="cmd lg" style="margin-top:16px;">./run.sh <span class="c">&nbsp; # everything, from the capstone root</span><br/>run.cmd <span class="c">&nbsp; # the same, on Windows</span><br/>cd part1-keys &amp;&amp; ./run.sh <span class="c">&nbsp; # just one part</span></div>
+    <ul class="clean" style="margin-top:22px;">
+      <li>Part 1 first, then part 2. The finale if there is time, and there usually is.</li>
+      <li>Read <code>RunTests.java</code> first: it is the spec. The failing tests are your to-do list, one at a time, and do not read ahead.</li>
+      <li>Every test name says which contract it is checking. When one fails, the name tells you which slide to go back to.</li>
+    </ul>
+    <p style="margin-top:22px; color:var(--muted);">Keep building through the break. We come back together afterwards for the debrief.</p>
+    <div class="footer-line"><span>capstone</span><span>go build</span></div>
+  </section>
+
+  <!-- 68 CAPSTONE DEBRIEF -->
+  <section class="handson">
+    <div class="handson-head"><span class="handson-badge">Capstone &middot; debrief</span></div>
+    <h2>Which contract did each test prove?</h2>
+    <div class="grid g2">
+      <ul class="clean">
+        <li class="fragment"><b>Part 1.</b> HashSet dedupe was your <code>hashCode</code>. TreeSet order was your <code>compareTo</code>. The <code>1.9.0 &lt; 1.10.0</code> test was numeric against lexical.</li>
+        <li class="fragment">The <code>matching()</code> test was a <code>Predicate</code> as a parameter, and an empty list rather than null when nothing matched.</li>
+        <li class="fragment">The counting-supplier test was <code>orElseGet</code> being lazy. That is the Optional slide with a test around it: <code>orElse</code> evaluates its argument even when the value is there, so that version failed.</li>
+        <li class="fragment"><b>Part 2.</b> <code>InstrumentedHashSet == 6</code> is Item 18 self-use. <code>InstrumentedSet == 3</code> is forwarding. Same behaviour requested, two answers, and the five methods you wrote by hand are why Bloch calls a forwarding class tedious and reusable, in that order.</li>
+      </ul>
+      <ul class="clean">
+        <li class="fragment">The wrapped-<code>TreeSet</code> test is the whole argument in one line: a wrapper is not a subclass, so it works over any Set.</li>
+        <li class="fragment">The LRU tests are <code>accessOrder</code> and <code>removeEldestEntry</code>. If eviction ignored your <code>get</code>, the constructor flag was false.</li>
+        <li class="fragment"><b>Finale.</b> <code>merge</code> is counting, and its null branch is deleting. <code>computeIfAbsent</code> is grouping. The heap is top-k in O(n log k) with the tie-break reversed.</li>
+        <li class="fragment"><code>mostFrequent</code> is Optional. <code>words()</code> is <code>stream.toList()</code> being unmodifiable. And <code>copyOf</code> against <code>unmodifiableMap</code> is snapshot against view, which is the test most people fail first.</li>
+      </ul>
+    </div>
+    <p class="fragment" style="margin-top:14px; color:var(--muted);">So: who returned the live map, and who wrote <code>orElse</code> where <code>orElseGet</code> was wanted?</p>
+    <div class="footer-line"><span>capstone</span><span>debrief</span></div>
+  </section>
+
+  <!-- 69 RECAP -->
+  <section>
+    <span class="eyebrow">what to actually remember</span>
+    <h2>Fourteen lines, the whole day.</h2>
+    <div class="grid g2">
+      <ul class="clean">
+        <li class="fragment"><code>Map</code> is not a <code>Collection</code>. Declare the interface, construct the class (Item 64).</li>
+        <li class="fragment"><code>ArrayList</code> by default. <code>LinkedList</code> almost never.</li>
+        <li class="fragment"><code>equals</code> and <code>hashCode</code> together, over the same fields, and those fields immutable (Items 10, 11).</li>
+        <li class="fragment">HashMap is: spread the hash, <code>(n-1) &amp; hash</code>, walk the chain, call equals, resize at 0.75, treeify on the ninth node once the table has 64 slots.</li>
+        <li class="fragment">Never mutate a key. Wrap it, do not extend it (Item 18).</li>
+        <li class="fragment"><code>LinkedHashMap</code> for order, and for an LRU. <code>TreeMap</code> believes <code>compareTo</code> and nothing else (Item 14).</li>
+        <li class="fragment">A lambda is an instance of a one-method interface, and the four shapes are <code>Predicate</code>, <code>Function</code>, <code>Consumer</code>, <code>Supplier</code>.</li>
+      </ul>
+      <ul class="clean">
+        <li class="fragment"><code>merge</code> returning null deletes the entry. <code>computeIfAbsent</code> must not touch its own map.</li>
+        <li class="fragment"><code>List.of</code> is immutable and null-hostile. <code>unmodifiableX</code> is a view. <code>Arrays.asList</code> is fixed size.</li>
+        <li class="fragment">Fail-fast is best-effort, so use <code>removeIf</code>.</li>
+        <li class="fragment">PECS, and no raw types (Items 31, 26).</li>
+        <li class="fragment"><code>ConcurrentHashMap</code>, and the per-key atomics.</li>
+        <li class="fragment"><code>orElse</code> evaluates its argument, <code>orElseGet</code> does not (Item 55). <code>stream.toList()</code> is unmodifiable.</li>
+        <li class="fragment">Return empty, never null (Item 54).</li>
+      </ul>
+    </div>
+    <div class="footer-line"><span>day 2</span><span>recap</span></div>
+  </section>
+
+  <!-- 70 CLOSE -->
+  <section class="title-wrap">
+    <span class="eyebrow">closing</span>
+    <h1 class="display" style="font-size:60px;">It is not about<br/>containers. It is about<br/><em>contracts.</em></h1>
+    <p class="subtitle">Every collection today trusted something you wrote: an <code>equals</code>, a <code>hashCode</code>, a <code>compareTo</code>, a <code>Predicate</code>, or just the promise not to mutate a key. Keep those promises and the JDK's data structures are fast and boring, which is the highest compliment I can pay a library. Tomorrow: JDBC, where the contract is between your code and a database, the <code>ResultSet</code> is the collection you did not build, and the Function you hand to a query has a name: RowMapper.</p>
+    <div class="footer-line"><span>day 2</span><span>now go build</span></div>
+  </section>
+
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1600, height: 900, margin: 0.04, minScale: 0.2, maxScale: 1.4,
+    hash: true, slideNumber: 'c/t', controls: true, progress: true,
+    center: false, transition: 'fade', backgroundTransition: 'fade',
+    plugins: [ RevealHighlight, RevealNotes ]
+  });
+
+  // Driven by teacher.html in this same folder. Folder-scoped so it never collides with other days.
+  var SCOPE = location.pathname.replace(/[^/]*$/, '');
+  var CH = 'byts-deck' + SCOPE, K_GOTO = 'byts-deck-goto' + SCOPE, K_HELLO = 'byts-deck-hello' + SCOPE;
+  var deckChan = ('BroadcastChannel' in window) ? new BroadcastChannel(CH) : null;
+  function pIdx() { return Reveal.getSlides().indexOf(Reveal.getCurrentSlide()); }
+  function goTo(i) {
+    if (isNaN(i) || i === pIdx()) return;
+    Reveal.slide(i, 0);
+    var n = Reveal.getCurrentSlide().querySelectorAll('.fragment').length;
+    if (n > 0) Reveal.slide(i, 0, n - 1);
+  }
+  function hello() {
+    try { localStorage.setItem(K_HELLO, String(Date.now())); } catch (e) {}
+    if (deckChan) deckChan.postMessage({ type: 'hello' });
+  }
+  Reveal.on('ready', hello);
+  if (deckChan) deckChan.onmessage = function (e) {
+    if (e.data && e.data.type === 'goto' && typeof e.data.slide === 'number') goTo(e.data.slide);
+  };
+  window.addEventListener('storage', function (e) {
+    if (e.key === K_GOTO && e.newValue != null) goTo(parseInt(e.newValue, 10));
+  });
+</script>
+</body>
+</html>
