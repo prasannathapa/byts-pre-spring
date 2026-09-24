@@ -1305,7 +1305,50 @@ public class ReportServlet extends HttpServlet {
     <div class="footer-line"><span>lifecycle</span><span>init and destroy</span></div>
   </section>
 
-  <!-- 34 SERVLETCONFIG VERSUS SERVLETCONTEXT: ONE IS YOURS ONE -->
+  <!-- 34 A SETTING YOU MIGHT WANT TO CHANGE -->
+  <section>
+    <span class="eyebrow">before we compare two things, what is the problem?</span>
+    <h2>Where do you put a setting you might want to change?</h2>
+    <div class="codeflex">
+      <div>
+        <span class="tag bad">baked in</span>
+<pre class="sm"><code class="language-java" data-trim>
+ofPattern("dd MMM yyyy");
+</code></pre>
+        <p style="font-size:19px;color:var(--muted);margin-top:6px;">To change the date format you edit the class, rebuild, and redeploy.</p>
+      </div>
+      <div>
+        <span class="tag good">a setting</span>
+<pre class="sm"><code class="language-java" data-trim>
+ofPattern(getInitParameter("pattern"));
+</code></pre>
+        <p style="font-size:19px;color:var(--muted);margin-top:6px;">The value lives outside the code, so it changes without touching Java.</p>
+      </div>
+    </div>
+    <p class="lede fragment" style="margin-top:14px;">A setting written outside the class is an <em>init parameter</em>. Now the only question left is who it belongs to.</p>
+    <div class="diagram fragment" style="margin-top:12px;">
+      <svg viewBox="0 0 940 150" width="100%">
+        <rect x="14" y="16" width="912" height="120" rx="10" fill="var(--bg-soft)" stroke="var(--line)"/>
+        <text x="30" y="40" fill="var(--muted)" font-size="13">one webapp</text>
+        <rect x="30" y="52" width="200" height="66" rx="8" fill="var(--bg)" stroke="var(--line)"/>
+        <text x="130" y="76" text-anchor="middle" fill="var(--text)" font-size="13" class="mono">ReportServlet</text>
+        <text x="130" y="100" text-anchor="middle" fill="var(--accent)" font-size="11">its own settings</text>
+        <rect x="250" y="52" width="200" height="66" rx="8" fill="var(--bg)" stroke="var(--line)"/>
+        <text x="350" y="76" text-anchor="middle" fill="var(--text)" font-size="13" class="mono">LoginServlet</text>
+        <text x="350" y="100" text-anchor="middle" fill="var(--accent)" font-size="11">its own settings</text>
+        <rect x="470" y="52" width="200" height="66" rx="8" fill="var(--bg)" stroke="var(--line)"/>
+        <text x="570" y="76" text-anchor="middle" fill="var(--text)" font-size="13" class="mono">SearchServlet</text>
+        <text x="570" y="100" text-anchor="middle" fill="var(--accent)" font-size="11">its own settings</text>
+        <rect x="700" y="52" width="210" height="66" rx="8" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="2"/>
+        <text x="805" y="76" text-anchor="middle" fill="var(--text)" font-size="13">shared settings</text>
+        <text x="805" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">one copy, all three read it</text>
+      </svg>
+    </div>
+    <p class="fragment" style="margin-top:8px;">Two places to put a setting means two objects to read it from. That is the whole reason the next slide has two columns.</p>
+    <div class="footer-line"><span>configuration</span><span>why two</span></div>
+  </section>
+
+  <!-- 35 SERVLETCONFIG VERSUS SERVLETCONTEXT: ONE IS YOURS ONE -->
   <section class="container">
     <span class="eyebrow">configuration</span>
     <h2>ServletConfig versus ServletContext: one is yours, one is everybody's.</h2>
@@ -1325,7 +1368,7 @@ public class ReportServlet extends HttpServlet {
     <div class="footer-line"><span>config</span><span>config vs context</span></div>
   </section>
 
-  <!-- 35 TOMCAT HAS STARTED. NO REQUEST HAS ARRIVED. WHAT HAS B -->
+  <!-- 36 TOMCAT HAS STARTED. NO REQUEST HAS ARRIVED. WHAT HAS B -->
   <section class="quiz">
     <span class="eyebrow"><span class="dot"></span> quiz &middot; 2 of 9</span>
     <h2>Tomcat has started. No request has arrived. What has been printed?</h2>
@@ -1347,7 +1390,7 @@ public class X extends HttpServlet {
   </section>
 
 
-  <!-- 37 THIS SERVLET COUNTS VISITS. WHAT IS WRONG WITH IT? -->
+  <!-- 38 THIS SERVLET COUNTS VISITS. WHAT IS WRONG WITH IT? -->
   <section class="threads">
     <span class="eyebrow"><span class="dot"></span> threads / question</span>
     <h2>This servlet counts visits. What is wrong with it?</h2>
@@ -1368,7 +1411,7 @@ public class HitServlet extends HttpServlet {
     <div class="footer-line"><span>threads</span><span>question</span></div>
   </section>
 
-  <!-- 38 TWO OF THESE ARE INSIDE THE SAME OBJECT RIGHT NOW. -->
+  <!-- 39 TWO OF THESE ARE INSIDE THE SAME OBJECT RIGHT NOW. -->
   <section class="threads">
     <span class="eyebrow">the word we have been leaning on since the first hour</span>
     <h2>Two of these are inside the same object, right now.</h2>
@@ -1417,7 +1460,7 @@ public class HitServlet extends HttpServlet {
     <div class="footer-line"><span>threads</span><span>what a thread is</span></div>
   </section>
 
-  <!-- 39 ONE INSTANCE MANY THREADS: EVERY INSTANCE FIELD IS SH -->
+  <!-- 40 ONE INSTANCE MANY THREADS: EVERY INSTANCE FIELD IS SH -->
   <section class="threads">
     <span class="eyebrow">the answer</span>
     <h2>One instance, many threads: every instance field is shared.</h2>
@@ -1455,7 +1498,7 @@ public class HitServlet extends HttpServlet {
     <div class="footer-line"><span>threads</span><span>the rule</span></div>
   </section>
 
-  <!-- 40 WHICH VARIABLES ARE SHARED -->
+  <!-- 41 WHICH VARIABLES ARE SHARED -->
   <section class="threads">
     <span class="eyebrow">so what is actually safe?</span>
     <h2>On the class: shared. In the method: yours.</h2>
@@ -1480,7 +1523,7 @@ public class MyServlet extends HttpServlet {
     <div class="footer-line"><span>threads</span><span>what is shared</span></div>
   </section>
 
-  <!-- 41 MAKE IT ATOMIC OR MAKE IT STATELESS. -->
+  <!-- 42 MAKE IT ATOMIC OR MAKE IT STATELESS. -->
   <section class="threads">
     <span class="eyebrow">the move</span>
     <h2>Make it atomic, or make it stateless.</h2>
@@ -1519,7 +1562,7 @@ protected void doGet(...) {
     <div class="footer-line"><span>threads</span><span>the fix</span></div>
   </section>
 
-  <!-- 42 DEMO03: 500 REQUESTS 313 COUNTS LOST. -->
+  <!-- 43 DEMO03: 500 REQUESTS 313 COUNTS LOST. -->
   <section class="threads">
     <span class="eyebrow">it ran / a real number, not a warning</span>
     <h2>Demo03: 500 requests, 313 counts lost.</h2>
@@ -1553,7 +1596,7 @@ protected void doGet(...) {
     <div class="footer-line"><span>threads</span><span>Demo03</span></div>
   </section>
 
-  <!-- 43 TWO REQUESTS HIT THIS SERVLET AT THE SAME INSTANT. WHI -->
+  <!-- 44 TWO REQUESTS HIT THIS SERVLET AT THE SAME INSTANT. WHI -->
   <section class="quiz">
     <span class="eyebrow"><span class="dot"></span> quiz &middot; 3 of 9</span>
     <h2>Two requests hit this servlet at the same instant. Which statement is true?</h2>
@@ -1579,7 +1622,7 @@ public class HitServlet extends HttpServlet {
   </section>
 
 
-  <!-- 45 REQUEST SESSION APPLICATION: THREE MAPS WITH THREE L -->
+  <!-- 46 REQUEST SESSION APPLICATION: THREE MAPS WITH THREE L -->
   <section class="scope">
     <span class="eyebrow"><span class="dot"></span> scopes</span>
     <h2>Request, session, application: three maps with three lifetimes.</h2>
@@ -1598,7 +1641,7 @@ public class HitServlet extends HttpServlet {
     <div class="footer-line"><span>scopes</span><span>the three</span></div>
   </section>
 
-  <!-- 46 SAME VERB THREE DOORS. -->
+  <!-- 47 SAME VERB THREE DOORS. -->
   <section class="scope">
     <span class="eyebrow">the move</span>
     <h2>Same verb, three doors.</h2>
@@ -1624,7 +1667,7 @@ if (existing != null) existing.invalidate();           // logout
     <div class="footer-line"><span>scopes</span><span>the APIs</span></div>
   </section>
 
-  <!-- 47 FORWARD STAYS INSIDE REDIRECT GOES BACK OUT INCLUDE -->
+  <!-- 48 FORWARD STAYS INSIDE REDIRECT GOES BACK OUT INCLUDE -->
   <section class="scope">
     <span class="eyebrow"><span class="dot"></span> dispatch</span>
     <h2>Forward stays inside, redirect goes back out, include comes back.</h2>
@@ -1671,7 +1714,7 @@ if (existing != null) existing.invalidate();           // logout
     <div class="footer-line"><span>dispatch</span><span>forward, redirect, include</span></div>
   </section>
 
-  <!-- 48 THE WEBAPP IS DEPLOYED AT /BANK. A REQUEST ARRIVES WIT -->
+  <!-- 49 THE WEBAPP IS DEPLOYED AT /BANK. A REQUEST ARRIVES WIT -->
   <section class="quiz">
     <span class="eyebrow"><span class="dot"></span> quiz &middot; 4 of 9</span>
     <h2>The webapp is deployed at /bank. A request arrives with no token. What happens?</h2>
@@ -1695,7 +1738,7 @@ if (existing != null) existing.invalidate();           // logout
   </section>
 
 
-  <!-- 50 A COOKIE IS A TICKET THE SESSION IS THE CLOAKROOM. -->
+  <!-- 51 A COOKIE IS A TICKET THE SESSION IS THE CLOAKROOM. -->
   <section class="scope">
     <span class="eyebrow"><span class="dot"></span> sessions</span>
     <h2>A cookie is a ticket; the session is the cloakroom.</h2>
@@ -1731,7 +1774,7 @@ if (existing != null) existing.invalidate();           // logout
     <div class="footer-line"><span>sessions</span><span>cookies and sessions</span></div>
   </section>
 
-  <!-- 51 WRITING AND READING A COOKIE BY HAND. -->
+  <!-- 52 WRITING AND READING A COOKIE BY HAND. -->
   <section class="scope">
     <span class="eyebrow">the move</span>
     <h2>Writing and reading a cookie by hand.</h2>
@@ -1757,7 +1800,7 @@ if (jar != null)
     <div class="footer-line"><span>sessions</span><span>the Cookie API</span></div>
   </section>
 
-  <!-- 52 A WHOLE POST EXCHANGE AND NOTHING IN IT IS NEW ANY MO -->
+  <!-- 53 A WHOLE POST EXCHANGE AND NOTHING IN IT IS NEW ANY MO -->
   <section class="http">
     <span class="eyebrow">the loop closes</span>
     <h2>A whole POST exchange, and nothing in it is new any more.</h2>
@@ -1794,7 +1837,7 @@ Set-Cookie: JSESSIONID=3F2A9C10; HttpOnly
     <div class="footer-line"><span>http</span><span>the exchange again</span></div>
   </section>
 
-  <!-- 53 SESSIONS HONESTLY: THEY ARE THE REASON SERVERS STOP S -->
+  <!-- 54 SESSIONS HONESTLY: THEY ARE THE REASON SERVERS STOP S -->
   <section class="scope">
     <span class="eyebrow"><span class="dot"></span> sessions at scale</span>
     <h2>Sessions, honestly: they are the reason servers stop scaling.</h2>
@@ -1830,7 +1873,7 @@ Set-Cookie: JSESSIONID=3F2A9C10; HttpOnly
     <div class="footer-line"><span>sessions</span><span>the cost</span></div>
   </section>
 
-  <!-- 54 WITHOUT COOKIES: THE ID IN THE PATH OR A HIDDEN FIELD -->
+  <!-- 55 WITHOUT COOKIES: THE ID IN THE PATH OR A HIDDEN FIELD -->
   <section class="scope">
     <span class="eyebrow">the two that are not cookies</span>
     <h2>Without cookies: the id in the path, or a hidden field.</h2>
@@ -1869,7 +1912,7 @@ String from = req.getParameter("from");   // an ordinary parameter
     <div class="footer-line"><span>sessions</span><span>url rewriting and hidden fields</span></div>
   </section>
 
-  <!-- 55 THREE REQUESTS FROM THIS CLIENT. WHAT DO THEY PRINT? -->
+  <!-- 56 THREE REQUESTS FROM THIS CLIENT. WHAT DO THEY PRINT? -->
   <section class="quiz">
     <span class="eyebrow"><span class="dot"></span> quiz &middot; 5 of 9</span>
     <h2>Three requests from this client. What do they print?</h2>
@@ -1898,7 +1941,7 @@ for (int i = 0; i &lt; 3; i++)
 
   <!-- ================= PART 2 ================= -->
 
-  <!-- 57 PART 2: AROUND THE SERVLET THEN OUT OF THE CONTAINER. -->
+  <!-- 58 PART 2: AROUND THE SERVLET THEN OUT OF THE CONTAINER. -->
   <section class="part">
     <span class="eyebrow part-tag">part 2 / around the servlet</span>
     <h2 style="margin-top:14px;">Part 2: around the servlet, then out of the container.</h2>
@@ -1907,7 +1950,7 @@ for (int i = 0; i &lt; 3; i++)
     <div class="footer-line"><span>part 2</span><span>next</span></div>
   </section>
 
-  <!-- 58 A FILTER WRAPS THE CALL: BEFORE CHAIN AFTER. -->
+  <!-- 59 A FILTER WRAPS THE CALL: BEFORE CHAIN AFTER. -->
   <section class="filter">
     <span class="eyebrow"><span class="dot"></span> filters</span>
     <h2>A filter wraps the call: before, chain, after.</h2>
@@ -1951,7 +1994,7 @@ for (int i = 0; i &lt; 3; i++)
     <div class="footer-line"><span>filters</span><span>the chain</span></div>
   </section>
 
-  <!-- 59 THE FILTER INTERFACE AND WHAT HTTPFILTER HIDES. -->
+  <!-- 60 THE FILTER INTERFACE AND WHAT HTTPFILTER HIDES. -->
   <section class="filter">
     <span class="eyebrow">the interface underneath</span>
     <h2>The Filter interface, and what HttpFilter hides.</h2>
@@ -1999,7 +2042,7 @@ public class LoggingFilter implements Filter {
     <div class="footer-line"><span>filters</span><span>the raw interface</span></div>
   </section>
 
-  <!-- 60 THREE WAYS TO REGISTER THE SAME SERVLET. -->
+  <!-- 61 THREE WAYS TO REGISTER THE SAME SERVLET. -->
   <section class="container">
     <span class="eyebrow">registration</span>
     <h2>Three ways to register the same servlet.</h2>
@@ -2017,7 +2060,7 @@ public class LoggingFilter implements Filter {
     <div class="footer-line"><span>registration</span><span>three doors</span></div>
   </section>
 
-  <!-- 61 WEB.XML AND THE SHAPE IT LIVES IN. -->
+  <!-- 62 WEB.XML AND THE SHAPE IT LIVES IN. -->
   <section class="container">
     <span class="eyebrow">the descriptor</span>
     <h2>web.xml, and the shape it lives in.</h2>
@@ -2046,7 +2089,7 @@ public class LoggingFilter implements Filter {
     <div class="footer-line"><span>registration</span><span>web.xml</span></div>
   </section>
 
-  <!-- 62 TWO ANNOTATED FILTERS ON / . WHICH ONE RUNS FIRST? -->
+  <!-- 63 TWO ANNOTATED FILTERS ON / . WHICH ONE RUNS FIRST? -->
   <section class="quiz">
     <span class="eyebrow"><span class="dot"></span> quiz &middot; 6 of 9</span>
     <h2>Two annotated filters on /*. Which one runs first?</h2>
@@ -2066,7 +2109,7 @@ public class LoggingFilter implements Filter {
   </section>
 
 
-  <!-- 64 SERVLETCONTEXTLISTENER: THE CONTAINER TELLS YOU WHEN T -->
+  <!-- 65 SERVLETCONTEXTLISTENER: THE CONTAINER TELLS YOU WHEN T -->
   <section class="filter">
     <span class="eyebrow"><span class="dot"></span> listeners</span>
     <h2>ServletContextListener: the container tells you when the app starts.</h2>
@@ -2093,7 +2136,7 @@ public class Startup implements ServletContextListener {
     <div class="footer-line"><span>listeners</span><span>context</span></div>
   </section>
 
-  <!-- 65 HTTPSESSIONLISTENER AND THE REST OF THE FAMILY. -->
+  <!-- 66 HTTPSESSIONLISTENER AND THE REST OF THE FAMILY. -->
   <section class="filter">
     <span class="eyebrow">the other listeners</span>
     <h2>HttpSessionListener, and the rest of the family.</h2>
@@ -2121,7 +2164,7 @@ public class SessionCounter implements HttpSessionListener {
     <div class="footer-line"><span>listeners</span><span>sessions</span></div>
   </section>
 
-  <!-- 66 READING THE REQUEST: FIVE INPUTS FIVE GETTERS. -->
+  <!-- 67 READING THE REQUEST: FIVE INPUTS FIVE GETTERS. -->
   <section class="json">
     <span class="eyebrow">input</span>
     <h2>Reading the request: five inputs, five getters.</h2>
@@ -2141,7 +2184,7 @@ public class SessionCounter implements HttpSessionListener {
     <div class="footer-line"><span>input</span><span>the getters</span></div>
   </section>
 
-  <!-- 67 THERE ARE NO PATH VARIABLES. HERE IS WHAT YOU ACTUALLY -->
+  <!-- 68 THERE ARE NO PATH VARIABLES. HERE IS WHAT YOU ACTUALLY -->
   <section class="json">
     <span class="eyebrow">routing</span>
     <h2>There are no path variables. Here is what you actually get.</h2>
@@ -2162,7 +2205,7 @@ public class SessionCounter implements HttpSessionListener {
     <div class="footer-line"><span>input</span><span>path matching</span></div>
   </section>
 
-  <!-- 68 A POST FORM ARRIVES WITH BODY NAME ANN. WHAT IS N? -->
+  <!-- 69 A POST FORM ARRIVES WITH BODY NAME ANN. WHAT IS N? -->
   <section class="quiz">
     <span class="eyebrow"><span class="dot"></span> quiz &middot; 7 of 9</span>
     <h2>A POST form arrives with body name=ann. What is n?</h2>
@@ -2185,7 +2228,7 @@ public class SessionCounter implements HttpSessionListener {
   </section>
 
 
-  <!-- 70 TOMCAT IN TEN LINES. -->
+  <!-- 71 TOMCAT IN TEN LINES. -->
   <section class="embed">
     <span class="eyebrow"><span class="dot"></span> embedded</span>
     <h2>Tomcat in ten lines.</h2>
@@ -2213,7 +2256,7 @@ tomcat.destroy();
     <div class="footer-line"><span>embedded</span><span>bootstrap</span></div>
   </section>
 
-  <!-- 71 REGISTERING A FILTER IN EMBEDDED TOMCAT: FOUR OBJECTS -->
+  <!-- 72 REGISTERING A FILTER IN EMBEDDED TOMCAT: FOUR OBJECTS -->
   <section class="embed">
     <span class="eyebrow">the other registration</span>
     <h2>Registering a filter in embedded Tomcat: four objects, one name.</h2>
@@ -2238,7 +2281,7 @@ ctx.addFilterMap(fm);
     <div class="footer-line"><span>embedded</span><span>filters in code</span></div>
   </section>
 
-  <!-- 72 RIGHT STATUS RIGHT CONTENT TYPE VALID JSON ESCAPED -->
+  <!-- 73 RIGHT STATUS RIGHT CONTENT TYPE VALID JSON ESCAPED -->
   <section class="json">
     <span class="eyebrow"><span class="dot"></span> json</span>
     <h2>Right status, right Content-Type, valid JSON, escaped strings.</h2>
@@ -2267,7 +2310,7 @@ ctx.addFilterMap(fm);
     <div class="footer-line"><span>json</span><span>a JSON servlet</span></div>
   </section>
 
-  <!-- 73 THE SERVLET PRINTS A RUPEE SIGN. WHAT REACHES A UTF 8 -->
+  <!-- 74 THE SERVLET PRINTS A RUPEE SIGN. WHAT REACHES A UTF 8 -->
   <section class="quiz">
     <span class="eyebrow"><span class="dot"></span> quiz &middot; 8 of 9</span>
     <h2>The servlet prints a rupee sign. What reaches a UTF-8 client?</h2>
@@ -2290,7 +2333,7 @@ ctx.addFilterMap(fm);
   </section>
 
 
-  <!-- 75 ERRORS: TRANSLATE AT THE EDGE OR THE CONTAINER DECIDE -->
+  <!-- 76 ERRORS: TRANSLATE AT THE EDGE OR THE CONTAINER DECIDE -->
   <section class="json">
     <span class="eyebrow">errors</span>
     <h2>Errors: translate at the edge, or the container decides.</h2>
@@ -2328,7 +2371,7 @@ try {
     <div class="footer-line"><span>errors</span><span>at the edge</span></div>
   </section>
 
-  <!-- 76 A SERVLET TALKING TO A DATABASE: WHO OWNS THE CONNECTI -->
+  <!-- 77 A SERVLET TALKING TO A DATABASE: WHO OWNS THE CONNECTI -->
   <section class="json">
     <span class="eyebrow">servlets and jdbc</span>
     <h2>A servlet talking to a database: who owns the connection.</h2>
@@ -2354,7 +2397,7 @@ public final class AccountServlet extends HttpServlet {
     <div class="footer-line"><span>errors</span><span>servlets and JDBC</span></div>
   </section>
 
-  <!-- 77 WHAT DOES /DONE PRINT? -->
+  <!-- 78 WHAT DOES /DONE PRINT? -->
   <section class="quiz">
     <span class="eyebrow"><span class="dot"></span> quiz &middot; 9 of 9</span>
     <h2>What does /done print?</h2>
@@ -2382,7 +2425,7 @@ public final class AccountServlet extends HttpServlet {
   </section>
 
 
-  <!-- 79 WHERE DOES YOUR APPLICATION GET BUILT? -->
+  <!-- 80 WHERE DOES YOUR APPLICATION GET BUILT? -->
   <section class="root">
     <span class="eyebrow"><span class="dot"></span> segue / question</span>
     <h2>Where does your application get built?</h2>
@@ -2396,7 +2439,7 @@ public final class AccountServlet extends HttpServlet {
     <div class="footer-line"><span>segue</span><span>question</span></div>
   </section>
 
-  <!-- 80 THE COMPOSITION ROOT: ONE PLACE THAT KNOWS THE WHOLE O -->
+  <!-- 81 THE COMPOSITION ROOT: ONE PLACE THAT KNOWS THE WHOLE O -->
   <section class="root">
     <span class="eyebrow">the answer</span>
     <h2>The composition root: one place that knows the whole object graph.</h2>
@@ -2450,7 +2493,7 @@ public final class AccountServlet extends HttpServlet {
     <div class="footer-line"><span>segue</span><span>composition root</span></div>
   </section>
 
-  <!-- 81 ONE PER PROCESS IS NOT THE SINGLETON ANTI PATTERN. -->
+  <!-- 82 ONE PER PROCESS IS NOT THE SINGLETON ANTI PATTERN. -->
   <section class="root">
     <span class="eyebrow">the objection</span>
     <h2>One per process is not the Singleton anti-pattern.</h2>
@@ -2491,7 +2534,7 @@ AccountServlet(AccountService service) {
     <div class="footer-line"><span>segue</span><span>not that singleton</span></div>
   </section>
 
-  <!-- 82 APP.JAVA: THE WHOLE PRE SPRING APPLICATION IN TWENTY L -->
+  <!-- 83 APP.JAVA: THE WHOLE PRE SPRING APPLICATION IN TWENTY L -->
   <section class="root">
     <span class="eyebrow">the move</span>
     <h2>App.java: the whole pre-Spring application in twenty lines.</h2>
@@ -2523,7 +2566,7 @@ public final class App {
     <div class="footer-line"><span>segue</span><span>App.java</span></div>
   </section>
 
-  <!-- 83 H2 IN THE EXERCISE MYSQL OR ORACLE IN PRODUCTION AND -->
+  <!-- 84 H2 IN THE EXERCISE MYSQL OR ORACLE IN PRODUCTION AND -->
   <section class="root">
     <span class="eyebrow">the other conflict</span>
     <h2>H2 in the exercise, MySQL or Oracle in production, and the one line between them.</h2>
@@ -2545,7 +2588,7 @@ public final class App {
     <div class="footer-line"><span>segue</span><span>H2 vs MySQL</span></div>
   </section>
 
-  <!-- 84 LAZY BUT SAFELY: SUPPLIER LT T GT IN THE ROOT. -->
+  <!-- 85 LAZY BUT SAFELY: SUPPLIER LT T GT IN THE ROOT. -->
   <section class="root">
     <span class="eyebrow"><span class="dot"></span> lazy</span>
     <h2>Lazy, but safely: Supplier&lt;T&gt; in the root.</h2>
@@ -2570,7 +2613,7 @@ static &lt;T&gt; Supplier&lt;T&gt; memoise(Supplier&lt;T&gt; once);
     <div class="footer-line"><span>segue</span><span>Supplier</span></div>
   </section>
 
-  <!-- 85 WHAT IS THE DIFFERENCE BETWEEN A FRAMEWORK AND A LIBRA -->
+  <!-- 86 WHAT IS THE DIFFERENCE BETWEEN A FRAMEWORK AND A LIBRA -->
   <section class="root">
     <span class="eyebrow"><span class="dot"></span> segue / question</span>
     <h2>What is the difference between a framework and a library?</h2>
@@ -2579,7 +2622,7 @@ static &lt;T&gt; Supplier&lt;T&gt; memoise(Supplier&lt;T&gt; once);
     <div class="footer-line"><span>segue</span><span>question</span></div>
   </section>
 
-  <!-- 86 A LIBRARY YOU CALL. A FRAMEWORK CALLS YOU. THAT FLIP I -->
+  <!-- 87 A LIBRARY YOU CALL. A FRAMEWORK CALLS YOU. THAT FLIP I -->
   <section class="root">
     <span class="eyebrow">the answer</span>
     <h2>A library you call. A framework calls you. That flip is inversion of control.</h2>
@@ -2604,7 +2647,7 @@ static &lt;T&gt; Supplier&lt;T&gt; memoise(Supplier&lt;T&gt; once);
     <div class="footer-line"><span>segue</span><span>framework vs library</span></div>
   </section>
 
-  <!-- 87 WHAT THE HAND WIRED ROOT COSTS AND WHAT REMOVES IT. -->
+  <!-- 88 WHAT THE HAND WIRED ROOT COSTS AND WHAT REMOVES IT. -->
   <section class="root">
     <span class="eyebrow">the pain</span>
     <h2>What the hand-wired root costs, and what removes it.</h2>
@@ -2624,7 +2667,7 @@ static &lt;T&gt; Supplier&lt;T&gt; memoise(Supplier&lt;T&gt; once);
     <div class="footer-line"><span>segue</span><span>the pain</span></div>
   </section>
 
-  <!-- 88 JAVAX.SERVLET OR JAKARTA.SERVLET: ONE API TWO NAMES. -->
+  <!-- 89 JAVAX.SERVLET OR JAKARTA.SERVLET: ONE API TWO NAMES. -->
   <section class="container">
     <span class="eyebrow">one import, before the laptops open</span>
     <h2>javax.servlet or jakarta.servlet: one API, two names.</h2>
@@ -2653,7 +2696,7 @@ import jakarta.servlet.http.HttpServletRequest;
     <div class="footer-line"><span>container</span><span>javax vs jakarta</span></div>
   </section>
 
-  <!-- 89 SETUP: THE DEMO THEN THREE JARS INTO LIB/. -->
+  <!-- 90 SETUP: THE DEMO THEN THREE JARS INTO LIB/. -->
   <section class="handson">
     <div class="handson-head"><span class="handson-badge">capstone &middot; setup</span></div>
     <span class="eyebrow">before you start</span>
@@ -2685,7 +2728,7 @@ import jakarta.servlet.http.HttpServletRequest;
     <div class="footer-line"><span>capstone</span><span>setup</span></div>
   </section>
 
-  <!-- 90 PART 1: BOOT TOMCAT SAY HELLO SPEAK JSON. -->
+  <!-- 91 PART 1: BOOT TOMCAT SAY HELLO SPEAK JSON. -->
   <section class="handson container">
     <div class="handson-head"><span class="handson-badge">capstone &middot; part 1 of 3</span></div>
     <span class="eyebrow">the brief</span>
@@ -2701,7 +2744,7 @@ import jakarta.servlet.http.HttpServletRequest;
     <div class="footer-line"><span>capstone</span><span>part 1</span></div>
   </section>
 
-  <!-- 91 PART 2: A FILTER A LISTENER A SESSION AND A COUNTER -->
+  <!-- 92 PART 2: A FILTER A LISTENER A SESSION AND A COUNTER -->
   <section class="handson threads">
     <div class="handson-head"><span class="handson-badge">capstone &middot; part 2 of 3</span></div>
     <span class="eyebrow">the brief</span>
@@ -2718,7 +2761,7 @@ import jakarta.servlet.http.HttpServletRequest;
     <div class="footer-line"><span>capstone</span><span>part 2</span></div>
   </section>
 
-  <!-- 92 FINALE: APP.JAVA IS THE COMPOSITION ROOT OF A BANK OVE -->
+  <!-- 93 FINALE: APP.JAVA IS THE COMPOSITION ROOT OF A BANK OVE -->
   <section class="handson root">
     <div class="handson-head"><span class="handson-badge">capstone &middot; finale</span></div>
     <span class="eyebrow">the brief</span>
@@ -2734,7 +2777,7 @@ import jakarta.servlet.http.HttpServletRequest;
     <div class="footer-line"><span>capstone</span><span>finale</span></div>
   </section>
 
-  <!-- 93 GO BUILD. PART 1 THEN PART 2 THEN THE FINALE. -->
+  <!-- 94 GO BUILD. PART 1 THEN PART 2 THEN THE FINALE. -->
   <section class="handson">
     <div class="handson-head"><span class="handson-badge">capstone &middot; build</span></div>
     <span class="eyebrow">now it is your turn</span>
@@ -2750,7 +2793,7 @@ import jakarta.servlet.http.HttpServletRequest;
     <div class="footer-line"><span>capstone</span><span>build</span></div>
   </section>
 
-  <!-- 94 DEBRIEF: READ APP.JAVA TOP TO BOTTOM THAT IS YOUR ARC -->
+  <!-- 95 DEBRIEF: READ APP.JAVA TOP TO BOTTOM THAT IS YOUR ARC -->
   <section class="root">
     <span class="eyebrow">capstone / debrief</span>
     <h2>Debrief: read App.java top to bottom, that is your architecture.</h2>
@@ -2764,7 +2807,7 @@ import jakarta.servlet.http.HttpServletRequest;
     <div class="footer-line"><span>capstone</span><span>debrief</span></div>
   </section>
 
-  <!-- 95 FOUR DAYS ONE SEAM. -->
+  <!-- 96 FOUR DAYS ONE SEAM. -->
   <section>
     <span class="eyebrow">recap</span>
     <h2>Four days, one seam.</h2>
@@ -2779,7 +2822,7 @@ import jakarta.servlet.http.HttpServletRequest;
     <div class="footer-line"><span>day 4</span><span>recap</span></div>
   </section>
 
-  <!-- 96 YOU HAVE NOW WRITTEN BY HAND EVERYTHING A FRAMEWORK -->
+  <!-- 97 YOU HAVE NOW WRITTEN BY HAND EVERYTHING A FRAMEWORK -->
   <section class="title-wrap">
     <span class="eyebrow">closer</span>
     <h1 class="display" style="font-size:58px;">You have now written,<br/>by hand, everything a<br/><em>framework</em> will do for you.</h1>
