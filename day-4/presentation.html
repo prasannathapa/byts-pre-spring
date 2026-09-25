@@ -2914,6 +2914,41 @@ import jakarta.servlet.http.HttpServletRequest;
     <p class="subtitle">Someone will show you a container that builds App.java from a description, and you will recognise every line it replaces. That is the whole point of the four days: you are not learning a framework from the outside, you are meeting one that solves problems you have already had.</p>
     <div class="footer-line"><span>day 4</span><span>end</span></div>
   </section>
+  <!-- 100 FEEDBACK -->
+  <section class="title-wrap">
+    <span class="eyebrow"><span class="dot"></span> before you go</span>
+    <h1 class="display" style="font-size:54px;">Tell me what<br/>did <em>not</em> land.</h1>
+    <p class="subtitle" style="margin-top:0.6em;">Three minutes, anonymous, all four days in one form. The critical answers are the useful ones, and they decide how the next course is taught.</p>
+    <div style="display:flex; align-items:center; gap:46px; margin-top:26px;">
+      <div id="fbQr" style="width:210px; height:210px; background:#fff; padding:10px; border:1px solid var(--line); border-radius:10px;"></div>
+      <div>
+        <div class="setup-link" id="fbUrl" style="font-size:26px;">set FEEDBACK_URL in this file</div>
+        <p style="color:var(--muted); font-size:19px; margin-top:12px;">Scan it, or type the link. It closes tonight.</p>
+      </div>
+    </div>
+    <div class="footer-line"><span>day 4</span><span>thank you</span></div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+  <script>
+    /* Paste the published form link here, from the Apps Script log. That is the
+       only edit needed: the QR code and the printed link both come from it. */
+    var FEEDBACK_URL = "";
+
+    (function () {
+      var box = document.getElementById('fbQr'), out = document.getElementById('fbUrl');
+      if (!box || !out) return;
+      if (!FEEDBACK_URL) { box.style.display = 'none'; return; }
+      out.textContent = FEEDBACK_URL.replace(/^https?:\/\//, '');
+      var qr = qrcode(0, 'M');
+      qr.addData(FEEDBACK_URL);
+      qr.make();
+      box.innerHTML = qr.createSvgTag({ scalable: true });
+      var svg = box.querySelector('svg');
+      if (svg) { svg.setAttribute('width', '100%'); svg.setAttribute('height', '100%'); }
+    })();
+  </script>
+
 </div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
